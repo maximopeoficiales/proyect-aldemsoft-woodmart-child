@@ -36,7 +36,7 @@ function aldem_get_view_directory_helper(): string
  */
 function aldem_get_image_url_helper($name): string
 {
-     return get_template_directory_uri() . "/helpers/public/imgs/$name";
+     return get_template_directory_uri() . "-child/helpers/public/imgs/$name";
 }
 /**
  * Obtiene la url de un archivo JS de la carpeta helpers/js
@@ -45,7 +45,7 @@ function aldem_get_image_url_helper($name): string
  */
 function aldem_get_js_url_helper($name): string
 {
-     return get_template_directory_uri() . "/helpers/public/js/$name";
+     return get_template_directory_uri() . "-child/helpers/public/js/$name";
 }
 /**
  * Obtiene la url de un archivo CSS de la carpeta helpers/css
@@ -55,7 +55,7 @@ function aldem_get_js_url_helper($name): string
 
 function aldem_get_css_url_helper($name): string
 {
-     return get_template_directory_uri() . "/helpers/public/css/$name.css";
+     return get_template_directory_uri() . "-child/helpers/public/css/$name.css";
 }
 
 
