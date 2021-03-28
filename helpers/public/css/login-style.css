@@ -1,0 +1,23 @@
+@media (max-width: 576px) {
+  .woocommerce {
+    margin-top: 100px !important;
+  }
+}
+.woocommerce {
+  margin-top: 150px;
+}
+.main-page-wrapper {
+  background: url("https://precor.pe/public/custom/images/slider/slider-01-v2.jpg")
+    no-repeat;
+  background-size: cover;
+}
+.wd-login-title {
+  color: white;
+  font-weight: 800;
+  text-align: center;
+}
+.login.woocommerce-form.woocommerce-form-login {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+}
