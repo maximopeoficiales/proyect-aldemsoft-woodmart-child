@@ -1,8 +1,9 @@
 <?php
-add_action("wp_enqueue_scripts", "llamar_estilos");
-function llamar_estilos()
+function woodmart_child_enqueue_styles()
 {
-    wp_enqueue_style("parent-style", get_template_directory_uri() . "/style.css");
+    wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('woodmart-style'), woodmart_get_theme_info('Version'));
 }
+add_action('wp_enqueue_scripts', 'woodmart_child_enqueue_styles', 10010);
 
-require get_template_directory() . "-child/helpers/functions.php";
+
+require get_stylesheet_directory() . "/helpers/functions.php";
