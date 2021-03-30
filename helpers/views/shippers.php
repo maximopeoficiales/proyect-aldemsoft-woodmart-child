@@ -3,6 +3,7 @@
 $shippers = (object) query_getShippers();
 $countrys = (object) query_getCountrys();
 $markenSites = (object) query_getMarkenSite();
+$ubigeosPeru = (object) query_getUbigeo(604);
 $urlUbigeos = get_site_url() . "/wp-json/aldem/v1/ubigeos";
 ?>
 <?php
@@ -33,7 +34,11 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $shipper->nombre ?></span>
-                                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal<?= $key + 1 ?>" onclick="$('.select-countrys-<?= $key + 1  ?>').select2();$('.select-countrys-<?= $key + 1  ?>').val('604');$('.select-countrys-<?= $key + 1  ?>').trigger('change.select2');"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal<?= $key + 1 ?>" onclick="
+                                    $('.select-countrys-<?= $key + 1  ?>').select2();
+                                    $('#ubigeoShipper-<?= $key + 1 ?>').select2();
+                                    $('.select-countrys-<?= $key + 1  ?>').val('604');
+                                    $('.select-countrys-<?= $key + 1  ?>').trigger('change.select2');"><i class="fa fa-eye" aria-hidden="true"></i></button>
                                 </td>
                                 <td><?= $shipper->direccion ?></td>
                                 <td><?= $shipper->site ?></td>
@@ -109,7 +114,15 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                                 <div class="form-group ">
                                                     <label for="ubigeoShipper">Ubigeo:</label>
                                                     <select class="form-control"" name=" ubigeoShipper" id="ubigeoShipper-<?= $key1 + 1 ?>" <?= $disabledGlobal ?>>
-                                                        <option selected value="<?= $ship->id_ubigeo ?>"><?= query_getUbigeo(null, $ship->id_ubigeo)[0]->descripcion ?></option>
+                                                        <?php foreach ($ubigeosPeru as $ubigeo) { ?>
+
+                                                            <option value="<?= $ubigeo->id_ubigeo ?>" <?= $ship->id_ubigeo ===  $ubigeo->id_ubigeo ? "  selected" : "" ?>>
+                                                                <?= $ubigeo->descripcion ?>
+                                                            </option>
+                                                        <?php } ?>
+
+
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -139,7 +152,11 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                     </div>
                 <?php } ?>
                 <div class="text-center">
-                    <button class="btn" data-toggle="modal" data-target="#modal-newShipper" onclick="$('.new-select-countrys').select2();$('.new-select-countrys').val('604');$('.new-select-countrys').trigger('change.select2');">Nuevo shipper</button>
+                    <button class="btn" data-toggle="modal" data-target="#modal-newShipper" onclick="
+                    $('.new-select-countrys').select2();
+                    $('#newshipper-ubigeoShipper').select2();
+                    $('.new-select-countrys').val('604');
+                    $('.new-select-countrys').trigger('change.select2');">Nuevo shipper</button>
                 </div>
 
                 <!-- new shipper -->
@@ -205,6 +222,13 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                             <div class="form-group ">
                                                 <label for="ubigeoShipper">Ubigeo:</label>
                                                 <select class="form-control" name="ubigeoShipper" id="newshipper-ubigeoShipper">
+                                                    <?php foreach ($ubigeosPeru as $ubigeoNew) { ?>
+
+                                                        <option value="<?= $ubigeoNew->id_ubigeo ?>">
+                                                            <?= $ubigeoNew->descripcion ?>
+                                                        </option>
+                                                    <?php } ?>
+
                                                     <option></option>
                                                 </select>
                                             </div>
