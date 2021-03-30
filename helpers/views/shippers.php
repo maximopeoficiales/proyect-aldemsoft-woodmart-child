@@ -33,7 +33,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $shipper->nombre ?></span>
-                                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal<?= $key + 1 ?>" onclick="$('.select-countrys-<?= $key + 1  ?>').select2();"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal<?= $key + 1 ?>" onclick="$('.select-countrys-<?= $key + 1  ?>').select2();$('.select-countrys-<?= $key + 1  ?>').val('604');$('.select-countrys-<?= $key + 1  ?>').trigger('change.select2');"><i class="fa fa-eye" aria-hidden="true"></i></button>
                                 </td>
                                 <td><?= $shipper->direccion ?></td>
                                 <td><?= $shipper->site ?></td>
@@ -73,7 +73,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="zipShipper">Zip:</label>
-                                                    <input type="number" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" min="0" value="<?= $ship->zip ?>" <?= $disabledGlobal ?>>
+                                                    <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" value="<?= $ship->zip ?>" <?= $disabledGlobal ?>>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -98,8 +98,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                                     <select class="form-control" name="siteShipper" id="shiteShipper" <?= $disabledGlobal ?>>
                                                         <?php foreach ($markenSites as $markenSite) { ?>
 
-                                                            <option value="<?= $markenSite->id_marken_site ?>" <?= $ship->site ===  $markenSite->descripcion ? "  selected" : "" ?>
-                                                            >
+                                                            <option value="<?= $markenSite->id_marken_site ?>" <?= $ship->site ===  $markenSite->descripcion ? "  selected" : "" ?>>
                                                                 <?= $markenSite->descripcion ?>
                                                             </option>
                                                         <?php } ?>
@@ -140,7 +139,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                     </div>
                 <?php } ?>
                 <div class="text-center">
-                    <button class="btn" data-toggle="modal" data-target="#modal-newShipper" onclick="$('.new-select-countrys').select2();">Nuevo shipper</button>
+                    <button class="btn" data-toggle="modal" data-target="#modal-newShipper" onclick="$('.new-select-countrys').select2();$('.new-select-countrys').val('604');$('.new-select-countrys').trigger('change.select2');">Nuevo shipper</button>
                 </div>
 
                 <!-- new shipper -->
@@ -172,7 +171,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="zipShipper">Zip:</label>
-                                                <input type="number" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" min="0">
+                                                <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId">
                                             </div>
                                         </div>
                                         <div class="col-md-6">

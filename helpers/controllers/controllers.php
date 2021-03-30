@@ -15,10 +15,10 @@ function new_shipper_data()
             'nombreShipper'                  =>  'required',
             'direccionShipper'                  => 'required',
             'direccion2Shipper'                  => 'required',
-            'zipShipper'                  => 'required|numeric',
+            'zipShipper'                  => 'required',
             'paisShipper'                  => 'required|numeric',
             'siteShipper'                  => 'required|numeric',
-            'ubigeoShipper'                  => 'required|numeric',
+            'ubigeoShipper'                  => 'numeric',
             'id_user'                  => 'required|numeric',
             'id_shipper'                  => 'numeric',
         ];
@@ -44,7 +44,7 @@ function new_shipper_data()
             ];
 
             if ($action_name === "new-shipper") {
-                $format = array('%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s');
+                $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%s');
                 if ($wpdb->insert($table, $data, $format)) {
                     wp_redirect(home_url("/marken_shipper/") . "?msg=" . 1);
                 } else {
