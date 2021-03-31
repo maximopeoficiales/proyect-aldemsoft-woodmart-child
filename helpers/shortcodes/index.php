@@ -73,7 +73,18 @@ function aldem_init_shorcode_getParam()
         $required = $atts["required"] == "true" ? "required" : "";
         // print_r($atts);
         echo "
-        <form action='/{$destinationUrL}' method='get' class='' style='width: {$width};'>
+        <style>
+            @media (max-width: 576px) {
+                .input-resposive-shortcode {
+                width: 100% !important;
+                }
+            }    
+            .input-resposive-shortcode{
+                    width:{$width}
+            }
+            
+        </style>
+        <form action='/{$destinationUrL}' method='get' class='input-resposive-shortcode'>
             <p><label>{$textlabel}</p>
             <div class='input-group mb-3'>
                 <input type='{$inputtype}' name='{$nameParam}' class='form-control' {$required} placeholder='{$placeholder}'>
