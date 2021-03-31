@@ -48,16 +48,17 @@ function aldem_init_shorcode_getParam()
     add_shortcode(aldem_shortcode_prefix() . "datatableGetParam", function ($atts) {
         $datatableID = $atts["idtable"];
         $getParam = $atts["nameparam"];
+        // si es envias nameparam
         if (is_null($getParam)) {
             echo do_shortcode("[wpdatatable id={$datatableID}]");
+            // si el name param existe 
         } else if ($getParam != "" && isset($_GET[$getParam])) {
             $var1 = $_GET[$getParam];
             echo   do_shortcode("[wpdatatable id={$datatableID} var1={$var1}]");
         } else {
-
+            // si no te falta enviar parametro url
             echo "<h2>Falta parametro por url: {$getParam}</h2>";
         }
-        // echo do_shortcode("[wpdatatable id='{$datatableID}']");
     });
 }
 
