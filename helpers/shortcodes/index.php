@@ -60,6 +60,31 @@ function aldem_init_shorcode_getParam()
             echo "<h2>Falta parametro por url: {$getParam}</h2>";
         }
     });
+
+
+    add_shortcode(aldem_shortcode_prefix() . "redirectinput", function ($atts) {
+        // [nameshortcode inputtype="text" destinationurl="marken_shipper" nameparam="id" textlabel="Tu nombre (requerido)" placeholder="Ingresa tu nombre" required="true" width="100%"]
+        $inputtype = $atts["inputtype"];
+        $destinationUrL = $atts["destinationurl"];
+        $nameParam = $atts["nameparam"];
+        $textlabel = $atts["textlabel"];
+        $placeholder = $atts["placeholder"];
+        $width = $atts["width"]  != ""  ? $atts["width"] : "30%";
+        $required = $atts["required"] == "true" ? "required" : "";
+        // print_r($atts);
+        echo "
+        <form action='/{$destinationUrL}' method='get' class='' style='width: {$width};'>
+            <p><label>{$textlabel}</p>
+            <div class='input-group mb-3'>
+                <input type='{$inputtype}' name='{$nameParam}' class='form-control' {$required} placeholder='{$placeholder}'>
+                <div class='input-group-append'>
+                    <button class='btn' type='submit'>Enviar</button>
+                </div>
+            </div>
+        </form>
+        
+        ";
+    });
 }
 
 
