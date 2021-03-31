@@ -1,6 +1,7 @@
 <?php
 // agrego todos los shorcodes a wordpress
 add_action('init', 'aldem_init_addshorcodes');
+add_action('init', 'aldem_init_shorcode_getParam');
 
 /**
  * Prefijo general de los shortcodes
@@ -41,6 +42,25 @@ function aldem_init_addshorcodes()
         });
     }
 }
+
+function aldem_init_shorcode_getParam()
+{
+    add_shortcode(aldem_shortcode_prefix() . "datatableGetParam", function ($atts) {
+        $datatableID = $atts["idtable"];
+        $getParam = $atts["nameparam"];
+        if (is_null($getParam)) {
+            echo do_shortcode("[wpdatatable id={$datatableID}]");
+        } else if ($getParam != "" && isset($_GET[$getParam])) {
+            $var1 = $_GET[$getParam];
+            echo   do_shortcode("[wpdatatable id={$datatableID} var1={$var1}]");
+        } else {
+
+            echo "<h2>Falta parametro por url: {$getParam}</h2>";
+        }
+        // echo do_shortcode("[wpdatatable id='{$datatableID}']");
+    });
+}
+
 
 function aldem_verify_exists_shortcodes(): bool
 {
