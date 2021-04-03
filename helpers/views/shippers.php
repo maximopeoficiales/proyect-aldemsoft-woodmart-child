@@ -113,7 +113,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                             <div class="col-md-12">
                                                 <div class="form-group ">
                                                     <label for="ubigeoShipper">Ubigeo:</label>
-                                                    <select class="form-control"" name=" ubigeoShipper" id="ubigeoShipper-<?= $key1 + 1 ?>" <?= $disabledGlobal ?> style="width:100%" >
+                                                    <select class="form-control"" name=" ubigeoShipper" id="ubigeoShipper-<?= $key1 + 1 ?>" <?= $disabledGlobal ?> style="width:100%">
                                                         <?php foreach ($ubigeosPeru as $ubigeo) { ?>
 
                                                             <option value="<?= $ubigeo->id_ubigeo ?>" <?= $ship->id_ubigeo ===  $ubigeo->id_ubigeo ? "  selected" : "" ?>>
@@ -132,7 +132,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                         </p>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="hidden" name="action" value="process_form">
+                                        <?php aldem_set_proccess_form(); ?>
                                         <input type="hidden" name="id_shipper" value="<?= $ship->id_shipper ?>">
                                         <?php
                                         shipper_isUserCreator($ship->id_usuario_created) ? aldem_set_action_name("edit-shipper") : "";
@@ -237,7 +237,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
 
                                 </div>
                                 <div class="modal-footer">
-                                    <input type="hidden" name="action" value="process_form">
+                                    <?php aldem_set_proccess_form(); ?>
                                     <?php aldem_set_action_name("new-shipper"); ?>
                                     <input type="hidden" name="id_user" value="<?= get_current_user_id() ?>">
                                     <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>

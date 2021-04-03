@@ -59,13 +59,40 @@ function aldem_show_message_custom($msg_success, $msg_act, $msg_error): void
     }
 }
 
+/**
+ * Crear un input hidden con el action como parametro
+ * @return void
+ */
 function aldem_set_action_name(string $nameAction): void
 {
     echo '
     <input type="hidden" name="action_name" value="' . $nameAction . '">';
 }
+/**
+ * Crea un input hidden procces_form para que sea procesado
+ * @return void
+ */
+function aldem_set_proccess_form(): void
+{
+    echo '
+    <input type="hidden" name="action" value="process_form">
+    ';
+}
+/**
+ * Crea un input hidden con un nombre y valor
+ * @return void
+ */
+function aldem_set_input_hidden($name, $value): void
+{
+    echo '
+    <input type="hidden" name="' . $name . '" value="' . $value . '">
+    ';
+}
 
-
+/**
+ * Crear un script necesario para traducir los datatables
+ * @return void
+ */
 function aldem_datatables_in_spanish(): void
 {
     echo ('  $.extend(true, $.fn.dataTable.defaults, {

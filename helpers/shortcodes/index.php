@@ -21,6 +21,7 @@ function aldem_getShorcodesViewList(): array
     // name-shorcode => aldem_$name, view => $nameFile
     return [
         ["name" => "marken_shipper", "view" => "shippers"],
+        ["name" => "marken_export_job_hielo_nuevo", "view" => "export_job_hielo_nuevo"],
     ];
 }
 

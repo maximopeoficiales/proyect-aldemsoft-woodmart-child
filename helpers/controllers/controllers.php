@@ -3,10 +3,11 @@ date_default_timezone_set('America/Lima');
 // Hooks admin-post
 
 // add_action( 'admin_post_nopriv_process_form', 'send_mail_data' );
-add_action('admin_post_process_form', 'new_shipper_data');
+add_action('admin_post_process_form', 'aldem_post_new_shipper_data');
+add_action('admin_post_process_form', 'aldem_post_new_export_job_hielo');
 
 // Funcion callback
-function new_shipper_data()
+function aldem_post_new_shipper_data()
 {
     $action_name = $_POST["action_name"];
     if ($action_name === "new-shipper" || $action_name === "edit-shipper") {
@@ -68,6 +69,54 @@ function new_shipper_data()
             }
         } else {
             wp_redirect(home_url("/marken_shipper/") . "?errors=" . $responseValidator["message"]);
+        }
+    }
+}
+function aldem_post_new_export_job_hielo()
+{
+    $action_name = $_POST["action_name"];
+    if ($action_name === "new-export-hielo") {
+        $wpdb = query_getWPDB();
+        $job = intval(sanitize_text_field($_POST['job']));
+        $waybill = sanitize_text_field($_POST['waybill']);
+        $validations = [
+            'kilos'                  =>  'required|numeric',
+            'serie'                  => 'required|max:6',
+            'numero'                  => 'required|max:15',
+            'precio'                  => 'required|numeric',
+            'comentario'                  => 'required|max:250',
+            'job'                  => 'required|numeric',
+            'user_id'                  => 'required|numeric',
+        ];
+        $responseValidator = adldem_UtilityValidator($_POST, $validations);
+        if ($responseValidator["validate"]) {
+            // se va crear un shipper
+            $kilos = doubleval(sanitize_text_field($_POST['kilos']));
+            $serie = sanitize_text_field($_POST['serie']);
+            $numero = sanitize_text_field($_POST['numero']);
+            $precio = doubleval(sanitize_text_field($_POST['precio']));
+            $comentario = sanitize_text_field($_POST['comentario']);
+            $user_id = intval(sanitize_text_field($_POST['user_id']));
+            $fecha_actual = date("Y-m-d H:i:s");
+            $table = "marken_job_hielo";
+            $data = [
+                "id_marken_job" => $job,
+                "kilos" => $kilos,
+                "id_usuario_created" => $user_id,
+                "comentarios" => $comentario,
+                "serie" => $serie,
+                "numero" => $numero,
+                "precio" => $precio,
+                "created_at" => $fecha_actual,
+            ];
+            $format = array('%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s');
+            if ($wpdb->insert($table, $data, $format)) {
+                wp_redirect(home_url("/marken_export_hielo_nuevo/?job=$job&waybill=$waybill") . "&msg=" . 1);
+            } else {
+                wp_redirect(home_url("marken_export_hielo_nuevo/?job=$job&waybill=$waybill") . "?msg=");
+            }
+        } else {
+            wp_redirect(home_url("/marken_export_hielo_nuevo/?job=$job&waybill=$waybill") . "&errors=" . $responseValidator["message"]);
         }
     }
 }
