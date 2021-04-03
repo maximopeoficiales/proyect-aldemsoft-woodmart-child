@@ -64,21 +64,21 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="nombreShipper">Nombre: </label>
-                                            <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId" value="<?= $ship->nombre ?>" <?= $disabledGlobal ?>>
+                                            <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId" value="<?= $ship->nombre ?>" <?= $disabledGlobal ?> required>
                                         </div>
                                         <div class="form-group">
                                             <label for="direccionShipper">Direccion:</label>
-                                            <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" value="<?= $ship->direccion ?>" <?= $disabledGlobal ?>>
+                                            <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" value="<?= $ship->direccion ?>" <?= $disabledGlobal ?> required>
                                         </div>
                                         <div class="form-group">
                                             <label for="direccion2Shipper">Direccion2:</label>
-                                            <input type="text" name="direccion2Shipper" id="direccion2Shipper" class="form-control" placeholder="Ingrese su direccion2" aria-describedby="helpId" value="<?= $ship->direccion2 ?>" <?= $disabledGlobal ?>>
+                                            <input type="text" name="direccion2Shipper" id="direccion2Shipper" class="form-control" placeholder="Ingrese su direccion2" aria-describedby="helpId" value="<?= $ship->direccion2 ?>" <?= $disabledGlobal ?> required>
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="zipShipper">Zip:</label>
-                                                    <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" value="<?= $ship->zip ?>" <?= $disabledGlobal ?>>
+                                                    <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" value="<?= $ship->zip ?>" <?= $disabledGlobal ?> required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -97,7 +97,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                         </div>
 
                                         <div class="row mt-2">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="shiteShipper">Site:</label>
                                                     <select class="form-control" name="siteShipper" id="shiteShipper" <?= $disabledGlobal ?>>
@@ -110,10 +110,10 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group ">
                                                     <label for="ubigeoShipper">Ubigeo:</label>
-                                                    <select class="form-control"" name=" ubigeoShipper" id="ubigeoShipper-<?= $key1 + 1 ?>" <?= $disabledGlobal ?>>
+                                                    <select class="form-control"" name=" ubigeoShipper" id="ubigeoShipper-<?= $key1 + 1 ?>" <?= $disabledGlobal ?> style="width:100%" >
                                                         <?php foreach ($ubigeosPeru as $ubigeo) { ?>
 
                                                             <option value="<?= $ubigeo->id_ubigeo ?>" <?= $ship->id_ubigeo ===  $ubigeo->id_ubigeo ? "  selected" : "" ?>>
@@ -174,21 +174,21 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="nombreShipper">Nombre: </label>
-                                        <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId">
+                                        <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="direccionShipper">Direccion:</label>
-                                        <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId">
+                                        <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="direccion2Shipper">Direccion2:</label>
-                                        <input type="text" name="direccion2Shipper" id="direccion2Shipper" class="form-control" placeholder="Ingrese su direccion2" aria-describedby="helpId">
+                                        <input type="text" name="direccion2Shipper" id="direccion2Shipper" class="form-control" placeholder="Ingrese su direccion2" aria-describedby="helpId" required>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="zipShipper">Zip:</label>
-                                                <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId">
+                                                <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -207,7 +207,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                     </div>
 
                                     <div class="row mt-2">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="shiteShipper">Site:</label>
                                                 <select class="form-control" name="siteShipper" id="shiteShipper">
@@ -218,10 +218,10 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group ">
                                                 <label for="ubigeoShipper">Ubigeo:</label>
-                                                <select class="form-control" name="ubigeoShipper" id="newshipper-ubigeoShipper">
+                                                <select class="form-control" name="ubigeoShipper" id="newshipper-ubigeoShipper" style="width:100%">
                                                     <?php foreach ($ubigeosPeru as $ubigeoNew) { ?>
 
                                                         <option value="<?= $ubigeoNew->id_ubigeo ?>">
@@ -292,6 +292,8 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
             }
         }
         $(document).ready(function() {
+            <?php aldem_datatables_in_spanish(); ?>
+
             $('#table-shippers').DataTable();
 
         });

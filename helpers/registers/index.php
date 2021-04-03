@@ -17,7 +17,10 @@ function aldem_head_js()
         wp_enqueue_style("aldemDatatablesB4-CSS", "https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css", '', '1.0.0');
         wp_enqueue_style("aldemDatatablesB4-Responsive-CSS", "https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css", '', '1.0.0');
 
+
+        // wp_enqueue_script("aldemDatatablesES", "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json", '', '1.0.0', true);
         wp_enqueue_script("aldemDatatablesJS", "https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js", '', '1.0.0', true);
+
         wp_enqueue_script("aldemDatatablesB4-JS", "https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js", '', '1.0.0', true);
         wp_enqueue_script("aldemDatatablesResposiveJS", "https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js", '', '1.0.0', true);
         //     wp_enqueue_script("aldemDatatablesB4-ResposiveJS", "https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js
