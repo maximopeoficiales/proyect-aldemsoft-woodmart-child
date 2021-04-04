@@ -14,6 +14,24 @@ function query_getShippers()
     return $result;
 }
 
+function query_getMarkenTypes($idMarkenType = null)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT  id AS id_marken_type , descripcion FROM marken_type WHERE id_cliente_subtipo = 1";
+    $sql .= $idMarkenType != null ? " AND id= $idMarkenType" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+function query_getMarkenCajas($idMarkenCaja = null)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT  id AS id_caja,descripcion from marken_caja where id_cliente_subtipo = 1";
+    $sql .= $idMarkenCaja != null ? " AND id= $idMarkenCaja" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
 function query_getCountrys($idPais = null)
 {
 

@@ -40,7 +40,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
                         </div>
                     </div>
                     <div class="form-group mt-2">
-                        <label for="nombreShipper">Comentario: </label>
+                        <label for="comentario">Comentario: </label>
                         <textarea name="comentario" id="comentario" class="form-control" placeholder="Ingrese su comentario" aria-describedby="comentario" required minlength="1" maxlength="250" style="min-height: 140px;"></textarea>
                     </div>
                     <?php aldem_set_proccess_form(); ?>
@@ -50,9 +50,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
                     <?php aldem_set_action_name("new-export-hielo"); ?>
                     <button type="submit" class="btn btn-success w-100"> <i class="fa fa-save mr-1"></i>Agregar</button>
                 </div>
-
+            </form>
         </div>
-        </form>
     </div>
 </div>
 
