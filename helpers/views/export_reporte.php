@@ -6,8 +6,6 @@ $urlExportGeneral = get_site_url(null, "marken_export_reporte_general/?fecharepo
         .<div class="card">
             <!-- <img class="card-img-top" src="holder.js/100x180/" alt=""> -->
             <div class="card-body">
-                <h4 class="card-title text-center">Reporte general de exportación</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem quasi magnam temporibus </p>
                 <form action="" method="post" id="form_export_reporte_general">
                     <div class="row align-items-center">
                         <div class="col-md-8">

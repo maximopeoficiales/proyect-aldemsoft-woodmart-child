@@ -17,8 +17,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
         <div class="card">
             <h5 class="card-header">Shippers</h5>
             <div class="card-body">
-                <h5 class="card-title text-center">Lista de Shippers</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                
                 <table class="table table-striped table-bordered dt-responsive nowrap" id="table-shippers" style="width: 100%;">
                     <thead class="thead-dark">
                         <tr>

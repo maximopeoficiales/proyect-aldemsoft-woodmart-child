@@ -18,6 +18,13 @@ function aldem_head_js()
         wp_enqueue_style("aldemDatatablesB4-Responsive-CSS", "https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css", '', '1.0.0');
 
 
+        // jquery ui
+        wp_enqueue_style("jqueryGUI-CSS", aldem_get_css_url_helper("jquery-ui.min.css"), '', '1.0.0');
+
+
+
+        wp_enqueue_script("aldemDatatablesJS", aldem_get_js_url_helper("jquery-ui.min.js"), '', '1.0.0', true);
+        // 
         // wp_enqueue_script("aldemDatatablesES", "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json", '', '1.0.0', true);
         wp_enqueue_script("aldemDatatablesJS", "https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js", '', '1.0.0', true);
 

@@ -8,8 +8,7 @@ $markenCajas = query_getMarkenCajas();
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center">Recoleccion de Muestras</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, reprehenderit? Veritatis soluta est reiciendis!</p>
+
                 <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
 
                     <div class="row mt-2">
@@ -120,7 +119,7 @@ $markenCajas = query_getMarkenCajas();
                             </div>
                             <div class="form-group mb-2">
                                 <label for="fecha_hora">Fecha y Hora de Recoleccion: </label>
-                                <input type="datetime-local" name="fecha_hora" id="fecha_hora" class="form-control" placeholder="Ingrese el numero de fecha_hora" required aria-describedby="fecha_hora" min="1">
+                                <input type="datetime-local" name="fecha_hora" id="fecha_hora" class="form-control" placeholder="Ingrese el numero de fecha_hora" required aria-describedby="fecha_hora" >
                             </div>
 
                         </div>
@@ -134,3 +133,7 @@ $markenCajas = query_getMarkenCajas();
         </div>
     </div>
 </div>
+
+<script>
+    
+</script>

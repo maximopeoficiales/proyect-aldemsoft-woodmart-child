@@ -7,8 +7,6 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
         <div class="card">
             <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
                 <div class="card-body">
-                    <h4 class="card-title text-center">Marken Export Hielo Nuevo</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem vero ad voluptas totam veniam minima dicta error illum provident </p>
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="form-group">
