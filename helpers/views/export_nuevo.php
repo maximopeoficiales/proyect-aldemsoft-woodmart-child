@@ -117,11 +117,22 @@ $markenCajas = query_getMarkenCajas();
                                 <label for="instrucciones">Instrucciones: </label>
                                 <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones" required minlength="1" maxlength="500" style="min-height: 140px;" required></textarea>
                             </div>
-                            <div class="form-group mb-2">
-                                <label for="fecha_hora">Fecha y Hora de Recoleccion: </label>
-                                <input type="datetime-local" name="fecha_hora" id="fecha_hora" class="form-control" placeholder="Ingrese el numero de fecha_hora" required aria-describedby="fecha_hora" >
-                            </div>
+                        </div>
 
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label for="fecha">Fecha de Recoleccion: </label>
+                                <input type="date" name="fecha" id="fecha" class="form-control" placeholder="Ingrese el numero de fecha" required aria-describedby="fecha">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group mb-2">
+                                <label for="hora">Hora de Recoleccion: </label>
+                                <input type="time" name="hora" id="hora" class="form-control" placeholder="Ingrese el numero de hora" required aria-describedby="hora">
+                            </div>
                         </div>
                     </div>
                     <?php aldem_set_proccess_form(); ?>
@@ -135,5 +146,7 @@ $markenCajas = query_getMarkenCajas();
 </div>
 
 <script>
-    
+    // $(function() {
+    //     $("#fecha_hora").datepicker();
+    // });
 </script>

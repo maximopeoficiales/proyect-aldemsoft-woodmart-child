@@ -144,3 +144,29 @@ function aldem_datatables_in_spanish(): void
     }
 });');
 }
+
+
+/**
+ * Retorna todos los meses del año
+ * @return void
+ */
+function aldem_getMonths(): array
+{
+    return array(
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    );
+}
+
+function aldem_getYears(): array
+{
+    $arrayAno = [];
+    $anoActual = intval(date("Y"));
+    $anosAtras = 15;
+    $anosAdelante = 30;
+
+    for ($i = $anoActual - $anosAtras; $i < $anoActual + $anosAdelante; $i++) {
+        array_push($arrayAno, $i);
+    }
+    return $arrayAno;
+}

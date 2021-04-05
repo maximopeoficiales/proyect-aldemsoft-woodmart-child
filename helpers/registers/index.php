@@ -19,11 +19,11 @@ function aldem_head_js()
 
 
         // jquery ui
-        wp_enqueue_style("jqueryGUI-CSS", aldem_get_css_url_helper("jquery-ui.min.css"), '', '1.0.0');
+        // wp_enqueue_style("jqueryGUI-CSS", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css", '', '1.0.0');
 
 
 
-        wp_enqueue_script("aldemDatatablesJS", aldem_get_js_url_helper("jquery-ui.min.js"), '', '1.0.0', true);
+        // wp_enqueue_script("jqueryUIJS","https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js", '', '1.0.0', true);
         // 
         // wp_enqueue_script("aldemDatatablesES", "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json", '', '1.0.0', true);
         wp_enqueue_script("aldemDatatablesJS", "https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js", '', '1.0.0', true);
@@ -39,7 +39,7 @@ function aldem_head_js()
         wp_enqueue_script("aldemSelect2JS", "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js", '', '1.0.0');
         // 
         // registro css global para todo el tema
-        wp_enqueue_style("customAldem", aldem_get_css_url_helper("styles"),  array('woodmart-style'), '1.0.0');
+        wp_enqueue_style("customAldem", aldem_get_css_url_helper("styles.css"),  array('woodmart-style'), '1.0.0');
     }
 }
 // se le agrega al wordpress

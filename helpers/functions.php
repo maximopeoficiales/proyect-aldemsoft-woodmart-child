@@ -55,7 +55,7 @@ function aldem_get_js_url_helper($name): string
 
 function aldem_get_css_url_helper($name): string
 {
-     return get_stylesheet_directory_uri() . "/helpers/public/css/$name.css";
+     return get_stylesheet_directory_uri() . "/helpers/public/css/$name";
 }
 
 
