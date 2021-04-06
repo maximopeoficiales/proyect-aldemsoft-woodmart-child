@@ -85,7 +85,7 @@ function aldem_set_proccess_form(): void
 function aldem_set_input_hidden($name, $value): void
 {
     echo '
-    <input type="hidden" name="' . $name . '" value="' . $value . '">
+    <input type="hidden" name="' . $name . '" value="' . $value . '" id="' . $name . '">
     ';
 }
 
@@ -162,7 +162,7 @@ function aldem_getYears(): array
 {
     $arrayAno = [];
     $anoActual = intval(date("Y"));
-    $anosAtras = 15;
+    $anosAtras = 30;
     $anosAdelante = 30;
 
     for ($i = $anoActual - $anosAtras; $i < $anoActual + $anosAdelante; $i++) {

@@ -45,6 +45,8 @@ $urlExportGeneral = get_site_url(null, "marken_export_reporte_general/?fecharepo
             </form>
 
             <script>
+                $('#mes').val('<?= date("m") ?>');
+                $('#ano').val('<?= date("Y") ?>');
                 $('#ano').select2();
                 $('#mes').select2();
                 document.querySelector("#form_export_reporte_general").addEventListener("submit", (e) => {
