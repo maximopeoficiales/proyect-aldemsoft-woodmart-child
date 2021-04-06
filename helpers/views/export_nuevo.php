@@ -144,7 +144,7 @@ $markenCajas = query_getMarkenCajas();
                     <?php aldem_set_proccess_form(); ?>
                     <?php aldem_set_input_hidden("user_id", get_current_user_id()); ?>
                     <?php aldem_set_input_hidden("id_shipper", ""); ?>
-                    <?php aldem_set_input_hidden("id_contact", ""); ?>
+                    <?php aldem_set_input_hidden("id_shipper_contact", ""); ?>
                     <?php aldem_set_action_name("new-export"); ?>
                     <button type="submit" class="btn btn-success w-100"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </form>
