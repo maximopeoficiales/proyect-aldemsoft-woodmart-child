@@ -4,12 +4,15 @@ function query_getWPDB(): wpdb
     global $wpdb;
     return $wpdb;
 }
-function query_getShippers()
+function query_getShippers($id_shipper = null)
 {
     $wpdb = query_getWPDB();
-    $result = $wpdb->get_results("SELECT t1.id as id_shipper,t1.descripcion as nombre,t1.*,t2.descripcion as site FROM marken_shipper t1
+    $sql = "SELECT t1.id as id_shipper,t1.descripcion as nombre,t1.*,t2.descripcion as site FROM marken_shipper t1
     INNER JOIN marken_site t2 on t2.id = t1.id_marken_site
-    WHERE t2.id_cliente_subtipo = 1");
+    WHERE t2.id_cliente_subtipo = 1";
+    $sql .= $id_shipper != null ? " AND t1.id= $id_shipper" : "";
+    $result = $wpdb->get_results($sql);
+
     $wpdb->flush();
     return $result;
 }
@@ -19,6 +22,24 @@ function query_getMarkenJobs($idMarkenJob = null)
     $wpdb = query_getWPDB();
     $sql = "SELECT id AS id_marken_job,t1.* FROM marken_job as t1 WHERE id_cliente_subtipo = 1";
     $sql .= $idMarkenJob != null ? " AND id= $idMarkenJob" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
+function query_getMarkenConsiggne($idConsiggne = null, $id_marken_job = null)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT id AS id_marken_consiggne,t1.* FROM marken_job_consignee as t1";
+    if ($idConsiggne != null && $id_marken_job != null) {
+        $sql .= " WHERE id= $idConsiggne AND id_marken_job = $id_marken_job ";
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+
+    $sql .= $idConsiggne != null ? " WHERE id= $idConsiggne" : "";
+    $sql .= $id_marken_job != null ? " WHERE id_marken_job= $id_marken_job" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
     return $result;
