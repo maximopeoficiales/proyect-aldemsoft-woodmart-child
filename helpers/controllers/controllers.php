@@ -125,20 +125,21 @@ function aldem_post_new_export()
 {
     $wpdb = query_getWPDB();
     $action_name = $_POST["action_name"];
-    if ($action_name === "new-export") {
+    if ($action_name === "new-job" || $action_name === "update-job") {
         $validations = [
             'waybill'                  =>  'required|max:35',
-            'id_shipper'                  =>  'required',
-            'id_shipper_contact'                  =>  'required',
+            'id_shipper'                  =>  'required|numeric',
             'consigge_nombre'                  => 'max:150',
             'consigge_direccion'                  => 'max:150',
             'id_pais'                  => 'numeric',
-            'consigge_reference'                  => 'max:150',
+            'contacto'                  => 'required|max:50',
+            'contacto_telf'                  => 'required|max:50',
+            'reference'                  => 'required|max:150',
             'content'                  => 'required|max:250',
-            'pcs'                  => 'required|numeric|min:1 ',
+            'pcs'                  => 'required|numeric',
             'range'                  => 'required|max:25',
-            'id_marken_type'                  => 'required',
-            'id_caja'                  => 'required',
+            'id_marken_type'                  => 'required|numeric',
+            'id_caja'                  => 'required|numeric',
             'instrucciones'                  => 'required|max:250',
             'fecha'                  => 'required|max:10|date:Y-m-d',
             'hora'                  => 'required|max:5',
@@ -149,11 +150,14 @@ function aldem_post_new_export()
             // se va crear un shipper
             $waybill = sanitize_text_field($_POST['waybill']);
             $id_shipper = intval(sanitize_text_field($_POST['id_shipper']));
-            $id_shipper_contact = intval(sanitize_text_field($_POST['id_shipper_contact']));
+            // consigge
             $consigge_nombre = sanitize_text_field($_POST['consigge_nombre']);
             $consigge_direccion = sanitize_text_field($_POST['consigge_direccion']);
             $id_pais = intval(sanitize_text_field($_POST['id_pais']));
-            $consigge_reference = sanitize_text_field($_POST['consigge_reference']);
+            $contacto = sanitize_text_field($_POST['contacto']);
+            $contacto_telf = sanitize_text_field($_POST['contacto_telf']);
+            $reference = sanitize_text_field($_POST['reference']);
+
             $content = sanitize_text_field($_POST['content']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
             $range = sanitize_text_field($_POST['range']);
@@ -163,12 +167,14 @@ function aldem_post_new_export()
             $fechaHora = sanitize_text_field($_POST['fecha']) . " " . sanitize_text_field($_POST['hora']) . ":00";
             $fecha_actual = date("Y-m-d H:i:s");
             $user_id = sanitize_text_field($_POST['user_id']);
+
+
+
             // query 1
             $table = "marken_job";
             $data = [
                 "id_cliente_subtipo" => 1,
                 "id_shipper" => $id_shipper,
-                "id_shipper_contact" => $id_shipper_contact,
                 "waybill" => $waybill,
                 "content" => $content,
                 "pcs" => $pcs,
@@ -176,22 +182,23 @@ function aldem_post_new_export()
                 "id_marken_type" => $id_marken_type,
                 "instrucciones" => $instrucciones,
                 "id_caja" => $id_caja,
-                "reference" => $consigge_reference,
+                "reference" => $reference,
+                "contact" => $contacto,
+                "contact_telephone" => $contacto_telf,
                 "fecha_hora" => $fechaHora,
                 "id_usuario_created" => $user_id,
                 "created_at" => $fecha_actual,
             ];
 
-            $format = array('%d', '%d', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%d', '%s');
-
+            $format = array('%d', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%s');
             $queryExistoso = $wpdb->insert($table, $data, $format);
-            $id_marken_job = $wpdb->insert_id;
+            $id_marken_job = $wpdb->insert_id; //obtemgo el id 
             $wpdb->flush();
             // query 2
+
             $table2 = "marken_job_consignee";
             $data2 = [
                 "id_marken_job" => $id_marken_job,
-                "id_shipper" => $id_shipper,
                 "id_pais" => $id_pais,
                 "nombre" => $consigge_nombre,
                 "direccion" => $consigge_direccion,
@@ -199,7 +206,7 @@ function aldem_post_new_export()
                 "created_at" => $fecha_actual,
             ];
 
-            $format2 = array('%d', '%d', '%d', '%s', '%s', '%d',  '%d', '%s');
+            $format2 = array('%d', '%d', '%s', '%s',   '%d', '%s');
             $queryExistoso2 = $wpdb->insert($table2, $data2, $format2);
             $wpdb->flush();
 

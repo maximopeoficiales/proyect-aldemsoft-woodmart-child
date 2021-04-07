@@ -1,10 +1,18 @@
 <?php
 $shippers = (object) query_getShippers();
-$countrys = query_getCountrys();
-$markenTypes = query_getMarkenTypes();
-$markenCajas = query_getMarkenCajas();
+$countrys = (object) query_getCountrys();
+$markenTypes = (object) query_getMarkenTypes();
+$markenCajas = (object) query_getMarkenCajas();
 
+$update = $_GET["id"] != null || $_GET["id"] != "" ? true : false;
+$id_marken_job = $update ? $_GET["id"] : null;
+$markenJob = $update ? (object) query_getMarkenJobs($id_marken_job) : null;
 ?>
+
+<?php
+aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha actualizado correctamente el Job😀", "Ocurrio un error 😢 en el registro del Job")
+?>
+
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
@@ -17,7 +25,7 @@ $markenCajas = query_getMarkenCajas();
                         <div class="col-md-12">
                             <div class="form-group mb-2" style="width: 100%;">
                                 <label for="waybill">Waybill: </label>
-                                <input type="text" name="waybill" id="waybill" class="form-control" placeholder="Ingrese el Waybill" aria-describedby="waybill" required maxlength="35">
+                                <input type="text" name="waybill" id="waybill" class="form-control" placeholder="Ingrese el Waybill" aria-describedby="waybill" required maxlength="35" value="<?=$markenJob->waybill ?>">
                             </div>
                             <div class="form-group mb-2">
                                 <label for="desc_shipper">Shipper:</label>
@@ -28,17 +36,27 @@ $markenCajas = query_getMarkenCajas();
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label for="desc_contacto">Contacto:</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" required class="form-control" name="desc_contacto" id="desc_contacto" placeholder="Selecciona un Contacto" aria-label="Selecciona un Contacto" aria-describedby="Selecciona un Contacto">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalContact">Seleccionar</button>
-                                    </div>
-                                </div>
+                                <label for="contacto">Contacto: </label>
+                                <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contacto" minlength="1" maxlength="50" required>
                             </div>
 
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label for="contacto_telf">Telefono de Contacto: </label>
+                                <input type="text" name="contacto_telf" id="contacto_telf" class="form-control" placeholder="Ingrese el telefono del contacto" aria-describedby="contacto_telf" maxlength="50" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="reference">Referencia: </label>
+                        <input type="text" name="reference" id="reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="reference" minlength="1" maxlength="150" required>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12">
@@ -46,11 +64,11 @@ $markenCajas = query_getMarkenCajas();
                             <div class="pl-2">
                                 <div class="form-group mb-2">
                                     <label for="consigge_nombre">Nombre: </label>
-                                    <input type="text" name="consigge_nombre" id="consigge_nombre" class="form-control" placeholder="Ingrese el Nombre" aria-describedby="nombre" minlength="1" maxlength="150">
+                                    <input type="text" name="consigge_nombre" id="consigge_nombre" class="form-control" placeholder="Ingrese el Nombre del Consignatario" aria-describedby="nombre" minlength="1" maxlength="150">
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="consigge_direccion">Direccion: </label>
-                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion" aria-describedby="consigge_direccion" minlength="1" maxlength="150">
+                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion del Consignatario" aria-describedby="consigge_direccion" minlength="1" maxlength="150">
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="id_pais">Pais: </label>
@@ -63,10 +81,7 @@ $markenCajas = query_getMarkenCajas();
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="form-group mb-2">
-                                    <label for="consigge_reference">Referencia: </label>
-                                    <input type="text" name="consigge_reference" id="consigge_reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="consigge_reference" minlength="1" maxlength="150">
-                                </div>
+
                             </div>
                         </div>
 
@@ -144,8 +159,7 @@ $markenCajas = query_getMarkenCajas();
                     <?php aldem_set_proccess_form(); ?>
                     <?php aldem_set_input_hidden("user_id", get_current_user_id()); ?>
                     <?php aldem_set_input_hidden("id_shipper", ""); ?>
-                    <?php aldem_set_input_hidden("id_shipper_contact", ""); ?>
-                    <?php aldem_set_action_name("new-export"); ?>
+                    <?php aldem_set_action_name("new-job"); ?>
                     <button type="submit" class="btn btn-success w-100"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </form>
             </div>
@@ -196,25 +210,7 @@ $markenCajas = query_getMarkenCajas();
     </div>
 </div>
 
-<!-- modal contact -->
-<div class="modal" id="modalContact" tabindex="-1" role="dialog" aria-labelledby="modalContact" aria-hidden="true" style="margin-top: 100px;">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Elige un Contacto</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListContacts">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                contactos
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <script>
     $('#id_pais').val('604');
     $('#id_pais').select2();

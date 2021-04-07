@@ -14,6 +14,15 @@ function query_getShippers()
     return $result;
 }
 
+function query_getMarkenJobs($idMarkenJob = null)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT id AS id_marken_job,t1.* FROM marken_job as t1 WHERE id_cliente_subtipo = 1";
+    $sql .= $idMarkenJob != null ? " AND id= $idMarkenJob" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
 function query_getMarkenTypes($idMarkenType = null)
 {
     $wpdb = query_getWPDB();
