@@ -69,18 +69,18 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                             <label for="direccionShipper">Direccion:</label>
                                             <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" value="<?= $ship->direccion ?>" <?= $disabledGlobal ?> required>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="direccion2Shipper">Direccion2:</label>
                                             <input type="text" name="direccion2Shipper" id="direccion2Shipper" class="form-control" placeholder="Ingrese su direccion2" aria-describedby="helpId" value="<?= $ship->direccion2 ?>" <?= $disabledGlobal ?> required>
-                                        </div>
+                                        </div> -->
                                         <div class="row mt-2">
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="zipShipper">Zip:</label>
                                                     <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" value="<?= $ship->zip ?>" <?= $disabledGlobal ?> required>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
+                                            </div> -->
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="paisShipper" style="display: block;">Pais:</label>
                                                     <select class="form-control select-countrys-<?= $key1 + 1 ?>" name="paisShipper" id="paisShipper" style="width: 100% !important;" <?= $disabledGlobal ?>>
@@ -179,18 +179,18 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                         <label for="direccionShipper">Direccion:</label>
                                         <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" required>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="direccion2Shipper">Direccion2:</label>
                                         <input type="text" name="direccion2Shipper" id="direccion2Shipper" class="form-control" placeholder="Ingrese su direccion2" aria-describedby="helpId" required>
-                                    </div>
+                                    </div> -->
                                     <div class="row mt-2">
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="zipShipper">Zip:</label>
                                                 <input type="text" name="zipShipper" id="zipShipper" class="form-control" placeholder="Ingrese su zip" aria-describedby="helpId" required>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        </div> -->
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="paisShipper" style="display: block;">Pais:</label>
                                                 <select class="form-control new-select-countrys" name="paisShipper" id="newshipper-paisShipper" style="width: 100% !important;">

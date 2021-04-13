@@ -16,8 +16,8 @@ function aldem_post_new_shipper_data()
         $validations = [
             'nombreShipper'                  =>  'required',
             'direccionShipper'                  => 'required',
-            'direccion2Shipper'                  => 'required',
-            'zipShipper'                  => 'required',
+            // 'direccion2Shipper'                  => 'required',
+            // 'zipShipper'                  => 'required',
             'paisShipper'                  => 'required|numeric',
             'siteShipper'                  => 'required|numeric',
             'ubigeoShipper'                  => 'numeric',
@@ -29,8 +29,8 @@ function aldem_post_new_shipper_data()
             // se va crear un shipper
             $nombreShipper = sanitize_text_field($_POST['nombreShipper']);
             $direccionShipper = sanitize_text_field($_POST['direccionShipper']);
-            $direccion2Shipper = sanitize_text_field($_POST['direccion2Shipper']);
-            $zipShipper = intval(sanitize_text_field($_POST['zipShipper']));
+            // $direccion2Shipper = sanitize_text_field($_POST['direccion2Shipper']);
+            // $zipShipper = intval(sanitize_text_field($_POST['zipShipper']));
             $paisShipper = intval(sanitize_text_field($_POST['paisShipper']));
             $siteShipper = intval(sanitize_text_field($_POST['siteShipper']));
             $ubigeoShipper = intval(sanitize_text_field($_POST['ubigeoShipper']));
@@ -39,14 +39,21 @@ function aldem_post_new_shipper_data()
             $table = "{$prefix}marken_shipper";
             $data = [
                 'descripcion' => $nombreShipper, 'direccion' => $direccionShipper,
-                'direccion2' => $direccion2Shipper, 'zip' => $zipShipper,
+                // 'direccion2' => $direccion2Shipper,
+                //  'zip' => $zipShipper,
                 'id_country' => $paisShipper, 'id_ubigeo' => $ubigeoShipper,
-                'id_marken_site' => $siteShipper, 'id_usuario_created' => $id_user,
+                'id_marken_site' => $siteShipper,
+                'id_usuario_created' => $id_user,
+                'id_tipo' => 1,
                 'created_at' => $fecha_actual
             ];
 
             if ($action_name === "new-shipper") {
-                $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%s');
+                $format = array(
+                    '%s', '%s',
+                    // '%s', '%s',
+                    '%d', '%d', '%d', '%d', '%d', '%s'
+                );
                 if ($wpdb->insert($table, $data, $format)) {
                     wp_redirect(home_url("/marken_shipper/") . "?msg=" . 1);
                 } else {
@@ -57,7 +64,11 @@ function aldem_post_new_shipper_data()
                 unset($data["created_at"]);
                 $data["updated_at"] = $fecha_actual;
                 // formatos de los valores 
-                $format = array('%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s');
+                $format = array(
+                    '%s', '%s'
+                    // ,'%s', '%s'
+                    , '%d', '%d', '%d', '%d', '%d', '%s'
+                );
                 if ($wpdb->update($table, $data, [
                     "id" => $idShipper
                 ], $format)) {
@@ -134,15 +145,15 @@ function aldem_post_new_export()
             'consigge_nombre'                  => 'max:150',
             'consigge_direccion'                  => 'max:150',
             'id_pais'                  => 'numeric',
-            'contacto'                  => 'required|max:50',
-            'contacto_telf'                  => 'required|max:50',
+            'contacto'                  => 'max:50',
+            'contacto_telf'                  => 'max:50',
             'reference'                  => 'required|max:150',
-            'content'                  => 'required|max:250',
+            // 'content'                  => 'required|max:250',
             'pcs'                  => 'required|numeric',
-            'range'                  => 'required|max:25',
+            // 'range'                  => 'required|max:25',
             'id_marken_type'                  => 'required|numeric',
             'id_caja'                  => 'required|numeric',
-            'instrucciones'                  => 'required|max:250',
+            'instrucciones'                  => 'max:250',
             'fecha'                  => 'required|max:10|date:Y-m-d',
             'hora'                  => 'required|max:5',
             'user_id'                  => 'required|numeric',
@@ -164,9 +175,9 @@ function aldem_post_new_export()
             $contacto_telf = sanitize_text_field($_POST['contacto_telf']);
             $reference = sanitize_text_field($_POST['reference']);
 
-            $content = sanitize_text_field($_POST['content']);
+            // $content = sanitize_text_field($_POST['content']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
-            $range = sanitize_text_field($_POST['range']);
+            // $range = sanitize_text_field($_POST['range']);
             $id_marken_type = intval(sanitize_text_field($_POST['id_marken_type']));
             $id_caja = intval(sanitize_text_field($_POST['id_caja']));
             $instrucciones = sanitize_text_field($_POST['instrucciones']);
@@ -186,9 +197,9 @@ function aldem_post_new_export()
                 "id_cliente_subtipo" => 1,
                 "id_shipper" => $id_shipper,
                 "waybill" => $waybill,
-                "content" => $content,
+                // "content" => $content,
                 "pcs" => $pcs,
-                "range" => $range,
+                // "range" => $range,
                 "id_marken_type" => $id_marken_type,
                 "instrucciones" => $instrucciones,
                 "id_caja" => $id_caja,
@@ -200,7 +211,13 @@ function aldem_post_new_export()
                 "created_at" => $fecha_actual,
             ];
             if ($action_name == "new-job") {
-                $format = array('%d', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%s');
+                $format = array(
+                    '%d', '%d', '%s'
+                    // , '%s'
+                    , '%d',
+                    //  '%s',
+                    '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%s'
+                );
                 $queryExistoso = $wpdb->insert($table, $data, $format);
                 $id_marken_job = $wpdb->insert_id; //obtemgo el id 
                 $wpdb->flush();

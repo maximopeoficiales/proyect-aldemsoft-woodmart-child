@@ -50,20 +50,20 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label for="contacto">Contacto: </label>
+                                <label for="contacto">Contact: </label>
                                 <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contacto" minlength="1" maxlength="50" required value="<?= $markenJob->contact ?>">
                             </div>
 
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label for="contacto_telf">Telefono de Contacto: </label>
+                                <label for="contacto_telf">Contact Telephone: </label>
                                 <input type="text" name="contacto_telf" id="contacto_telf" class="form-control" placeholder="Ingrese el telefono del contacto" aria-describedby="contacto_telf" maxlength="50" required value="<?= $markenJob->contact_telephone ?>">
                             </div>
                         </div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="reference">Referencia: </label>
+                        <label for="reference">Reference: </label>
                         <input type="text" name="reference" id="reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="reference" minlength="1" maxlength="150" required value="<?= $markenJob->reference ?>">
                     </div>
                     <div class="row mt-2">
@@ -94,29 +94,30 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         </div>
 
                     </div>
-                    <div class="form-group mt-2">
+                    <!-- <div class="form-group mt-2">
                         <label for="content">Descripcion del Contenido: </label>
                         <textarea name="content" id="content" class="form-control" placeholder="Ingrese la Descripcion del Contenido" aria-describedby="content" required minlength="1" maxlength="250" style="min-height: 140px;" value=""><?= $markenJob->content ?></textarea>
-                    </div>
+                    </div> -->
+
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group mb-2">
                                 <label for="pcs">PCs: </label>
                                 <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese el numero de Pcs" required aria-describedby="pcs" min="1" value="<?= $markenJob->pcs ?>">
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group mb-2">
                                 <label for="range">Rango: </label>
                                 <input type="text" name="range" id="range" class="form-control" placeholder="Ingrese el Rango" aria-describedby="range" minlength="1" maxlength="25" value="<?= $markenJob->range ?>">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label for="id_marken_type">Tipo: </label>
+                                <label for="id_marken_type">Type: </label>
                                 <select name="id_marken_type" id="id_marken_type" required style="width: 100%;">
                                     <?php foreach ($markenTypes as $key => $markenType) {
                                     ?>

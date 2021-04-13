@@ -16,7 +16,8 @@ function query_getShippers($id_shipper = null)
     $prefix = query_getAldemPrefix();
     $sql = "SELECT t1.id as id_shipper,t1.descripcion as nombre,t1.*,t2.descripcion as site FROM {$prefix}marken_shipper t1
     INNER JOIN {$prefix}marken_site t2 on t2.id = t1.id_marken_site
-    WHERE t2.id_cliente_subtipo = 1";
+    WHERE t2.id_cliente_subtipo = 1
+    AND t1.id_tipo=1";
     $sql .= $id_shipper != null ? " AND t1.id= $id_shipper" : "";
     $result = $wpdb->get_results($sql);
 
