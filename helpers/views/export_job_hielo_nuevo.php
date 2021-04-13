@@ -8,21 +8,21 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
             <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
                 <div class="card-body">
                     <div class="row mt-2">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="kilos">Kilos: </label>
-                                <input type="number" name="kilos" id="kilos" class="form-control" placeholder="Ingrese los kilos" aria-describedby="kilos" required min="0" step="0.01">
+                                <input type="number" name="kilos" id="kilos" class="form-control" placeholder="Ingrese los kilos" aria-describedby="kilos" required step="0.01">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label for="serie">Serie: </label>
                                 <input type="text" name="serie" id="serie" class="form-control" placeholder="Ingrese la serie" aria-describedby="serie" required minlength="1" maxlength="6">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
-                    <div class="row mt-2">
+                    <!-- <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="numero">Numero: </label>
@@ -36,7 +36,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
                                 <input type="number" name="precio" id="precio" class="form-control" placeholder="Ingrese el precio" aria-describedby="precio" required min="0" step="0.01">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group mt-2">
                         <label for="comentario">Comentario: </label>
                         <textarea name="comentario" id="comentario" class="form-control" placeholder="Ingrese su comentario" aria-describedby="comentario" required minlength="1" maxlength="250" style="min-height: 140px;"></textarea>

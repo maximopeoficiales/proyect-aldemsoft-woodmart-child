@@ -94,9 +94,9 @@ function aldem_post_new_export_job_hielo()
         $waybill = sanitize_text_field($_POST['waybill']);
         $validations = [
             'kilos'                  =>  'required|numeric',
-            'serie'                  => 'required|max:6',
-            'numero'                  => 'required|max:15',
-            'precio'                  => 'required|numeric',
+            // 'serie'                  => 'required|max:6',
+            // 'numero'                  => 'required|max:15',
+            // 'precio'                  => 'required|numeric',
             'comentario'                  => 'required|max:250',
             'job'                  => 'required|numeric',
             'user_id'                  => 'required|numeric',
@@ -105,9 +105,9 @@ function aldem_post_new_export_job_hielo()
         if ($responseValidator["validate"]) {
             // se va crear un shipper
             $kilos = doubleval(sanitize_text_field($_POST['kilos']));
-            $serie = sanitize_text_field($_POST['serie']);
-            $numero = sanitize_text_field($_POST['numero']);
-            $precio = doubleval(sanitize_text_field($_POST['precio']));
+            // $serie = sanitize_text_field($_POST['serie']);
+            // $numero = sanitize_text_field($_POST['numero']);
+            // $precio = doubleval(sanitize_text_field($_POST['precio']));
             $comentario = sanitize_text_field($_POST['comentario']);
             $user_id = intval(sanitize_text_field($_POST['user_id']));
             $fecha_actual = date("Y-m-d H:i:s");
@@ -117,12 +117,16 @@ function aldem_post_new_export_job_hielo()
                 "kilos" => $kilos,
                 "id_usuario_created" => $user_id,
                 "comentarios" => $comentario,
-                "serie" => $serie,
-                "numero" => $numero,
-                "precio" => $precio,
+                // "serie" => $serie,
+                // "numero" => $numero,
+                // "precio" => $precio,
                 "created_at" => $fecha_actual,
             ];
-            $format = array('%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s');
+            $format = array(
+                '%d', '%s', '%d', '%s'
+                // , '%s', '%s', '%s'
+                , '%s'
+            );
             if ($wpdb->insert($table, $data, $format)) {
                 wp_redirect(home_url("/marken_export_hielo_nuevo/?job=$job&waybill=$waybill") . "&msg=" . 1);
             } else {
