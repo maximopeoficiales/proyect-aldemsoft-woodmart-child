@@ -6,10 +6,10 @@ date_default_timezone_set('America/Lima');
 add_action('admin_post_process_form', 'aldem_post_new_shipper_data');
 add_action('admin_post_process_form', 'aldem_post_new_export_job_hielo');
 add_action('admin_post_process_form', 'aldem_post_new_export');
-
 // Funcion callback
 function aldem_post_new_shipper_data()
 {
+    $prefix = query_getAldemPrefix();
     $action_name = $_POST["action_name"];
     if ($action_name === "new-shipper" || $action_name === "edit-shipper") {
         $wpdb = query_getWPDB();
@@ -36,7 +36,7 @@ function aldem_post_new_shipper_data()
             $ubigeoShipper = intval(sanitize_text_field($_POST['ubigeoShipper']));
             $id_user = intval(sanitize_text_field($_POST['id_user']));
             $fecha_actual = date("Y-m-d H:i:s");
-            $table = "marken_shipper";
+            $table = "{$prefix}marken_shipper";
             $data = [
                 'descripcion' => $nombreShipper, 'direccion' => $direccionShipper,
                 'direccion2' => $direccion2Shipper, 'zip' => $zipShipper,
@@ -75,6 +75,7 @@ function aldem_post_new_shipper_data()
 }
 function aldem_post_new_export_job_hielo()
 {
+    $prefix = query_getAldemPrefix();
     $wpdb = query_getWPDB();
     $action_name = $_POST["action_name"];
     if ($action_name === "new-export-hielo") {
@@ -99,7 +100,7 @@ function aldem_post_new_export_job_hielo()
             $comentario = sanitize_text_field($_POST['comentario']);
             $user_id = intval(sanitize_text_field($_POST['user_id']));
             $fecha_actual = date("Y-m-d H:i:s");
-            $table = "marken_job_hielo";
+            $table = "{$prefix}marken_job_hielo";
             $data = [
                 "id_marken_job" => $job,
                 "kilos" => $kilos,
@@ -123,6 +124,7 @@ function aldem_post_new_export_job_hielo()
 }
 function aldem_post_new_export()
 {
+    $prefix = query_getAldemPrefix();
     $wpdb = query_getWPDB();
     $action_name = $_POST["action_name"];
     if ($action_name === "new-job" || $action_name === "update-job") {
@@ -178,8 +180,8 @@ function aldem_post_new_export()
 
 
             // query 1
-            $table = "marken_job";
-            $table2 = "marken_job_consignee";
+            $table = "{$prefix}marken_job";
+            $table2 = "{$prefix}marken_job_consignee";
             $data = [
                 "id_cliente_subtipo" => 1,
                 "id_shipper" => $id_shipper,
