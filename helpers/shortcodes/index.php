@@ -24,6 +24,7 @@ function aldem_getShorcodesViewList(): array
         ["name" => "marken_export_nuevo", "view" => "export_nuevo"],
         ["name" => "marken_export_job_hielo_nuevo", "view" => "export_job_hielo_nuevo"],
         ["name" => "marken_export_reporte", "view" => "export_reporte"],
+        ["name" => "marken_courier_nuevo", "view" => "courier_nuevo"],
     ];
 }
 
