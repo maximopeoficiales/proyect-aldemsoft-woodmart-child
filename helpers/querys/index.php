@@ -146,3 +146,14 @@ function shipper_isUserCreator($id_user_created): bool
 {
     return get_current_user_id() === intval($id_user_created) ? true : false;
 }
+function query_getIncoterms($incoterm = null)
+{
+
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id AS id_incoterm, descripcion FROM ${prefix}incoterms";
+    $sql .= $incoterm != null ? " WHERE id= $incoterm" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}

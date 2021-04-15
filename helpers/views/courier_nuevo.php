@@ -1,5 +1,5 @@
 <?php
-
+$incoTerms = query_getIncoterms();
 
 ?>
 <?php
@@ -47,7 +47,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="">Pcs</label>
-                                <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese la guia" aria-describedby="pcs" min="1">
+                                <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese las pcs" aria-describedby="pcs" min="1">
                             </div>
                         </div>
                         <div class="col-md-6 ">
@@ -82,10 +82,10 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <label for="incoterm">IncoTerm:</label>
                         <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
 
-                            <?php foreach (aldem_getMonths() as $key => $month) {
+                            <?php foreach ($incoTerms as $key => $incoTerm) {
                             ?>
 
-                                <option value="<?= sprintf("%02d", $key + 1) ?>"><?= $month ?></option>
+                                <option value="<?= $incoTerm->id_incoterm ?>"><?= $incoTerm->descripcion ?></option>
                             <?php }  ?>
                         </select>
                     </div>
@@ -104,19 +104,50 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         </div>
                     </div>
 
+
+                    <div class="form-group my-2">
+                        <label for="protocolo">Protocolo: </label>
+                        <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" aria-describedby="protocolo" maxlength="50">
+                        <!-- <textarea name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el protocolo" aria-describedby="protocolo" maxlength="50" style="min-height: 140px;"></textarea> -->
+                    </div>
                     <div class="form-group my-2">
                         <label for="instructions">Instructions: </label>
                         <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"></textarea>
                     </div>
-                    <div class="form-group my-2">
-                        <label for="protocolo">Protocolo: </label>
-                        <textarea name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el protocolo" aria-describedby="protocolo" maxlength="50" style="min-height: 140px;"></textarea>
-                    </div>
 
                     <?php aldem_set_input_hidden("master", ""); ?>
-                    <button type="submit" class="btn btn-success w-100"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                    <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $('#incoterm').select2();
+
+    (() => {
+        document.querySelector("#master-text").addEventListener("keyup", (e) => {
+            function formatearTargetaBanco(string) {
+                var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
+                if (cleaned != "") {
+                    if (cleaned.length > 10) {
+                        cleaned = cleaned.substring(0, 10);
+                        console.log(cleaned.length);
+                    } else if (cleaned.length < 10) {
+                        cleaned = cleaned.padEnd(10);
+                        // console.log("mi tamaño es", cleaned.length);
+                    }
+                    return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
+                } else {
+                    return "";
+                }
+            }
+            setTimeout(() => {
+                e.target.value = formatearTargetaBanco(e.target.value);
+                document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
+            }, 500);
+        })
+       
+    })()
+</script>
