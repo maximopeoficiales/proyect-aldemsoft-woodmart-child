@@ -4,7 +4,7 @@ $shippers = (object) query_getShippers();
 $countrys = (object) query_getCountrys();
 $markenSites = (object) query_getMarkenSite();
 $ubigeosPeru = (object) query_getUbigeo(604);
-$urlUbigeos = get_site_url() . "/wp-json/aldem/v1/ubigeos";
+$urlUbigeos = get_site_url() . "/wp-json/aldem/v1/ubigeos/" . aldem_getUserNameCurrent();
 ?>
 <?php
 aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se ha actualizado correctamente el shipper 😀", "Ocurrio un error 😢 en el registro del shipper")
@@ -17,7 +17,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
         <div class="card">
             <h5 class="card-header">Shippers</h5>
             <div class="card-body">
-                
+
                 <table class="table table-striped table-bordered dt-responsive nowrap" id="table-shippers" style="width: 100%;">
                     <thead class="thead-dark">
                         <tr>
@@ -258,6 +258,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
             try {
                 let myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
                 let raw = JSON.stringify({
                     "id_country": id_country,
                 });
@@ -268,7 +269,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                     body: raw,
                     redirect: 'follow'
                 };
-                return await (await (fetch('<?= $urlUbigeos ?>', requestOptions))).json();
+                return await (await (fetch('<?= $urlUbigeos  ?>', requestOptions))).json();
             } catch (error) {
                 return null;
             }
