@@ -1,8 +1,11 @@
 <?php
+
 // En este archivo se registran todos los endpoints personalizados
+/* Recuarda siempre agregar el permission_callback aldem_verify_token*/
 add_action('rest_api_init', function () {
-    register_rest_route('aldem/v1', '/ubigeos/', array(
+    register_rest_route('aldem/v1', '/ubigeos/(?P<username>\w+)/', array(
         'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
         'callback' => 'get_aldem_ubigeos',
         'args' => array(),
     ));

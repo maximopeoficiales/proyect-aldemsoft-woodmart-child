@@ -5,7 +5,6 @@ $incoTerms = query_getIncoterms();
 <?php
 aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se ha actualizado correctamente el Courier😀", "Ocurrio un error 😢 en el registro del Courier");
 ?>
-
 <div class="row justify-content-center">
     <div pcs="col-md-8">
         <div class="card">
@@ -148,6 +147,6 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                 document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
             }, 500);
         })
-       
+
     })()
 </script>
