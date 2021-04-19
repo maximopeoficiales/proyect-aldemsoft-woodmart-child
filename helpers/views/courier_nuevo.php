@@ -1,10 +1,20 @@
 <?php
+$update = $_GET["id"] != null || $_GET["id"] != "" ? true : false;
+$id_courier_job = $update ? $_GET["id"] : null;
 $countrys = (object) query_getCountrys();
 $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
 $importadores = query_getImportadores();
+$courierCurrent = $update ? query_getCourierJobs($id_courier_job)[0] : null;
+// update
+$exportadorCurrent = $update ?  query_getExportadores($courierCurrent->id_exportador)[0] : null;
+$importadorCurrent = $update ?  query_getImportadores($importadorCurrent->id_importador)[0] : null;
+
+
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
 $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
+
+
 ?>
 
 <?php
@@ -15,22 +25,22 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
     <div pcs="col-md-8">
         <div class="card">
             <div class="card-body">
-                <form action="" method="post">
+                <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
                     <div class="form-group">
                         <label for="job">Job</label>
-                        <input type="text" name="job" id="job" class="form-control" placeholder="Ingrese el Job" aria-describedby="job" maxlength="25">
+                        <input type="text" name="job" id="job" class="form-control" placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>">
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
-                                <label for="manifesto">Manifesto</label>
-                                <input type="number" name="manifesto" id="manifesto" class="form-control" placeholder="Ingrese el Manifesto" aria-describedby="manifesto" min="1">
+                                <label for="manifiesto">Manifiesto</label>
+                                <input type="number" name="manifiesto" id="manifiesto" class="form-control" placeholder="Ingrese el Manifiesto" aria-describedby="manifiesto" value="<?= $courierCurrent->manifiesto ?>">
                             </div>
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="dua">DUA</label>
-                                <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" aria-describedby="DUA" min="1">
+                                <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" aria-describedby="DUA" value="<?= $courierCurrent->dua ?>">
                             </div>
                         </div>
                     </div>
@@ -38,13 +48,13 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="guia">Guia</label>
-                                <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" min="1">
+                                <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" value="<?= $courierCurrent->guia ?>">
                             </div>
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="master-text">Master</label>
-                                <input type="text" name="master-text" id="master-text" class="form-control" placeholder="Ingrese el Master" aria-describedby="master-text" min="1">
+                                <input type="text" name="master-text" id="master-text" class="form-control" placeholder="Ingrese el Master" aria-describedby="master-text" value=" <?= $courierCurrent->guia_master ?>">
                             </div>
                         </div>
                     </div>
@@ -52,20 +62,20 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="">Pcs</label>
-                                <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese las pcs" aria-describedby="pcs" min="1">
+                                <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese las pcs" aria-describedby="pcs" value="<?= $courierCurrent->pcs ?>">
                             </div>
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="kilos">Kilos: </label>
-                                <input type="number" name="kilos" id="kilos" class="form-control" placeholder="Ingrese los kilos" aria-describedby="kilos" step="0.01">
+                                <input type="number" name="kilos" id="kilos" class="form-control" placeholder="Ingrese los kilos" aria-describedby="kilos" step="0.01" value="<?= $courierCurrent->peso ?>">
                             </div>
                         </div>
                     </div>
 
 
                     <div class="input-group my-2">
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador">
+                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador" value="<?= $importadorCurrent->nombre ?>">
                         <div class="input-group-append">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white;">Elije una opcion</button>
                             <div class="dropdown-menu">
@@ -75,7 +85,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         </div>
                     </div>
                     <div class="input-group my-2">
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador">
+                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador" value="<?= $exportadorCurrent->nombre ?>">
                         <div class="input-group-append">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white;">Elije una opcion</button>
                             <div class="dropdown-menu">
@@ -98,14 +108,14 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                     <div class="row mt-2">
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
-                                <label for="pcs">Schd Collection</label>
-                                <input type="text" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" min="1">
+                                <label for="collection">Schd Collection</label>
+                                <input type="text" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-2">
                                 <label for="delivery">Delivery: </label>
-                                <input type="time" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery">
+                                <input type="time" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
                             </div>
                         </div>
                     </div>
@@ -113,17 +123,25 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
 
                     <div class="form-group my-2">
                         <label for="protocolo">Protocolo: </label>
-                        <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" aria-describedby="protocolo" maxlength="50">
+                        <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" aria-describedby="protocolo" maxlength="50" value="<?= $courierCurrent->protocolo ?>">
                         <!-- <textarea name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el protocolo" aria-describedby="protocolo" maxlength="50" style="min-height: 140px;"></textarea> -->
                     </div>
                     <div class="form-group my-2">
                         <label for="instructions">Instructions: </label>
-                        <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"></textarea>
+                        <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
                     </div>
 
                     <?php aldem_set_input_hidden("master", ""); ?>
                     <?php aldem_set_input_hidden("id_exportador", ""); ?>
                     <?php aldem_set_input_hidden("id_importador", ""); ?>
+                    <?php aldem_set_input_hidden("id_user", get_current_user_id()); ?>
+                    <?php if ($update) {
+                        aldem_set_input_hidden("new_courier", get_current_user_id());
+                    } else {
+                        aldem_set_input_hidden("edit_courier", get_current_user_id());
+                        aldem_set_input_hidden("id_courier_job", $id_courier_job);
+                    } ?>
+                    <?php aldem_set_proccess_form(); ?>
                     <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </form>
             </div>
@@ -306,6 +324,14 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
 
     });
     $('#incoterm').select2();
+    <?php
+
+    if ($update) {
+    ?>
+        $('#incoterm').select2('<?= $courierCurrent->id_incoterm ?>');
+    <?php        }
+    ?>
+
     $('#paisNewImportador').val('604');
     $('#paisNewExportador').val('604');
     $('#paisNewImportador').select2();

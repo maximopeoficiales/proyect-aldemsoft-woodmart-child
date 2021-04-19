@@ -10,6 +10,7 @@ function query_getWPDB(): wpdb
     global $wpdb;
     return $wpdb;
 }
+
 function query_getShippers($id_shipper = null)
 {
     $wpdb = query_getWPDB();
@@ -21,6 +22,18 @@ function query_getShippers($id_shipper = null)
     $sql .= $id_shipper != null ? " AND t1.id= $id_shipper" : "";
     $result = $wpdb->get_results($sql);
 
+    $wpdb->flush();
+    return $result;
+}
+
+function query_getCourierJobs($idMarkenJob = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+
+    $sql = "SELECT id AS id_marken_job,t1.* FROM {$prefix}marken_job as t1 WHERE id_cliente_subtipo = 3";
+    $sql .= $idMarkenJob != null ? " AND id= $idMarkenJob" : "";
+    $result = $wpdb->get_results($sql);
     $wpdb->flush();
     return $result;
 }
