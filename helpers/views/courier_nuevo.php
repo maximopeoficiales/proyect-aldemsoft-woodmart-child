@@ -135,14 +135,17 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
                     </div>
 
-                    <?php aldem_set_input_hidden("master", ""); ?>
-                    <?php aldem_set_input_hidden("id_exportador", ""); ?>
-                    <?php aldem_set_input_hidden("id_importador", ""); ?>
                     <?php aldem_set_input_hidden("id_user", get_current_user_id()); ?>
                     <?php if ($update) {
+                        aldem_set_input_hidden("master", $courierCurrent->guia_master);
+                        aldem_set_input_hidden("id_exportador", $courierCurrent->id_exportador);
+                        aldem_set_input_hidden("id_importador", $courierCurrent->id_importador);
                         aldem_set_input_hidden("id_courier_job", $id_courier_job);
                         aldem_set_action_name("update-courier", "");
                     } else {
+                        aldem_set_input_hidden("master", "");
+                        aldem_set_input_hidden("id_exportador", "");
+                        aldem_set_input_hidden("id_importador", "");
                         aldem_set_action_name("new-courier", "");
                     } ?>
                     <?php aldem_set_proccess_form(); ?>
