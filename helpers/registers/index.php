@@ -36,7 +36,7 @@ function aldem_head_js()
         wp_enqueue_script("aldemSelect2JS", "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js", '', '1.0.0');
         // 
         // registro css global para todo el tema
-        wp_enqueue_style("customAldem", aldem_get_css_url_helper("styles.css"),  array('woodmart-style'), '1.0.0');
+        // wp_enqueue_style("customAldem", aldem_get_css_url_helper("styles.css"),  array('woodmart-style'), '1.0.0');
     }
 }
 // se le agrega al wordpress

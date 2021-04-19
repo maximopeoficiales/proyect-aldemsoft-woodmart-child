@@ -1,4 +1,5 @@
 <?php
+aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 😀", "Se ha actualizado correctamente el Export Hielo Nuevo😀", "Ocurrio un error 😢 en el registro del Export Hielo")
 ?>
 

@@ -1,8 +1,12 @@
 <?php
+$countrys = (object) query_getCountrys();
 $incoTerms = query_getIncoterms();
-
+$exportadores = query_getExportadores();
+$importadores = query_getImportadores();
 ?>
+
 <?php
+aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se ha actualizado correctamente el Courier😀", "Ocurrio un error 😢 en el registro del Courier");
 ?>
 <div class="row justify-content-center">
@@ -56,28 +60,29 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                             </div>
                         </div>
                     </div>
-                    <div class="input-group my-2">
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white;">Elije una opcion</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Seleccionar Exportador</a>
-                                <a class="dropdown-item" href="#">Nuevo Exportador</a>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="input-group my-2">
                         <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador">
                         <div class="input-group-append">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white;">Elije una opcion</button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Seleccionar Importador</a>
-                                <a class="dropdown-item" href="#">Nuevo Importador</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalImportador">Seleccionar Importador</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewImportador">Nuevo Importador</a>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group my-2">
+                    <div class="input-group my-2">
+                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white;">Elije una opcion</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExportador">Seleccionar Exportador</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewExportador">Nuevo Exportador</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" form-group my-2">
                         <label for="incoterm">IncoTerm:</label>
                         <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
 
@@ -122,8 +127,173 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
     </div>
 </div>
 
+<!-- modal de Exportador -->
+<div class="modal" id="modalExportador" tabindex="-1" role="dialog" aria-labelledby="modalExportador" aria-hidden="true" style="margin-top: 100px; ">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">Elige un Exportador</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListExportador">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered dt-responsive nowrap" id="table-exportadors-select" style="width: 100%;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Direccion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($exportadores as $key => $exportador) {
+                        ?>
+                            <tr>
+                                <td class="d-flex justify-content-between" style="align-items: center !important;">
+                                    <span><?= $exportador->nombre ?></span>
+                                    <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
+                                </td>
+                                <td><?= $exportador->direccion ?></td>
+                            </tr>
+                        <?php }  ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal de Exportador -->
+<div class="modal" id="modalImportador" tabindex="-1" role="dialog" aria-labelledby="modalImportador" aria-hidden="true" style="margin-top: 100px; ">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">Elige un Importador</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListImportador">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered dt-responsive nowrap" id="table-importadores-select" style="width: 100%;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Direccion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($importadores as $key => $importador) {
+                        ?>
+                            <tr>
+                                <td class="d-flex justify-content-between" style="align-items: center !important;">
+                                    <span><?= $importador->nombre ?></span>
+                                    <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
+                                </td>
+                                <td><?= $importador->direccion ?></td>
+                            </tr>
+                        <?php }  ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalNewExportador" tabindex="-1" role="dialog" aria-labelledby="modalNewExportador" aria-hidden="true" style="margin-top: 100px; ">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title aldem-text-white">Crear un Exportador</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListExportador">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" method="post" id="formNewExportador">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombreNewExportador">Nombre</label>
+                        <input type="text" name="nombreNewExportador" id="nombreNewExportador" class="form-control" placeholder="Ingrese nombre" aria-describedby="nombreNewExportador" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="direcccionNewExportador">Direccion</label>
+                        <input type="text" name="direcccionNewExportador" id="direcccionNewExportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direcccionNewExportador" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="paisShipper" style="display: block;">Pais:</label>
+                        <select class="form-control select-countrys" name="paisNewExportador" id="paisNewExportador" style="width: 100% !important;">
+                            <?php
+                            foreach ($countrys as $country) {
+                            ?>
+                                <option value="<?= $country->id_pais ?>">
+                                    <?= $country->desc_pais ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+
+                    </div>
+                    <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalNewImportador" tabindex="-1" role="dialog" aria-labelledby="modalNewImportador" aria-hidden="true" style="margin-top: 100px; ">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title aldem-text-white">Crear un Importador</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListExportador">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" method="post" id="formNewImportador">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombreNewImportador">Nombre</label>
+                        <input type="text" name="nombreNewImportador" id="nombreNewImportador" class="form-control" placeholder="Ingrese nombre" aria-describedby="nombreNewImportador" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="direcccionNewImportador">Direccion</label>
+                        <input type="text" name="direcccionNewImportador" id="direcccionNewImportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direcccionNewImportador" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="paisShipper" style="display: block;">Pais:</label>
+                        <select class="form-control select-countrys" name="paisNewImportador" id="paisNewImportador" style="width: 100% !important;">
+                            <?php
+                            foreach ($countrys as $country) {
+                            ?>
+                                <option value="<?= $country->id_pais ?>">
+                                    <?= $country->desc_pais ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script>
     $('#incoterm').select2();
+    $('#paisNewImportador').select2();
+    $('#paisNewExportador').select2();
 
     (() => {
         document.querySelector("#master-text").addEventListener("keyup", (e) => {

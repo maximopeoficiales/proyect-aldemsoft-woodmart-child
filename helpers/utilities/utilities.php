@@ -22,3 +22,10 @@ function adldem_UtilityValidator($data, $validations)
         return ["validate" => true];
     }
 }
+
+function aldem_cargarStyles(): void
+{
+    require aldem_get_directory_helper() . "public/styles.php";
+}
+
+

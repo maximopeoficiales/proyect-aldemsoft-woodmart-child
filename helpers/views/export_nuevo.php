@@ -18,6 +18,7 @@ $horaJob = $update ? substr(explode(" ", $markenJob->fecha_hora)[1], 0, -3) : nu
 
 
 <?php
+aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha actualizado correctamente el Job😀", "Ocurrio un error 😢 en el registro del Job");
 ?>
 

@@ -6,7 +6,9 @@ $markenSites = (object) query_getMarkenSite();
 $ubigeosPeru = (object) query_getUbigeo(604);
 $urlUbigeos = get_site_url() . "/wp-json/aldem/v1/ubigeos/" . aldem_getUserNameCurrent();
 ?>
+
 <?php
+aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se ha actualizado correctamente el shipper 😀", "Ocurrio un error 😢 en el registro del shipper")
 ?>
 

@@ -51,3 +51,9 @@ function aldem_verify_token(WP_REST_Request $request): bool
     $token = str_replace("Bearer ", "", $request->get_header("Authorization"));
     return $token === aldem_getBearerTokenUserId($user_id) ? true : false;
 }
+function aldem_rest_response($data, $msg = "Solicitud Exitosa", $status = 200): array
+{
+    return [
+        "status" => $status, "message" => $msg, "data" => $data
+    ];
+}

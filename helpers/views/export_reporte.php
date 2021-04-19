@@ -2,6 +2,7 @@
 
 
 $urlExportGeneral = get_site_url(null, "marken_export_reporte_general/?fechareporte=");
+aldem_cargarStyles();
 ?>
 <div class="row justify-content-center">
     <div class="col-md-8">

@@ -157,3 +157,26 @@ function query_getIncoterms($incoterm = null)
     $wpdb->flush();
     return $result;
 }
+
+
+function query_getImportadores($idImportador = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t1.id AS id_importador,t1.descripcion as nombre,t1.direccion FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 3";
+    $sql .= $idImportador != null ? " AND t1.id= $idImportador" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
+function query_getExportadores($idExportador = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t1.id AS id_exportador,t1.descripcion as nombre,t1.direccion FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 2";
+    $sql .= $idExportador != null ? " AND t1.id= $idExportador" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
