@@ -3,6 +3,7 @@ $countrys = (object) query_getCountrys();
 $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
 $importadores = query_getImportadores();
+$uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
 ?>
 
 <?php
@@ -120,6 +121,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                     </div>
 
                     <?php aldem_set_input_hidden("master", ""); ?>
+                    <?php aldem_set_input_hidden("id_exportador", ""); ?>
+                    <?php aldem_set_input_hidden("id_importador", ""); ?>
                     <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </form>
             </div>
@@ -210,19 +213,21 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title aldem-text-white">Crear un Exportador</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListExportador">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseModalExportador">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="#" method="post" id="formNewExportador">
                 <div class="modal-body">
+                    <div class="" id="validacionesExportador">
+                    </div>
                     <div class="form-group">
                         <label for="nombreNewExportador">Nombre</label>
                         <input type="text" name="nombreNewExportador" id="nombreNewExportador" class="form-control" placeholder="Ingrese nombre" aria-describedby="nombreNewExportador" required maxlength="50">
                     </div>
                     <div class="form-group">
-                        <label for="direcccionNewExportador">Direccion</label>
-                        <input type="text" name="direcccionNewExportador" id="direcccionNewExportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direcccionNewExportador" required maxlength="50">
+                        <label for="direccionNewExportador">Direccion</label>
+                        <input type="text" name="direccionNewExportador" id="direccionNewExportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewExportador" required maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="paisShipper" style="display: block;">Pais:</label>
@@ -252,19 +257,21 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title aldem-text-white">Crear un Importador</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListExportador">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseModalImportador">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="#" method="post" id="formNewImportador">
                 <div class="modal-body">
+                    <div class="" id="validacionesImportador">
+                    </div>
                     <div class="form-group">
                         <label for="nombreNewImportador">Nombre</label>
                         <input type="text" name="nombreNewImportador" id="nombreNewImportador" class="form-control" placeholder="Ingrese nombre" aria-describedby="nombreNewImportador" required maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="direcccionNewImportador">Direccion</label>
-                        <input type="text" name="direcccionNewImportador" id="direcccionNewImportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direcccionNewImportador" required maxlength="50">
+                        <input type="text" name="direccionNewImportador" id="direccionNewImportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewImportador" required maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="paisShipper" style="display: block;">Pais:</label>
@@ -292,10 +299,75 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
 
 <script>
     $('#incoterm').select2();
+    $('#paisNewImportador').val('604');
+    $('#paisNewExportador').val('604');
     $('#paisNewImportador').select2();
     $('#paisNewExportador').select2();
-
     (() => {
+        const showSpinnerCargando = () => {
+            Swal.fire({
+                title: '<strong>Cargando...</strong>',
+                html: `<div class='text-center'><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>`,
+                showConfirmButton: false
+            })
+        };
+        const closeSpinnerCargando = () => {
+            Swal.closeModal();
+        }
+        const saveMarkenShipperAsync = async (exportador = false) => {
+            showSpinnerCargando();
+            let tipo = exportador ? "Exportador" : "Importador";
+            let id_tipo = exportador ? 2 : 3;
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+            myHeaders.append("Content-Type", "application/json");
+            let raw = JSON.stringify({
+                "nombre": document.querySelector(`#nombreNew${tipo}`).value,
+                "direccion": document.querySelector(`#direccionNew${tipo}`).value,
+                "id_pais": document.querySelector(`#paisNew${tipo}`).value,
+                "id_tipo": id_tipo,
+                "id_user": <?= get_current_user_id() ?>,
+            });
+
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let response = await (await fetch("<?= $uriMarkenShipper ?>", requestOptions)).json();
+            closeSpinnerCargando();
+            if (response.status == 200) {
+                // todo salio correctamente
+                Swal.fire({
+                    title: response.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                // poner texto en input
+                if (exportador) {
+                    document.querySelector(`#exportador-text`).value = response.data.nombre;
+                    document.querySelector(`#id_exportador`).value = response.data.id_marken_shipper;
+                } else {
+                    document.querySelector(`#importador-text`).value = response.data.nombre;
+                    document.querySelector(`#id_importador`).value = response.data.id_marken_shipper;
+                }
+            } else if (response.status == 404) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `${response.data}`,
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `${response.message}`,
+                })
+                console.error(response);
+            }
+
+        }
         document.querySelector("#master-text").addEventListener("keyup", (e) => {
             function formatearTargetaBanco(string) {
                 var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
@@ -316,6 +388,43 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                 e.target.value = formatearTargetaBanco(e.target.value);
                 document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
             }, 500);
+        })
+        document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            document.querySelector("#btnCloseModalExportador").click();
+            try {
+                await saveMarkenShipperAsync(true);
+                e.target.reset();
+            } catch (error) {
+                console.error(error);
+            }
+        })
+        document.querySelector("#formNewImportador").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            document.querySelector("#btnCloseModalImportador").click();
+            try {
+                await saveMarkenShipperAsync(false);
+                e.target.reset();
+            } catch (error) {
+                console.error(error);
+            }
+        })
+        // seleccionador del modal
+
+        document.addEventListener("click", (e) => {
+            if (e.target.classList.value.includes("exportador-btn")) {
+                let idShipper = e.target.getAttribute("data-id-exportador");
+                let nombreShipper = e.target.getAttribute("data-nombre-exportador");
+                document.querySelector("#id_exportador").value = idShipper;
+                document.querySelector("#exportador-text").value = nombreShipper;
+                document.querySelector("#btnCloseListExportador").click();
+            } else if (e.target.classList.value.includes("importador-btn")) {
+                let idShipper = e.target.getAttribute("data-id-importador");
+                let nombreShipper = e.target.getAttribute("data-nombre-importador");
+                document.querySelector("#id_importador").value = idShipper;
+                document.querySelector("#importador-text").value = nombreShipper;
+                document.querySelector("#btnCloseListImportador").click();
+            }
         })
 
     })()

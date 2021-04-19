@@ -18,10 +18,10 @@ function aldem_head_js()
         wp_enqueue_style("aldemDatatablesB4-Responsive-CSS", "https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css", '', '1.0.0');
 
 
-        
+
 
         // fontawesome
-        wp_enqueue_script("fontAwesomeJS","https://kit.fontawesome.com/b5b7f00aae.js", '', '1.0.0');
+        wp_enqueue_script("fontAwesomeJS", "https://kit.fontawesome.com/b5b7f00aae.js", '', '1.0.0');
         // wp_enqueue_script("aldemDatatablesES", "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json", '', '1.0.0', true);
         wp_enqueue_script("aldemDatatablesJS", "https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js", '', '1.0.0', true);
 
@@ -37,6 +37,10 @@ function aldem_head_js()
         // 
         // registro css global para todo el tema
         // wp_enqueue_style("customAldem", aldem_get_css_url_helper("styles.css"),  array('woodmart-style'), '1.0.0');
+
+
+        // swal alert
+        wp_enqueue_script("aldemSweetAlertJS", "https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js", '', '1.0.0');
     }
 }
 // se le agrega al wordpress

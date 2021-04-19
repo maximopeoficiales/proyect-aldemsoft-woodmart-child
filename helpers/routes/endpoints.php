@@ -46,30 +46,31 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
     $responseValidator = adldem_UtilityValidator($request->get_json_params(), $validations);
     if ($responseValidator["validate"]) {
         // se va crear un shipper
-        // $nombre = sanitize_text_field($request->get_json_params()["nombre"]);
-        // $direccion = sanitize_text_field($request->get_json_params()["direccion"]);
-        // $id_pais = intval(sanitize_text_field($request->get_json_params()["id_pais"]));
-        // $id_user = intval(sanitize_text_field($request->get_json_params()["id_user"]));
-        // $id_tipo = intval(sanitize_text_field($request->get_json_params()["id_tipo"]));
-        // $fecha_actual = date("Y-m-d H:i:s");
-        // $table = "{$prefix}marken_shipper";
-        // $data = [
-        //     'id_tipo' => $id_tipo,
-        //     'descripcion' => $nombre,
-        //     'direccion' => $direccion,
-        //     'id_country' => $id_pais,
-        //     'id_usuario_created' => $id_user,
-        //     'created_at' => $fecha_actual
-        // ];
+        $nombre = sanitize_text_field($request->get_json_params()["nombre"]);
+        $direccion = sanitize_text_field($request->get_json_params()["direccion"]);
+        $id_pais = intval(sanitize_text_field($request->get_json_params()["id_pais"]));
+        $id_user = intval(sanitize_text_field($request->get_json_params()["id_user"]));
+        $id_tipo = intval(sanitize_text_field($request->get_json_params()["id_tipo"]));
+        $fecha_actual = date("Y-m-d H:i:s");
+        $table = "{$prefix}marken_shipper";
+        $data = [
+            'id_tipo' => $id_tipo,
+            'descripcion' => $nombre,
+            'direccion' => $direccion,
+            'id_country' => $id_pais,
+            'id_usuario_created' => $id_user,
+            'created_at' => $fecha_actual
+        ];
 
-        // $format = array(
-        //     '%d', '%s', '%s',
-        //     '%d', '%d',  '%s'
-        // );
-        // if ($wpdb->insert($table, $data, $format)) {
-        // }
-
-        return  aldem_rest_response("", "Todo correcto");
+        $format = array(
+            '%d', '%s', '%s',
+            '%d', '%d',  '%s'
+        );
+        if ($wpdb->insert($table, $data, $format)) {
+            return  aldem_rest_response(["id_marken_shipper" => $wpdb->insert_id, "nombre" => $nombre, "direccion" => $direccion], "Marken Shipper creado correctamente");
+        } else {
+            return  aldem_rest_response("", "Error en la creacion de Marken Shipper", 500);
+        }
     } else {
         return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
     }
