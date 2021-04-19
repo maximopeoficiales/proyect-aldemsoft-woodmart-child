@@ -34,7 +34,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="manifiesto">Manifiesto</label>
-                                <input type="number" name="manifiesto" id="manifiesto" class="form-control" placeholder="Ingrese el Manifiesto" aria-describedby="manifiesto" value="<?= $courierCurrent->manifiesto ?>">
+                                <input type="number" name="manifiesto" id="manifiesto" class="form-control" placeholder="Ingrese el Manifiesto" aria-describedby="manifiesto" value="<?= $courierCurrent->manifiesto ?>" maxlength="10">
                             </div>
                         </div>
                         <div class="col-md-6 ">
@@ -54,7 +54,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="master-text">Master</label>
-                                <input type="text" name="master-text" id="master-text" class="form-control" placeholder="Ingrese el Master" aria-describedby="master-text" value=" <?= $courierCurrent->guia_master ?>">
+                                <input type="text" name="master-text" id="master-text" class="form-control" placeholder="Ingrese el Master" aria-describedby="master-text" value="<?= $courierCurrent->guia_master ?>">
+                                <small id="helpId" class="text-muted">Escriba los 10 caracteres de su guia master</small>
                             </div>
                         </div>
                     </div>
@@ -109,13 +110,16 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="collection">Schd Collection</label>
-                                <input type="text" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
+                                <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
+                                <small class="text-muted text-center">Ingresa la Fecha en formato 24h</small>
                             </div>
+
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-2">
                                 <label for="delivery">Delivery: </label>
-                                <input type="time" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
+                                <input type="date" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
+                                <small class="text-muted text-center">Ingresa la Fecha en formato 24h</small>
                             </div>
                         </div>
                     </div>
@@ -136,10 +140,10 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                     <?php aldem_set_input_hidden("id_importador", ""); ?>
                     <?php aldem_set_input_hidden("id_user", get_current_user_id()); ?>
                     <?php if ($update) {
-                        aldem_set_input_hidden("new_courier", get_current_user_id());
-                    } else {
-                        aldem_set_input_hidden("edit_courier", get_current_user_id());
                         aldem_set_input_hidden("id_courier_job", $id_courier_job);
+                        aldem_set_action_name("update-courier", "");
+                    } else {
+                        aldem_set_action_name("new-courier", "");
                     } ?>
                     <?php aldem_set_proccess_form(); ?>
                     <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
@@ -323,14 +327,15 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
         $('#table-importadores-select').DataTable();
 
     });
-    $('#incoterm').select2();
     <?php
 
     if ($update) {
     ?>
-        $('#incoterm').select2('<?= $courierCurrent->id_incoterm ?>');
+        $('#incoterm').val('<?= $courierCurrent->id_incoterm ?>');
     <?php        }
     ?>
+    $('#incoterm').select2();
+
 
     $('#paisNewImportador').val('604');
     $('#paisNewExportador').val('604');
@@ -367,7 +372,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
 
             if (response.status == 200) {
                 // todo bien
-                console.log(response.data);
+                // console.log(response.data);
                 let tabladiv = document.querySelector(id_table + "_wrapper");
                 let modalBody = document.querySelector("#modal-body-" + tipo);
                 modalBody.innerHTML = "";
@@ -460,22 +465,24 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
             }
 
         }
-        document.querySelector("#master-text").addEventListener("keyup", (e) => {
-            function formatearTargetaBanco(string) {
-                var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
-                if (cleaned != "") {
-                    if (cleaned.length > 10) {
-                        cleaned = cleaned.substring(0, 10);
-                        console.log(cleaned.length);
-                    } else if (cleaned.length < 10) {
-                        cleaned = cleaned.padEnd(10);
-                        // console.log("mi tamaño es", cleaned.length);
-                    }
-                    return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
-                } else {
-                    return "";
+
+        function formatearTargetaBanco(string) {
+            var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
+            if (cleaned != "") {
+                if (cleaned.length > 10) {
+                    cleaned = cleaned.substring(0, 10);
+                    // console.log(cleaned.length);
+                } else if (cleaned.length < 10) {
+                    cleaned = cleaned.padEnd(10);
+                    // console.log("mi tamaño es", cleaned.length);
                 }
+                return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
+            } else {
+                return "";
             }
+        }
+        document.querySelector("#master-text").addEventListener("keyup", (e) => {
+
             setTimeout(() => {
                 e.target.value = formatearTargetaBanco(e.target.value);
                 document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
@@ -518,6 +525,12 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                 document.querySelector("#btnCloseListImportador").click();
             }
         })
+        <?php
+        if ($update) {
+        ?>
+            $('#master-text').val(formatearTargetaBanco($('#master-text').val()));
+        <?php        }
+        ?>
 
     })()
 </script>

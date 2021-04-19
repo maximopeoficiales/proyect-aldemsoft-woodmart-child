@@ -52,7 +52,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-6">
                             <div class="form-group mb-2">
                                 <label for="contacto">Contact: </label>
-                                <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contacto" minlength="1" maxlength="50" required value="<?= $markenJob->contact ?>">
+                                <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contacto"  maxlength="50" required value="<?= $markenJob->contact ?>">
                             </div>
 
                         </div>
@@ -65,7 +65,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     </div>
                     <div class="form-group mb-2">
                         <label for="reference">Reference: </label>
-                        <input type="text" name="reference" id="reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="reference" minlength="1" maxlength="150" required value="<?= $markenJob->reference ?>">
+                        <input type="text" name="reference" id="reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="reference"  maxlength="150" required value="<?= $markenJob->reference ?>">
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12">
@@ -73,11 +73,11 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                             <div class="pl-2">
                                 <div class="form-group mb-2">
                                     <label for="consigge_nombre">Nombre: </label>
-                                    <input type="text" name="consigge_nombre" id="consigge_nombre" class="form-control" placeholder="Ingrese el Nombre del Consignatario" aria-describedby="nombre" minlength="1" maxlength="150" value="<?= $consiggneCurrent->nombre ?>">
+                                    <input type="text" name="consigge_nombre" id="consigge_nombre" class="form-control" placeholder="Ingrese el Nombre del Consignatario" aria-describedby="nombre" maxlength="150" value="<?= $consiggneCurrent->nombre ?>">
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="consigge_direccion">Direccion: </label>
-                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion del Consignatario" aria-describedby="consigge_direccion" minlength="1" maxlength="150" value="<?= $consiggneCurrent->direccion ?>">
+                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion del Consignatario" aria-describedby="consigge_direccion"  maxlength="150" value="<?= $consiggneCurrent->direccion ?>">
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="id_pais">Pais: </label>
@@ -146,7 +146,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-12">
                             <div class="form-group mt-2">
                                 <label for="instrucciones">Instrucciones: </label>
-                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones" required minlength="1" maxlength="500" style="min-height: 140px;" required value=""><?= $markenJob->instrucciones ?></textarea>
+                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones" required  maxlength="500" style="min-height: 140px;" required value=""><?= $markenJob->instrucciones ?></textarea>
                             </div>
                         </div>
 

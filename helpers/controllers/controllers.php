@@ -6,6 +6,7 @@ date_default_timezone_set('America/Lima');
 add_action('admin_post_process_form', 'aldem_post_new_shipper_data');
 add_action('admin_post_process_form', 'aldem_post_new_export_job_hielo');
 add_action('admin_post_process_form', 'aldem_post_new_export');
+add_action('admin_post_process_form', 'aldem_post_new_courier');
 // Funcion callback
 function aldem_post_new_shipper_data()
 {
@@ -97,7 +98,7 @@ function aldem_post_new_export_job_hielo()
             // 'serie'                  => 'required|max:6',
             // 'numero'                  => 'required|max:15',
             // 'precio'                  => 'required|numeric',
-            'comentario'                  => 'required|max:250',
+            'comentario'                  => 'max:250',
             'job'                  => 'required|numeric',
             'user_id'                  => 'required|numeric',
         ];
@@ -276,6 +277,116 @@ function aldem_post_new_export()
             }
         } else {
             wp_redirect(home_url("marken_export_nuevo") . "?errors=" . $responseValidator["message"]);
+        }
+    }
+}
+function aldem_post_new_courier()
+{
+    $prefix = query_getAldemPrefix();
+    $wpdb = query_getWPDB();
+    $pagina = "marken_courier_nuevo";
+    $action_name = $_POST["action_name"];
+    if ($action_name === "new-courier" || $action_name === "update-courier") {
+        $validations = [
+            'job'                  =>  'required|max:35',
+            'manifiesto'                  => 'numeric',
+            'dua'                  => 'numeric',
+            'guia'                  => 'max:12',
+            'master'                  => 'max:10',
+            'pcs'                  => 'numeric',
+            'kilos'                  => 'numeric',
+            'id_importador'                  => 'numeric',
+            'id_exportador'                  => 'numeric',
+            'incoterm'                  => 'numeric',
+            'collection'                  => 'date:Y-m-d',
+            'delivery'                  => 'date:Y-m-d',
+            'instructions'                  => 'max:500',
+            'protocolo'                  => 'max:50',
+            'id_user'                  => 'required|numeric',
+        ];
+        if ($action_name == "update-courier") {
+            $validations["id_courier_job"] = "required|numeric";
+        }
+        $responseValidator = adldem_UtilityValidator($_POST, $validations);
+        if ($responseValidator["validate"]) {
+            // se va crear un shipper
+            $waybill = sanitize_text_field($_POST['job']);
+            $manifiesto = intval(sanitize_text_field($_POST['manifiesto']));
+            $dua = intval(sanitize_text_field($_POST['dua']));
+            $guia = sanitize_text_field($_POST['guia']);
+            $guia_master = sanitize_text_field($_POST['master']);
+            $pcs = intval(sanitize_text_field($_POST['pcs']));
+            $peso = doubleval(sanitize_text_field($_POST['kilos']));
+            $id_importador = intval(sanitize_text_field($_POST['id_importador']));
+            $id_exportador = intval(sanitize_text_field($_POST['id_exportador']));
+            $id_incoterm = intval(sanitize_text_field($_POST['incoterm']));
+            $schd_collection = sanitize_text_field($_POST['collection']);
+            $schd_delivery = sanitize_text_field($_POST['delivery']);
+            $instrucciones = sanitize_text_field($_POST['instructions']);
+            $protocolo = sanitize_text_field($_POST['protocolo']);
+            $fecha_actual = date("Y-m-d H:i:s");
+            $id_user = sanitize_text_field($_POST['id_user']);
+            // query 1
+            $table = "{$prefix}marken_job";
+            $data = [
+                "id_cliente_subtipo" => 3,
+                "waybill" => $waybill,
+                "manifiesto" => $manifiesto,
+                "dua" => $dua,
+
+                "guia" => $guia,
+                "guia_master" => $guia_master,
+                "peso" => $peso,
+                "pcs" => $pcs,
+
+                "id_importador" => $id_importador,
+                "id_exportador" => $id_exportador,
+                "id_incoterm" => $id_incoterm,
+                "instrucciones" => $instrucciones,
+
+                "schd_collection" => $schd_collection,
+                "schd_delivery" => $schd_delivery,
+                "protocolo" => $protocolo,
+                "id_usuario_created" => $id_user,
+
+                "updated_at" => $fecha_actual,
+                "created_at" => $fecha_actual,
+            ];
+            if ($action_name == "new-courier") {
+                $format = array(
+                    '%d', '%s', '%d', '%d',
+                    '%s', '%s', '%d', '%d',
+                    '%d', '%d', '%d', '%s',
+                    '%s', '%s', '%s', '%d',
+                    '%s', '%s'
+                );
+                $queryExistoso = $wpdb->insert($table, $data, $format);
+                $wpdb->flush();
+                if ($queryExistoso) {
+                    wp_redirect(home_url($pagina) . "?msg=" . 1);
+                } else {
+                    wp_redirect(home_url($pagina) . "?msg=");
+                }
+            } else if ($action_name == "update-courier") {
+                $id_courier_job = intval(sanitize_text_field($_POST['id_courier_job']));
+                unset($data["created_at"]);
+                $format2 = $format = array(
+                    '%d', '%s', '%d', '%d',
+                    '%s', '%s', '%d', '%d',
+                    '%d', '%d', '%d', '%s',
+                    '%s', '%s', '%s', '%d',
+                    '%s'
+                );
+                if ($wpdb->update($table, $data, [
+                    "id" => $id_courier_job
+                ], $format2)) {
+                    wp_redirect(home_url($pagina) . "?id=$id_courier_job&msg=" . 2);
+                } else {
+                    wp_redirect(home_url($pagina) . "?id=$id_courier_job&msg=");
+                }
+            }
+        } else {
+            wp_redirect(home_url($pagina) . "?errors=" . $responseValidator["message"]);
         }
     }
 }
