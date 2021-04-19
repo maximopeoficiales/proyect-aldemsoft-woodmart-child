@@ -4,6 +4,7 @@ $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
 $importadores = query_getImportadores();
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
+$uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
 ?>
 
 <?php
@@ -135,13 +136,13 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Elige un Exportador</h5>
+                <h5 class="modal-title aldem-text-white">Elige un Exportador</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListExportador">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <table class="table table-striped table-bordered dt-responsive nowrap" id="table-exportadors-select" style="width: 100%;">
+            <div class="modal-body" id="modal-body-exportador">
+                <table class="table table-striped table-bordered dt-responsive nowrap" id="table-exportadores-select" style="width: 100%;">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
@@ -169,17 +170,17 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
     </div>
 </div>
 
-<!-- modal de Exportador -->
+<!-- modal de Importador -->
 <div class="modal" id="modalImportador" tabindex="-1" role="dialog" aria-labelledby="modalImportador" aria-hidden="true" style="margin-top: 100px; ">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Elige un Importador</h5>
+                <h5 class="modal-title aldem-text-white">Elige un Importador</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListImportador">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modal-body-importador">
                 <table class="table table-striped table-bordered dt-responsive nowrap" id="table-importadores-select" style="width: 100%;">
                     <thead class="thead-dark">
                         <tr>
@@ -298,6 +299,12 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
 
 
 <script>
+    $(document).ready(function() {
+        <?php aldem_datatables_in_spanish(); ?>
+        $('#table-exportadores-select').DataTable();
+        $('#table-importadores-select').DataTable();
+
+    });
     $('#incoterm').select2();
     $('#paisNewImportador').val('604');
     $('#paisNewExportador').val('604');
@@ -313,6 +320,63 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
         };
         const closeSpinnerCargando = () => {
             Swal.closeModal();
+        }
+
+        const getMarkenShippersAsync = async (id_tipo = 2, id_table) => {
+            let tipo = id_tipo == 2 ? "exportador" : "importador";
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+            myHeaders.append("Content-Type", "application/json");
+            let raw = JSON.stringify({
+                "id_tipo": id_tipo,
+            });
+
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let response = await (await fetch("<?= $uriGETMarkenShipper ?>", requestOptions)).json();
+
+            if (response.status == 200) {
+                // todo bien
+                console.log(response.data);
+                let tabladiv = document.querySelector(id_table + "_wrapper");
+                let modalBody = document.querySelector("#modal-body-" + tipo);
+                modalBody.innerHTML = "";
+                let htmlTemplate = `
+                <table class="table table-striped table-bordered dt-responsive nowrap" id="table-${tipo+"es"}-select" style="width: 100%;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Direccion</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                response.data.forEach(shipper => {
+                    htmlTemplate += `
+
+                    <tr>
+                        <td class="d-flex justify-content-between" style="align-items: center !important;">
+                            <span>${shipper.nombre}</span>
+                            <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
+                        </td>
+                        <td>${shipper.direccion}</td>
+                    </tr>
+                    `;
+                });
+                htmlTemplate += `
+                </tbody>
+                <table>
+                `;
+                modalBody.innerHTML = htmlTemplate;
+                $(id_table).DataTable();
+                // $(id_table).DataTable().draw();
+            } else {
+                // algo salio mal
+                console.error(response.message)
+            }
         }
         const saveMarkenShipperAsync = async (exportador = false) => {
             showSpinnerCargando();
@@ -340,6 +404,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
             if (response.status == 200) {
                 // todo salio correctamente
                 Swal.fire({
+                    icon: "success",
                     title: response.message,
                     showConfirmButton: false,
                     timer: 1500
@@ -352,6 +417,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                     document.querySelector(`#importador-text`).value = response.data.nombre;
                     document.querySelector(`#id_importador`).value = response.data.id_marken_shipper;
                 }
+                await getMarkenShippersAsync(id_tipo, id_tipo == 2 ? "#table-exportadores-select" : "#table-importadores-select");
             } else if (response.status == 404) {
                 Swal.fire({
                     icon: 'error',

@@ -75,3 +75,28 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
         return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
     }
 }
+
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/getMarkenShippers/(?P<username>\w+)/', array(
+        'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
+        'callback' => 'get_aldem_shippers',
+        'args' => array(),
+    ));
+});
+
+function get_aldem_shippers(WP_REST_Request $request)
+{
+    //obtengo el id_country del parametros
+    $id_tipo = intval(sanitize_text_field($request->get_json_params()["id_tipo"]));
+    $shippers = null;
+    if ($id_tipo == 2) {
+        $shippers =    query_getExportadores();
+        return  aldem_rest_response($shippers);
+    } else if ($id_tipo == 3) {
+        $shippers = query_getImportadores();
+        return  aldem_rest_response($shippers);
+    } else {
+        return  aldem_rest_response("", "Tipo no Valido", 404);
+    }
+}
