@@ -383,9 +383,9 @@ function aldem_post_new_courier()
                 if ($wpdb->update($table, $data, [
                     "id" => $id_courier_job
                 ], $format2)) {
-                    wp_redirect(home_url($pagina) . "?id=$id_courier_job&msg=" . 2);
+                    wp_redirect(home_url($pagina) . "?editjob=$id_courier_job&msg=" . 2);
                 } else {
-                    wp_redirect(home_url($pagina) . "?id=$id_courier_job&msg=");
+                    wp_redirect(home_url($pagina) . "?editjob=$id_courier_job&msg=");
                 }
             }
         } else {

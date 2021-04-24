@@ -1,6 +1,6 @@
 <?php
-$update = $_GET["id"] != null || $_GET["id"] != "" ? true : false;
-$id_courier_job = $update ? $_GET["id"] : null;
+$update = $_GET["editjob"] != null || $_GET["editjob"] != "" ? true : false;
+$id_courier_job = $update ? $_GET["editjob"] : null;
 $countrys = (object) query_getCountrys();
 $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
@@ -19,7 +19,7 @@ $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" .
 
 <?php
 aldem_cargarStyles();
-aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se ha actualizado correctamente el Courier😀", "Ocurrio un error 😢 en el registro del Courier");
+aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion courier 😀", "Se ha actualizado correctamente el servicio de importacion courier😀", "Ocurrio un error 😢 en el registro del servicio de importacion courier");
 ?>
 <div class="row justify-content-center">
     <div pcs="col-md-8">
@@ -28,7 +28,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                 <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
                     <div class="form-group">
                         <label for="job">Job</label>
-                        <input type="text" name="job" id="job" class="form-control" placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>">
+                        <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>">
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6 ">
@@ -439,7 +439,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Courier 😀", "Se 
                 // todo salio correctamente
                 Swal.fire({
                     icon: "success",
-                    title: response.message,
+                    title: "Se Ha Creado Nuevo " + tipo,
                     showConfirmButton: false,
                     timer: 1500
                 })
