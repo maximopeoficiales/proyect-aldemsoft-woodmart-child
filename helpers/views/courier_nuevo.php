@@ -75,6 +75,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     </div>
 
 
+                    <label for="importador-text">Importador</label>
                     <div class="input-group my-2">
                         <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador" value="<?= $importadorCurrent->nombre ?>">
                         <div class="input-group-append">
@@ -85,6 +86,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                         </div>
                     </div>
+                    <label for="exportador-text">Exportador</label>
                     <div class="input-group my-2">
                         <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador" value="<?= $exportadorCurrent->nombre ?>">
                         <div class="input-group-append">
