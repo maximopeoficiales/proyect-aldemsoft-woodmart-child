@@ -6,8 +6,8 @@ $markenTypes = (object) query_getMarkenTypes();
 $markenCajas = (object) query_getMarkenCajas();
 
 // para el update
-$update = $_GET["id"] != null || $_GET["id"] != "" ? true : false;
-$id_marken_job = $update ? $_GET["id"] : null;
+$update = $_GET["editjob"] != null || $_GET["editjob"] != "" ? true : false;
+$id_marken_job = $update ? $_GET["editjob"] : null;
 $markenJob = $update ? (object) query_getMarkenJobs($id_marken_job)[0] : null;
 $shipperCurrent = $update ? (object) query_getShippers($markenJob->id_shipper)[0] : null;
 $consiggneCurrent = $update ? (object) query_getMarkenConsiggne(null, $markenJob->id)[0] : null;
@@ -52,20 +52,20 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-6">
                             <div class="form-group mb-2">
                                 <label for="contacto">Contact: </label>
-                                <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contacto"  maxlength="50" required value="<?= $markenJob->contact ?>">
+                                <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contacto" maxlength="50" value="<?= $markenJob->contact ?>">
                             </div>
 
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-2">
                                 <label for="contacto_telf">Contact Telephone: </label>
-                                <input type="text" name="contacto_telf" id="contacto_telf" class="form-control" placeholder="Ingrese el telefono del contacto" aria-describedby="contacto_telf" maxlength="50" required value="<?= $markenJob->contact_telephone ?>">
+                                <input type="text" name="contacto_telf" id="contacto_telf" class="form-control" placeholder="Ingrese el telefono del contacto" aria-describedby="contacto_telf" maxlength="50" value="<?= $markenJob->contact_telephone ?>">
                             </div>
                         </div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="reference">Reference: </label>
-                        <input type="text" name="reference" id="reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="reference"  maxlength="150" required value="<?= $markenJob->reference ?>">
+                        <input type="text" name="reference" id="reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="reference" maxlength="150" required value="<?= $markenJob->reference ?>">
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12">
@@ -77,7 +77,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="consigge_direccion">Direccion: </label>
-                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion del Consignatario" aria-describedby="consigge_direccion"  maxlength="150" value="<?= $consiggneCurrent->direccion ?>">
+                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion del Consignatario" aria-describedby="consigge_direccion" maxlength="150" value="<?= $consiggneCurrent->direccion ?>">
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="id_pais">Pais: </label>
@@ -146,7 +146,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-12">
                             <div class="form-group mt-2">
                                 <label for="instrucciones">Instrucciones: </label>
-                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones" required  maxlength="500" style="min-height: 140px;" required value=""><?= $markenJob->instrucciones ?></textarea>
+                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones" required maxlength="500" style="min-height: 140px;" value=""><?= $markenJob->instrucciones ?></textarea>
                             </div>
                         </div>
 
@@ -165,6 +165,13 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                                 <input type="time" name="hora" id="hora" class="form-control" placeholder="Ingrese el numero de hora" required aria-describedby="hora" value="<?= $horaJob ?>">
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ind_activo">Estado</label>
+                        <select class="form-control" name="ind_activo" id="ind_activo">
+                            <option value="1" <?= $markenType->ind_activo == 1  ? "selected" : "" ?>>Activo</option>
+                            <option value="2" <?= $markenType->ind_activo == 2  ? "selected" : "" ?>>Inactivo</option>
+                        </select>
                     </div>
                     <?php aldem_set_proccess_form(); ?>
                     <?php aldem_set_input_hidden("user_id", get_current_user_id()); ?>

@@ -162,6 +162,7 @@ function aldem_post_new_export()
             'fecha'                  => 'required|max:10|date:Y-m-d',
             'hora'                  => 'required|max:5',
             'user_id'                  => 'required|numeric',
+            'ind_activo'                  => 'required|numeric',
         ];
         if ($action_name == "update-job") {
             $validations["id_marken_job"] = "required|numeric";
@@ -189,6 +190,7 @@ function aldem_post_new_export()
             $fechaHora = sanitize_text_field($_POST['fecha']) . " " . sanitize_text_field($_POST['hora']) . ":00";
             $fecha_actual = date("Y-m-d H:i:s");
             $user_id = sanitize_text_field($_POST['user_id']);
+            $ind_activo = intval(sanitize_text_field($_POST['ind_activo']));
 
             // campos necesarios para la actualizacion
             $id_marken_jobUpdated = intval(sanitize_text_field($_POST['id_marken_job']));
@@ -213,6 +215,7 @@ function aldem_post_new_export()
                 "contact_telephone" => $contacto_telf,
                 "fecha_hora" => $fechaHora,
                 "id_usuario_created" => $user_id,
+                "ind_activo" => $ind_activo,
                 "created_at" => $fecha_actual,
             ];
             if ($action_name == "new-job") {
@@ -221,7 +224,7 @@ function aldem_post_new_export()
                     // , '%s'
                     , '%d',
                     //  '%s',
-                    '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%s'
+                    '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s'
                 );
                 $queryExistoso = $wpdb->insert($table, $data, $format);
                 $id_marken_job = $wpdb->insert_id; //obtemgo el id 
@@ -247,7 +250,7 @@ function aldem_post_new_export()
             } else if ($action_name == "update-job") {
                 unset($data["created_at"]);
                 $data["updated_at"] = $fecha_actual;
-                $formatUpdated = array('%d', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%s');
+                $formatUpdated = array('%d', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s');
                 $queryExistosoUpdated = $wpdb->update($table, $data, [
                     "id" => $id_marken_jobUpdated
                 ], $formatUpdated);
@@ -270,9 +273,9 @@ function aldem_post_new_export()
                 $wpdb->flush();
 
                 if ($queryExistosoUpdated && $queryExistoso2Updated) {
-                    wp_redirect(home_url("marken_export_nuevo") . "?id=$id_marken_jobUpdated&msg=" . 2);
+                    wp_redirect(home_url("marken_export_nuevo") . "?editjob=$id_marken_jobUpdated&msg=" . 2);
                 } else {
-                    wp_redirect(home_url("marken_export_nuevo") . "?id=$id_marken_jobUpdated&msg=");
+                    wp_redirect(home_url("marken_export_nuevo") . "?editjob=$id_marken_jobUpdated&msg=");
                 }
             }
         } else {
