@@ -439,7 +439,7 @@ function aldem_post_new_courier()
             // query 1
             $table = "{$prefix}marken_job";
             $data = [
-                "id_cliente_subtipo" => 3,
+                "id_cliente_subtipo" => 2,
                 "waybill" => $waybill,
                 "manifiesto" => $manifiesto,
                 "dua" => $dua,
