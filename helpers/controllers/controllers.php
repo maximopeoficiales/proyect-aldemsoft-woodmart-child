@@ -250,7 +250,7 @@ function aldem_post_new_export()
             } else if ($action_name == "update-job") {
                 unset($data["created_at"]);
                 $data["updated_at"] = $fecha_actual;
-                $formatUpdated = array('%d', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s');
+                $formatUpdated = array('%d', '%d', '%s', '%d',  '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s');
                 $queryExistosoUpdated = $wpdb->update($table, $data, [
                     "id" => $id_marken_jobUpdated
                 ], $formatUpdated);

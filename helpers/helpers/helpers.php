@@ -170,3 +170,23 @@ function aldem_getYears(): array
     }
     return $arrayAno;
 }
+
+/**
+ * Retorna True si el usuario logueado es el usuario creador
+ * @return bool
+ */
+function aldem_isUserCreated($id_usuario_created): bool
+{
+    return $id_usuario_created == get_current_user_id() ? true : false;
+}
+
+/**
+ * Escribe en la pantalla que no tiene acceso
+ * @return void
+ */
+function aldem_noAccess(): void
+{
+    echo "
+        <h1 class='text-center'>No tienes acceso a esta pagina</h1>
+    ";
+}
