@@ -392,4 +392,112 @@ function aldem_post_new_courier()
             wp_redirect(home_url($pagina) . "?errors=" . $responseValidator["message"]);
         }
     }
+    // marken_courier_nuevo
+    $pagina2 = "marken_carga_nuevo";
+    if ($action_name === "new-cargo" || $action_name === "update-cargo") {
+        $validations = [
+            'job'                  =>  'required|max:35',
+            'manifiesto'                  => 'numeric',
+            'dua'                  => 'numeric',
+            'guia'                  => 'max:12',
+            'master'                  => 'max:10',
+            'pcs'                  => 'numeric',
+            'kilos'                  => 'numeric',
+            'id_importador'                  => 'numeric',
+            'id_exportador'                  => 'numeric',
+            'incoterm'                  => 'numeric',
+            'collection'                  => 'date:Y-m-d',
+            'delivery'                  => 'date:Y-m-d',
+            'instructions'                  => 'max:500',
+            'protocolo'                  => 'max:50',
+            'observaciones'                  => 'max:250',
+            'id_user'                  => 'required|numeric',
+        ];
+        if ($action_name == "update-cargo") {
+            $validations["id_cargo_job"] = "required|numeric";
+        }
+        $responseValidator = adldem_UtilityValidator($_POST, $validations);
+        if ($responseValidator["validate"]) {
+            // se va crear un shipper
+            $waybill = sanitize_text_field($_POST['job']);
+            $manifiesto = intval(sanitize_text_field($_POST['manifiesto']));
+            $dua = intval(sanitize_text_field($_POST['dua']));
+            $guia = sanitize_text_field($_POST['guia']);
+            $guia_master = sanitize_text_field($_POST['master']);
+            $pcs = intval(sanitize_text_field($_POST['pcs']));
+            $peso = doubleval(sanitize_text_field($_POST['kilos']));
+            $id_importador = intval(sanitize_text_field($_POST['id_importador']));
+            $id_exportador = intval(sanitize_text_field($_POST['id_exportador']));
+            $id_incoterm = intval(sanitize_text_field($_POST['incoterm']));
+            $schd_collection = sanitize_text_field($_POST['collection']);
+            $schd_delivery = sanitize_text_field($_POST['delivery']);
+            $instrucciones = sanitize_text_field($_POST['instructions']);
+            $observaciones = sanitize_text_field($_POST['observaciones']);
+            $protocolo = sanitize_text_field($_POST['protocolo']);
+            $fecha_actual = date("Y-m-d H:i:s");
+            $id_user = sanitize_text_field($_POST['id_user']);
+            // query 1
+            $table = "{$prefix}marken_job";
+            $data = [
+                "id_cliente_subtipo" => 3,
+                "waybill" => $waybill,
+                "manifiesto" => $manifiesto,
+                "dua" => $dua,
+
+                "guia" => $guia,
+                "guia_master" => $guia_master,
+                "peso" => $peso,
+                "pcs" => $pcs,
+
+                "id_importador" => $id_importador,
+                "id_exportador" => $id_exportador,
+                "id_incoterm" => $id_incoterm,
+                "instrucciones" => $instrucciones,
+
+                "schd_collection" => $schd_collection,
+                "schd_delivery" => $schd_delivery,
+                "protocolo" => $protocolo,
+                "id_usuario_created" => $id_user,
+                "observaciones" => $observaciones,
+
+                "updated_at" => $fecha_actual,
+                "created_at" => $fecha_actual,
+            ];
+            if ($action_name == "new-cargo") {
+                $format = array(
+                    '%d', '%s', '%d', '%d',
+                    '%s', '%s', '%d', '%d',
+                    '%d', '%d', '%d', '%s',
+                    '%s', '%s', '%s', '%d',
+                    '%s', '%s', '%s'
+                );
+                $queryExistoso = $wpdb->insert($table, $data, $format);
+                $wpdb->flush();
+                if ($queryExistoso) {
+                    wp_redirect(home_url($pagina2) . "?msg=" . 1);
+                } else {
+                    wp_redirect(home_url($pagina2) . "?msg=");
+                }
+            } else if ($action_name == "update-cargo") {
+                $id_cargo_job = intval(sanitize_text_field($_POST['id_cargo_job']));
+                unset($data["created_at"]);
+                $format2 = array(
+                    '%d', '%s', '%d', '%d',
+                    '%s', '%s', '%d', '%d',
+                    '%d', '%d', '%d', '%s',
+                    '%s', '%s', '%s', '%d',
+                    '%s', '%s'
+                );
+                if ($wpdb->update($table, $data, [
+                    "id" => $id_cargo_job
+                ], $format2)) {
+                    wp_redirect(home_url($pagina2) . "?editjob=$id_cargo_job&msg=" . 2);
+                } else {
+                    wp_redirect(home_url($pagina2) . "?editjob=$id_cargo_job&msg=");
+                }
+            }
+        } else {
+            wp_redirect(home_url($pagina2) . "?errors=" . $responseValidator["message"]);
+        }
+    }
 }
