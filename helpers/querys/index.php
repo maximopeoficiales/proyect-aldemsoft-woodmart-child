@@ -37,6 +37,18 @@ function query_getCourierJobs($idMarkenJob = null)
     $wpdb->flush();
     return $result;
 }
+function query_getCargoJobs($idMarkenJob = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+
+    $sql = "SELECT id AS id_marken_job,t1.* FROM {$prefix}marken_job as t1 WHERE id_cliente_subtipo = 2";
+    $sql .= $idMarkenJob != null ? " AND id= $idMarkenJob" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
 
 function query_getMarkenJobs($idMarkenJob = null)
 {

@@ -5,7 +5,7 @@ $countrys = (object) query_getCountrys();
 $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
 $importadores = query_getImportadores();
-$courierCurrent = $update ? query_getCourierJobs($id_cargo_job)[0] : null;
+$courierCurrent = $update ? query_getCargoJobs($id_cargo_job)[0] : null;
 // update
 $exportadorCurrent = $update ?  query_getExportadores($courierCurrent->id_exportador)[0] : null;
 $importadorCurrent = $update ?  query_getImportadores($importadorCurrent->id_importador)[0] : null;
