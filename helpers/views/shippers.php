@@ -12,8 +12,6 @@ aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se ha actualizado correctamente el shipper 😀", "Ocurrio un error 😢 en el registro del shipper")
 ?>
 
-
-
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card">

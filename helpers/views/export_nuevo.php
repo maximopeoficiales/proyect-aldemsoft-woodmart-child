@@ -22,6 +22,10 @@ aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha actualizado correctamente el Job😀", "Ocurrio un error 😢 en el registro del Job");
 ?>
 
+<?php if ($update && !aldem_isUserCreated($markenJob->id_usuario_created)) {
+    aldem_noAccess();
+    return;
+} ?>
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">

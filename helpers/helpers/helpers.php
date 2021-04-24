@@ -177,7 +177,7 @@ function aldem_getYears(): array
  */
 function aldem_isUserCreated($id_usuario_created): bool
 {
-    return $id_usuario_created == get_current_user_id() ? true : false;
+    return (intval($id_usuario_created) === intval(get_current_user_id())) ? true : false;
 }
 
 /**
