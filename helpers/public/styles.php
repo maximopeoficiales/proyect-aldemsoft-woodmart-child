@@ -168,4 +168,14 @@
     }
 
     /* fin de spinner */
+    .btn-aldem-verde {
+        background-color: #98ddca;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .bg-aldem-secondary {
+        background-color: #02475e;
+        color: white;
+    }
 </style>

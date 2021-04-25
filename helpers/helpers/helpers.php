@@ -7,7 +7,7 @@ function aldem_transform_text_p(string $text): string
     foreach ($arrayText as $string) {
         $textTransform .= "<p>$string</p>";
     }
-    return $textTransform;
+    return  str_replace("<p></p>", "", $textTransform);
 }
 
 

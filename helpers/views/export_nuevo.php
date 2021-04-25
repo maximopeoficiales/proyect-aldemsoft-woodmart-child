@@ -5,6 +5,12 @@ $countrys = (object) query_getCountrys();
 $markenTypes = (object) query_getMarkenTypes();
 $markenCajas = (object) query_getMarkenCajas();
 
+$markenSites = (object) query_getMarkenSite();
+$ubigeosPeru = (object) query_getUbigeo(604);
+// para los API REST
+$urlUbigeos = get_site_url() . "/wp-json/aldem/v1/ubigeos/" . aldem_getUserNameCurrent();
+$urlShippers = get_site_url() . "/wp-json/aldem/v1/shippers/" . aldem_getUserNameCurrent();
+
 // para el update
 $update = $_GET["editjob"] != null || $_GET["editjob"] != "" ? true : false;
 $id_marken_job = $update ? $_GET["editjob"] : null;
@@ -40,15 +46,19 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                                 <label for="waybill">Waybill: </label>
                                 <input type="text" name="waybill" id="waybill" class="form-control" placeholder="Ingrese el Waybill" aria-describedby="waybill" required maxlength="35" value="<?= $markenJob->waybill ?>">
                             </div>
-                            <div class="form-group mb-2">
-                                <label for="desc_shipper">Shipper:</label>
-                                <div class="input-group ">
-                                    <input type="text" required class="form-control" name="desc_shipper" id="desc_shipper" placeholder="Selecciona un Shipper" aria-label="Selecciona un Shipper" aria-describedby="basic-addon2" value="<?= $shipperCurrent->nombre ?>" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalShipper">Seleccionar</button>
+
+                            <label for="exportador-text">Shipper:</label>
+                            <div class="input-group my-2">
+                                <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="desc_shipper" placeholder="Elija un Shipper" value="<?= $shipperCurrent->nombre ?>">
+                                <div class="input-group-append">
+                                    <button class="btn bg-aldem-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Elije una opcion</button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalShipper">Seleccionar Shipper</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewShipper">Crear Shipper</a>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -150,7 +160,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-12">
                             <div class="form-group mt-2">
                                 <label for="instrucciones">Instrucciones: </label>
-                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones"  maxlength="500" style="min-height: 140px;" value=""><?= $markenJob->instrucciones ?></textarea>
+                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones" maxlength="500" style="min-height: 140px;" value=""><?= $markenJob->instrucciones ?></textarea>
                             </div>
                         </div>
 
@@ -190,7 +200,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         aldem_set_input_hidden("id_shipper", "");
                         aldem_set_action_name("new-job");
                     } ?>
-                    <button type="submit" class="btn btn-success w-100"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                    <button type="submit" class="btn  w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </form>
             </div>
         </div>
@@ -207,7 +217,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modal-body-shippers">
                 <table class="table table-striped table-bordered dt-responsive nowrap" id="table-shippers-select" style="width: 100%;">
                     <thead class="thead-dark">
                         <tr>
@@ -223,7 +233,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $shipper->nombre ?></span>
-                                    <button type="button" class="btn shipper-btn" style="background: transparent;" data-id-shipper="<?= $shipper->id_shipper  ?>" data-nombre-shipper="<?= $shipper->nombre ?>"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
+                                    <button type="button" class="btn shipper-btn" style="background: transparent;" data-id-shipper="<?= $shipper->id_shipper  ?>" data-nombre-shipper="<?= $shipper->nombre ?>"><i class="fas fa-check-circle fa-2x shipper-btn" style="color: #32CC52;" data-id-shipper="<?= $shipper->id_shipper  ?>" data-nombre-shipper="<?= $shipper->nombre ?>"></i></button>
                                 </td>
                                 <td><?= $shipper->direccion ?></td>
                                 <td><?= $shipper->site ?></td>
@@ -241,6 +251,82 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
 </div>
 
 
+<!-- modal de creacion de shipper -->
+<div class="modal" id="modalNewShipper" tabindex="-1" role="dialog" aria-labelledby="modalNewShipper" aria-hidden="true" style="margin-top: 100px; ">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">Crea un Shipper</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseNewShippers">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="formNewShipper">
+                    <div class="form-group">
+                        <label for="nombreShipper">Nombre: </label>
+                        <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccionShipper">Direccion:</label>
+                        <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" required>
+                    </div>
+
+                    <div class="row mt-2">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="paisShipper" style="display: block;">Pais:</label>
+                                <select class="form-control select-countrys" name="paisShipper" id="paisShipper" style="width: 100% !important;">
+                                    <?php
+                                    foreach ($countrys as $kq => $country) {
+                                    ?>
+                                        <option value="<?= $country->id_pais ?>">
+                                            <?= $country->desc_pais ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="shiteShipper">Site:</label>
+                                <select class="form-control" name="siteShipper" id="siteShipper">
+                                    <?php foreach ($markenSites as $markenSite) { ?>
+
+                                        <option value="<?= $markenSite->id_marken_site ?>">
+                                            <?= $markenSite->descripcion ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <label for="ubigeoShipper">Ubigeo:</label>
+                                <select class="form-control"" name=" ubigeoShipper" id="ubigeoShipper" style="width:100%">
+                                    <?php foreach ($ubigeosPeru as
+                                        $ubigeo) { ?>
+                                        <option value="<?= $ubigeo->id_ubigeo ?>">
+                                            <?= $ubigeo->descripcion ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <?php aldem_set_input_hidden("id_user_new", get_current_user_id()) ?>
+                    <button type="submit" class="my-2 btn w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div> 
+
 <script>
     <?php
     if ($update) {
@@ -252,10 +338,12 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
     ?>
 
     $('#id_pais').val('604');
+    $('#paisShipper').val('604');
     $('#id_pais').select2();
     $('#id_caja').select2();
     $('#id_marken_type').select2();
-
+    $('#paisShipper').select2();
+    $('#ubigeoShipper').select2();
 
     $(document).ready(function() {
         <?php aldem_datatables_in_spanish(); ?>
@@ -264,6 +352,156 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
 
     // listeners
     (() => {
+        const showSpinnerCargando = () => {
+            Swal.fire({
+                title: '<strong>Cargando...</strong>',
+                html: `<div class='text-center'><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>`,
+                showConfirmButton: false
+            })
+        };
+        const closeSpinnerCargando = () => {
+            Swal.closeModal();
+        }
+        const getUbigeos = async (id_country = 0) => {
+            try {
+                let myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+                let raw = JSON.stringify({
+                    "id_country": id_country,
+                });
+
+                let requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+                return await (await (fetch('<?= $urlUbigeos  ?>', requestOptions))).json();
+            } catch (error) {
+                return null;
+            }
+        }
+        const setUbigeosAsync = async (id_country = 0, name_select = "") => {
+            let ubigeos = await getUbigeos(id_country);
+            let selectUbigeo = document.querySelector(name_select);
+            // si no tiene error
+            if (!ubigeos.data) {
+                // cargar los ubigeos en el select
+                selectUbigeo.innerHTML = "";
+                let htmlTemporal = "";
+                ubigeos.forEach(ubigeo => {
+                    htmlTemporal += `<option value="${ubigeo.id_ubigeo}">${ubigeo.descripcion}</option>`
+                });
+                selectUbigeo.innerHTML = htmlTemporal;
+                $(name_select).select2();
+            } else {
+                selectUbigeo.innerHTML = `<option value="">No tiene Ubigeos Registrados</option>`;
+            }
+        }
+        const getShippersAsync = async () => {
+            try {
+                let myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+                let requestOptions = {
+                    method: 'GET',
+                    headers: myHeaders,
+                    redirect: 'follow'
+                };
+                return await (await (fetch('<?= $urlShippers  ?>', requestOptions))).json();
+            } catch (error) {
+                return null;
+            }
+        }
+        const cargarTablaShipperAsync = async (id_table) => {
+            let response = await getShippersAsync();
+            if (response.status == 200) {
+                // let tabladiv = document.querySelector(id_table + "_wrapper");
+                let modalBody = document.querySelector("#modal-body-shippers");
+                modalBody.innerHTML = "";
+                let htmlTemplate = `
+                <table class="table table-striped table-bordered dt-responsive nowrap" id="table-shippers-select" style="width: 100%;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">Site</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                response.data.forEach(shipper => {
+                    htmlTemplate += `
+                    <tr>
+                    <td class="d-flex justify-content-between" style="align-items: center !important;">
+                        <span>${shipper.nombre}</span>
+                        <button type="button" class="btn shipper-btn" style="background: transparent;" data-id-shipper="${shipper.id_shipper}" data-nombre-shipper="${shipper.nombre}"><i class="fas fa-check-circle fa-2x shipper-btn" style="color: #32CC52;" data-id-shipper="${shipper.id_shipper}" data-nombre-shipper="${shipper.nombre}"></i></button>
+                    </td>
+                    <td>${shipper.direccion}</td>
+                    <td>${shipper.site}</td>
+                    </tr>
+                    `;
+                });
+                htmlTemplate += `
+                </tbody>
+                <table>
+                `;
+                modalBody.innerHTML = htmlTemplate;
+                $(id_table).DataTable();
+            }
+        }
+        const postShipperAsync = async () => {
+            showSpinnerCargando();
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+            myHeaders.append("Content-Type", "application/json");
+            let raw = JSON.stringify({
+                "nombreShipper": document.querySelector("#nombreShipper").value,
+                "direccionShipper": document.querySelector("#direccionShipper").value,
+                "paisShipper": document.querySelector("#paisShipper").value,
+                "siteShipper": document.querySelector("#siteShipper").value,
+                "ubigeoShipper": document.querySelector("#ubigeoShipper").value,
+                "id_user": <?= get_current_user_id() ?>
+            });
+
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let response = await (await fetch("<?= $urlShippers ?>", requestOptions)).json();
+            closeSpinnerCargando();
+            if (response.status == 200) {
+                await cargarTablaShipperAsync("#table-shippers-select");
+                Swal.fire({
+                    icon: "success",
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                document.querySelector("#id_shipper").value = response.data.id_marken_shipper;
+                document.querySelector("#desc_shipper").value = response.data.descripcion;
+            } else if (response.status == 404) {
+                Swal.fire({
+                    icon: 'error',
+                    title: `${response.message}`,
+                    html: `${response.data}`,
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `${response.message}`,
+                })
+            }
+        }
+
+        $('#paisShipper').on('select2:select', async function(e) {
+            let id_country = (e.params.data.id);
+            await setUbigeosAsync(id_country, "#ubigeoShipper");
+        });
+
         document.addEventListener("click", (e) => {
             if (e.target.classList.value.includes("shipper-btn")) {
                 let idShipper = e.target.getAttribute("data-id-shipper");
@@ -273,5 +511,16 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                 document.querySelector("#btnCloseListShippers").click();
             }
         })
+        document.querySelector("#formNewShipper").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            document.querySelector("#btnCloseNewShippers").click();
+            try {
+                await postShipperAsync();
+                e.target.reset();
+            } catch (error) {
+                console.error(error);
+            }
+        })
+
     })()
 </script>
