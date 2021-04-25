@@ -150,7 +150,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-12">
                             <div class="form-group mt-2">
                                 <label for="instrucciones">Instrucciones: </label>
-                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones" required maxlength="500" style="min-height: 140px;" value=""><?= $markenJob->instrucciones ?></textarea>
+                                <textarea name="instrucciones" id="instrucciones" class="form-control" placeholder="Ingrese las Instrucciones" aria-describedby="instrucciones"  maxlength="500" style="min-height: 140px;" value=""><?= $markenJob->instrucciones ?></textarea>
                             </div>
                         </div>
 

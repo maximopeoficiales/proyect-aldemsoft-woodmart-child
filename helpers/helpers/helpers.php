@@ -85,7 +85,7 @@ function aldem_set_proccess_form(): void
 function aldem_set_input_hidden($name, $value): void
 {
     echo '
-    <input type="hidden" name="' . $name . '" value="' . $value . '" id="' . $name . '">
+    <input type="hidden" name="' . $name . '" value="' . $value . '" id="' . $name . '" required>
     ';
 }
 

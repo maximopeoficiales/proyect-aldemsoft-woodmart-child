@@ -19,7 +19,7 @@ $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" .
 
 <?php
 aldem_cargarStyles();
-aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion courier 😀", "Se ha actualizado correctamente el servicio de importacion courier😀", "Ocurrio un error 😢 en el registro del servicio de importacion courier");
+aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion carga 😀", "Se ha actualizado correctamente el servicio de importacion carga😀", "Ocurrio un error 😢 en el registro del servicio de importacion carga");
 ?>
 
 <?php if ($update && !aldem_isUserCreated($courierCurrent->id_usuario_created)) {
