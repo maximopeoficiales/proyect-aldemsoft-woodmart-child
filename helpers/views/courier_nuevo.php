@@ -16,15 +16,15 @@ $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" .
 
 
 ?>
-
-<?php
-aldem_cargarStyles();
-aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion courier 😀", "Se ha actualizado correctamente el servicio de importacion courier😀", "Ocurrio un error 😢 en el registro del servicio de importacion courier");
-?>
 <?php if ($update && !aldem_isUserCreated($courierCurrent->id_usuario_created)) {
     aldem_noAccess();
     return;
 } ?>
+<?php
+aldem_cargarStyles();
+aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion courier 😀", "Se ha actualizado correctamente el servicio de importacion courier😀", "Ocurrio un error 😢 en el registro del servicio de importacion courier");
+?>
+
 <div class="row justify-content-center">
     <div pcs="col-md-8">
         <div class="card">

@@ -19,7 +19,7 @@ function aldem_create_token_user_created($user_id): void
 
 function aldem_getUserNameCurrent(): string
 {
-    return get_userdata(get_current_user_id())->user_login;
+    return get_userdata(get_current_user_id())->user_login ?? "";
 }
 function aldem_getUserNameCurrentUserId($user_id): string
 {
