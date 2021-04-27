@@ -152,7 +152,7 @@ function aldem_post_new_export()
             'id_pais'                  => 'numeric',
             'contacto'                  => 'max:50',
             'contacto_telf'                  => 'max:50',
-            'reference'                  => 'required|max:150',
+            'reference'                  => 'max:150',
             // 'content'                  => 'required|max:250',
             'pcs'                  => 'required|numeric',
             // 'range'                  => 'required|max:25',
