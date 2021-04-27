@@ -178,4 +178,8 @@
         background-color: #02475e;
         color: white;
     }
+
+    .iti.iti--allow-dropdown {
+        width: 100%;
+    }
 </style>

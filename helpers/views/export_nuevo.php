@@ -1,5 +1,9 @@
 <?php
 date_default_timezone_set('America/Lima');
+wp_enqueue_script("intTelinputJS", "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js", '', '1.0.0');
+
+wp_enqueue_style("intTelinputCSS", "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css", '', '1.0.0');
+
 $shippers = (object) query_getShippers();
 $countrys = (object) query_getCountrys();
 $markenTypes = (object) query_getMarkenTypes();
@@ -37,7 +41,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
         <div class="card">
             <div class="card-body">
 
-                <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
+                <form action="<?php echo admin_url('admin-post.php') ?>" method="post" id="formNewExport">
 
                     <div class="row mt-2">
 
@@ -72,8 +76,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label for="contacto_telf">Contact Telephone: </label>
-                                <input type="text" name="contacto_telf" id="contacto_telf" class="form-control" placeholder="Ingrese el telefono del contacto" aria-describedby="contacto_telf" maxlength="50" value="<?= $markenJob->contact_telephone ?>">
+                                <label for="contacto_telf_text">Contact Telephone: </label>
+                                <input type="tel" name="contacto_telf_text" id="contacto_telf_text" class="form-control" placeholder="Ingrese el telefono del contacto" aria-describedby="contacto_telf_text" maxlength="50" value="<?= $markenJob->contact_telephone ?>" style="width: 100%;">
                             </div>
                         </div>
                     </div>
@@ -194,10 +198,12 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     <?php if ($update) {
                         aldem_set_action_name("update-job");
                         aldem_set_input_hidden("id_shipper",                         $shipperCurrent->id);
+                        aldem_set_input_hidden("contacto_telf",                         $markenJob->contact_telephone);
                         aldem_set_input_hidden("id_marken_job", $markenJob->id);
                         aldem_set_input_hidden("id_marken_consiggne", $consiggneCurrent->id);
                     } else {
                         aldem_set_input_hidden("id_shipper", "", false);
+                        aldem_set_input_hidden("contacto_telf", "", false);
                         aldem_set_action_name("new-job");
                     } ?>
                     <button type="submit" class="btn  w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
@@ -348,6 +354,16 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
     $(document).ready(function() {
         <?php aldem_datatables_in_spanish(); ?>
         $('#table-shippers-select').DataTable();
+        const phoneInputField = document.querySelector("#contacto_telf_text");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            preferredCountries: ["pe"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+        document.querySelector("#formNewExport").addEventListener("submit", (e) => {
+            e.preventDefault();
+            document.querySelector("#contacto_telf").value = phoneInput.getNumber();
+            e.target.submit();
+        })
     });
 
     // listeners
