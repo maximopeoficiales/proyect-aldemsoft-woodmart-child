@@ -146,7 +146,7 @@ function aldem_post_new_export()
     if ($action_name === "new-job" || $action_name === "update-job") {
         $validations = [
             'waybill'                  =>  'required|max:35',
-            'id_shipper'                  =>  'required|numeric',
+            'id_shipper'                  =>  'numeric',
             'consigge_nombre'                  => 'max:150',
             'consigge_direccion'                  => 'max:150',
             'id_pais'                  => 'numeric',

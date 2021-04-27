@@ -82,11 +82,10 @@ function aldem_set_proccess_form(): void
  * Crea un input hidden con un nombre y valor
  * @return void
  */
-function aldem_set_input_hidden($name, $value): void
+function aldem_set_input_hidden($name, $value, $required = true): void
 {
-    echo '
-    <input type="hidden" name="' . $name . '" value="' . $value . '" id="' . $name . '" required>
-    ';
+    $required = $required ? "required" : "";
+    echo "<input type='hidden' name='$name' value='$value' id='$name' $required>";
 }
 
 /**

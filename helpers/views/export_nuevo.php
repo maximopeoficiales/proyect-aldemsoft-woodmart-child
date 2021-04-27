@@ -197,7 +197,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         aldem_set_input_hidden("id_marken_job", $markenJob->id);
                         aldem_set_input_hidden("id_marken_consiggne", $consiggneCurrent->id);
                     } else {
-                        aldem_set_input_hidden("id_shipper", "");
+                        aldem_set_input_hidden("id_shipper", "", false);
                         aldem_set_action_name("new-job");
                     } ?>
                     <button type="submit" class="btn  w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
