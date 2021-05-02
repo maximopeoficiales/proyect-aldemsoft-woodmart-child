@@ -182,4 +182,7 @@
     .iti.iti--allow-dropdown {
         width: 100%;
     }
+    .aldem_pointer{
+        cursor: pointer;
+    }
 </style>

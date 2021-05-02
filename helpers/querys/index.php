@@ -124,6 +124,29 @@ function query_getMarkenSite($idMarkenSite = null)
     $wpdb->flush();
     return $result;
 }
+function query_getMarkenSiteTipos($idMarkenSite = null, $tipo = 3)
+{
+
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id AS id_marken_site, descripcion FROM ${prefix}marken_site WHERE id_cliente_subtipo = $tipo";
+    $sql .= $idMarkenSite != null ? " WHERE id= $idMarkenSite" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+function query_getMarkenHandlings($idMarkenSite = null, $tipo = 3)
+{
+
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id AS id_handling, descripcion FROM ${prefix}marken_handling WHERE id_cliente_subtipo = $tipo";
+    $sql .= $idMarkenSite != null ? " WHERE id= $idMarkenSite" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
 
 function query_getUbigeo($idPais = null, $idUbigeo = null)
 {
