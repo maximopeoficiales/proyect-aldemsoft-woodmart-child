@@ -45,7 +45,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="dua">DUA</label>
-                                <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" aria-describedby="DUA" value="<?= $courierCurrent->dua ?>">
+                                <input type="text" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" maxlength="20" aria-describedby="DUA" value="<?= $courierCurrent->dua ?>">
                             </div>
                         </div>
                     </div>
@@ -53,14 +53,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
                                 <label for="guia">Guia</label>
-                                <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" value="<?= $courierCurrent->guia ?>">
+                                <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" maxlength="12" value="<?= $courierCurrent->guia ?>">
                             </div>
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group mb-2">
-                                <label for="master-text">Master</label>
-                                <input type="text" name="master-text" id="master-text" class="form-control" placeholder="Ingrese el Master" aria-describedby="master-text" value="<?= $courierCurrent->guia_master ?>">
-                                <small id="helpId" class="text-muted">Escriba los 10 caracteres de su guia master</small>
+                                <label for="master">Master</label>
+                                <input type="text" name="master" id="master" class="form-control" placeholder="Ingrese el Master" aria-describedby="master" maxlength="20" value="<?= $courierCurrent->guia_master ?>">
+                                <!-- <small id="helpId" class="text-muted">Escriba los 10 caracteres de su guia master</small> -->
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <div class="form-group mb-2">
                                 <label for="collection">Schd Collection</label>
                                 <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
-                                <small class="text-muted text-center">Ingresa la Fecha en formato 24h</small>
+                             
                             </div>
 
                         </div>
@@ -148,13 +148,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                     <?php aldem_set_input_hidden("id_user", get_current_user_id()); ?>
                     <?php if ($update) {
-                        aldem_set_input_hidden("master", $courierCurrent->guia_master);
+                        // aldem_set_input_hidden("master", $courierCurrent->guia_master);
                         aldem_set_input_hidden("id_exportador", $courierCurrent->id_exportador);
                         aldem_set_input_hidden("id_importador", $courierCurrent->id_importador);
                         aldem_set_input_hidden("id_cargo_job", $id_cargo_job);
                         aldem_set_action_name("update-cargo", "");
                     } else {
-                        aldem_set_input_hidden("master", "");
+                        // aldem_set_input_hidden("master", "");
                         aldem_set_input_hidden("id_exportador", "");
                         aldem_set_input_hidden("id_importador", "");
                         aldem_set_action_name("new-cargo", "");
@@ -480,28 +480,28 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
         }
 
-        function formatearTargetaBanco(string) {
-            var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
-            if (cleaned != "") {
-                if (cleaned.length > 10) {
-                    cleaned = cleaned.substring(0, 10);
-                    // console.log(cleaned.length);
-                } else if (cleaned.length < 10) {
-                    cleaned = cleaned.padEnd(10);
-                    // console.log("mi tamaño es", cleaned.length);
-                }
-                return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
-            } else {
-                return "";
-            }
-        }
-        document.querySelector("#master-text").addEventListener("keyup", (e) => {
+        // function formatearTargetaBanco(string) {
+        //     var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
+        //     if (cleaned != "") {
+        //         if (cleaned.length > 10) {
+        //             cleaned = cleaned.substring(0, 10);
+        //             // console.log(cleaned.length);
+        //         } else if (cleaned.length < 10) {
+        //             cleaned = cleaned.padEnd(10);
+        //             // console.log("mi tamaño es", cleaned.length);
+        //         }
+        //         return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
+        //     } else {
+        //         return "";
+        //     }
+        // }
+        // document.querySelector("#master-text").addEventListener("keyup", (e) => {
 
-            setTimeout(() => {
-                e.target.value = formatearTargetaBanco(e.target.value);
-                document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
-            }, 500);
-        })
+        //     setTimeout(() => {
+        //         e.target.value = formatearTargetaBanco(e.target.value);
+        //         document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
+        //     }, 500);
+        // })
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnCloseModalExportador").click();
@@ -542,7 +542,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         <?php
         if ($update) {
         ?>
-            $('#master-text').val(formatearTargetaBanco($('#master-text').val()));
+            // $('#master-text').val(formatearTargetaBanco($('#master-text').val()));
         <?php        }
         ?>
 

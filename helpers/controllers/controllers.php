@@ -293,9 +293,9 @@ function aldem_post_new_courier()
         $validations = [
             'job'                  =>  'required|max:35',
             'manifiesto'                  => 'numeric',
-            'dua'                  => 'numeric',
+            'dua'                  => 'max:20',
             'guia'                  => 'max:12',
-            'master'                  => 'max:10',
+            'master'                  => 'max:20',
             'pcs'                  => 'numeric',
             'kilos'                  => 'numeric',
             'id_importador'                  => 'numeric',
@@ -315,7 +315,7 @@ function aldem_post_new_courier()
             // se va crear un shipper
             $waybill = sanitize_text_field($_POST['job']);
             $manifiesto = intval(sanitize_text_field($_POST['manifiesto']));
-            $dua = intval(sanitize_text_field($_POST['dua']));
+            $dua = sanitize_text_field($_POST['dua']);
             $guia = sanitize_text_field($_POST['guia']);
             $guia_master = sanitize_text_field($_POST['master']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
@@ -357,7 +357,7 @@ function aldem_post_new_courier()
             ];
             if ($action_name == "new-courier") {
                 $format = array(
-                    '%d', '%s', '%d', '%d',
+                    '%d', '%s', '%d', '%s',
                     '%s', '%s', '%d', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
@@ -374,7 +374,7 @@ function aldem_post_new_courier()
                 $id_courier_job = intval(sanitize_text_field($_POST['id_courier_job']));
                 unset($data["created_at"]);
                 $format2 = $format = array(
-                    '%d', '%s', '%d', '%d',
+                    '%d', '%s', '%d', '%s',
                     '%s', '%s', '%d', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
@@ -398,9 +398,9 @@ function aldem_post_new_courier()
         $validations = [
             'job'                  =>  'required|max:35',
             'manifiesto'                  => 'numeric',
-            'dua'                  => 'numeric',
+            'dua'                  => 'max:20',
             'guia'                  => 'max:12',
-            'master'                  => 'max:10',
+            'master'                  => 'max:20',
             'pcs'                  => 'numeric',
             'kilos'                  => 'numeric',
             'id_importador'                  => 'numeric',
@@ -421,7 +421,7 @@ function aldem_post_new_courier()
             // se va crear un shipper
             $waybill = sanitize_text_field($_POST['job']);
             $manifiesto = intval(sanitize_text_field($_POST['manifiesto']));
-            $dua = intval(sanitize_text_field($_POST['dua']));
+            $dua = sanitize_text_field($_POST['dua']);
             $guia = sanitize_text_field($_POST['guia']);
             $guia_master = sanitize_text_field($_POST['master']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
@@ -465,7 +465,7 @@ function aldem_post_new_courier()
             ];
             if ($action_name == "new-cargo") {
                 $format = array(
-                    '%d', '%s', '%d', '%d',
+                    '%d', '%s', '%d', '%s',
                     '%s', '%s', '%d', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
@@ -482,7 +482,7 @@ function aldem_post_new_courier()
                 $id_cargo_job = intval(sanitize_text_field($_POST['id_cargo_job']));
                 unset($data["created_at"]);
                 $format2 = array(
-                    '%d', '%s', '%d', '%d',
+                    '%d', '%s', '%d', '%s',
                     '%s', '%s', '%d', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
