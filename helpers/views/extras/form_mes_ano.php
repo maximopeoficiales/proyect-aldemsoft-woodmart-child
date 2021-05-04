@@ -1,5 +1,5 @@
 <?php
-print_r($atts);
+// print_r($atts);
 $urlRedirection = $atts["url"];
 $nameParam = $atts["param"];
 $textButton = $atts["text_button"] ?? "Enviar";
