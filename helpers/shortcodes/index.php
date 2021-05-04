@@ -36,10 +36,10 @@ function aldem_getShorcodesViewList(): array
 function aldem_init_addshorcodes()
 {
     foreach (aldem_getShorcodesViewList() as $shorcode) {
-        add_shortcode(aldem_shortcode_prefix() . $shorcode["name"], function () use ($shorcode) {
+        add_shortcode(aldem_shortcode_prefix() . $shorcode["name"], function ($atts) use ($shorcode) {
             ob_start();
             // include file (contents will get saved in output buffer)
-            aldem_cargar_view($shorcode["view"]);
+            aldem_cargar_view($shorcode["view"], $atts);
             // print_r($shorcode["view"]);
 
             // save and return the content that has been output
@@ -48,6 +48,10 @@ function aldem_init_addshorcodes()
     }
 }
 
+/**
+ * Shortcodes Custom
+ * @return void
+ */
 function aldem_init_shorcode_getParam()
 {
     add_shortcode(aldem_shortcode_prefix() . "datatableGetParam", function ($atts) {
@@ -103,7 +107,10 @@ function aldem_init_shorcode_getParam()
     });
 }
 
-
+/**
+ * Verifica si existe un shortcode , si existe agrega styles
+ * @return void
+ */
 function aldem_verify_exists_shortcodes(): bool
 {
     foreach (aldem_getShorcodesViewList() as $shorcode) {

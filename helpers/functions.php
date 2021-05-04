@@ -9,7 +9,7 @@ require aldem_get_directory_helper() . "vendor/autoload.php";
  * @param string $name Nombre del archivo
  * @return void
  */
-function aldem_cargar_view($name)
+function aldem_cargar_view($name,$atts=null)
 {
      require(aldem_get_view_directory_helper() . "$name.php");
 }

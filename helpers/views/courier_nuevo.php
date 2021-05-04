@@ -16,7 +16,6 @@ $importadorCurrent = $update ?  query_getImportadores($importadorCurrent->id_imp
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
 $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
 
-
 ?>
 <?php if ($update && !aldem_isUserCreated($courierCurrent->id_usuario_created)) {
     aldem_noAccess();
