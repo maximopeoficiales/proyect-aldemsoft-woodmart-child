@@ -269,7 +269,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 </div>
 
 <!-- modal de Exportador -->
-<div class="modal" id="modalExportador" tabindex="-1" role="dialog" aria-labelledby="modalExportador" aria-hidden="true" style="margin-top: 100px; ">
+<div class="modal" id="modalExportador" tabindex="-1" role="dialog" aria-labelledby="modalExportador" aria-hidden="true" style="margin-top: 100px;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark aldem-text-white">
@@ -283,7 +283,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Correo1</th>
+                            <th scope="col" class="none">Correo2</th>
+                            <th scope="col" class="none">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -294,7 +298,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <span><?= $exportador->nombre ?></span>
                                     <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
                                 </td>
+                                <td><?= $exportador->desc_pais ?></td>
                                 <td><?= $exportador->direccion ?></td>
+                                <td><?= $exportador->correo1 ?></td>
+                                <td><?= $exportador->correo2 ?></td>
+                                <td><?= $exportador->correo3 ?></td>
                             </tr>
                         <?php }  ?>
                     </tbody>
@@ -322,7 +330,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Correo1</th>
+                            <th scope="col" class="none">Correo2</th>
+                            <th scope="col" class="none">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -333,7 +345,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <span><?= $importador->nombre ?></span>
                                     <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
                                 </td>
+                                <td><?= $importador->desc_pais ?></td>
                                 <td><?= $importador->direccion ?></td>
+                                <td><?= $importador->correo1 ?></td>
+                                <td><?= $importador->correo2 ?></td>
+                                <td><?= $importador->correo3 ?></td>
                             </tr>
                         <?php }  ?>
                     </tbody>
@@ -345,7 +361,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         </div>
     </div>
 </div>
-
+<!-- modales de creacion -->
 <div class="modal" id="modalNewExportador" tabindex="-1" role="dialog" aria-labelledby="modalNewExportador" aria-hidden="true" style="margin-top: 100px; ">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -365,8 +381,21 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     </div>
                     <div class="form-group">
                         <label for="direccionNewExportador">Direccion</label>
-                        <input type="text" name="direccionNewExportador" id="direccionNewExportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewExportador" required maxlength="50">
+                        <input type="text" name="direccionNewExportador" id="direccionNewExportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewExportador" maxlength="50">
                     </div>
+                    <div class="form-group">
+                        <label for="correo1NewExportador">Correo1</label>
+                        <input type="email" name="correo1NewExportador" id="correo1NewExportador" class="form-control" placeholder="Ingrese correo1" aria-describedby="correo1NewExportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo2NewExportador">Correo2</label>
+                        <input type="email" name="correo2NewExportador" id="correo2NewExportador" class="form-control" placeholder="Ingrese correo2" aria-describedby="correo2NewExportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo3NewExportador">Correo3</label>
+                        <input type="email" name="correo3NewExportador" id="correo3NewExportador" class="form-control" placeholder="Ingrese correo3" aria-describedby="correo3NewExportador" maxlength="200">
+                    </div>
+
                     <div class="form-group">
                         <label for="paisShipper" style="display: block;">Pais:</label>
                         <select class="form-control select-countrys" name="paisNewExportador" id="paisNewExportador" style="width: 100% !important;">
@@ -409,7 +438,19 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     </div>
                     <div class="form-group">
                         <label for="direcccionNewImportador">Direccion</label>
-                        <input type="text" name="direccionNewImportador" id="direccionNewImportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewImportador" required maxlength="50">
+                        <input type="text" name="direccionNewImportador" id="direccionNewImportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewImportador" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo1NewImportador">Correo1</label>
+                        <input type="email" name="correo1NewImportador" id="correo1NewImportador" class="form-control" placeholder="Ingrese correo1" aria-describedby="correo1NewImportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo2NewImportador">Correo2</label>
+                        <input type="email" name="correo2NewImportador" id="correo2NewImportador" class="form-control" placeholder="Ingrese correo2" aria-describedby="correo2NewImportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo3NewImportador">Correo3</label>
+                        <input type="email" name="correo3NewImportador" id="correo3NewImportador" class="form-control" placeholder="Ingrese correo3" aria-describedby="correo3NewImportador" maxlength="200">
                     </div>
                     <div class="form-group">
                         <label for="paisShipper" style="display: block;">Pais:</label>
@@ -440,7 +481,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         <?php aldem_datatables_in_spanish(); ?>
         $('#table-exportadores-select').DataTable();
         $('#table-importadores-select').DataTable();
-
     });
     <?php
 
@@ -498,7 +538,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Correo1</th>
+                            <th scope="col" class="none">Correo2</th>
+                            <th scope="col" class="none">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -510,7 +554,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <span>${shipper.nombre}</span>
                             <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x ${tipo}-btn" style="color: #32CC52;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}"   data-nombre-${tipo}="${shipper.nombre}"></i></button>
                         </td>
+                        <td>${shipper.desc_pais}</td>
                         <td>${shipper.direccion}</td>
+                        <td>${shipper.correo1}</td>
+                        <td>${shipper.correo2}</td>
+                        <td>${shipper.correo3}</td>
                     </tr>
                     `;
                 });
@@ -536,6 +584,9 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             let raw = JSON.stringify({
                 "nombre": document.querySelector(`#nombreNew${tipo}`).value,
                 "direccion": document.querySelector(`#direccionNew${tipo}`).value,
+                "correo1": document.querySelector(`#correo1New${tipo}`).value,
+                "correo2": document.querySelector(`#correo2New${tipo}`).value,
+                "correo3": document.querySelector(`#correo3New${tipo}`).value,
                 "id_pais": document.querySelector(`#paisNew${tipo}`).value,
                 "id_tipo": id_tipo,
                 "id_user": <?= get_current_user_id() ?>,

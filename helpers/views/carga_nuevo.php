@@ -118,7 +118,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <div class="form-group mb-2">
                                 <label for="collection">Schd Collection</label>
                                 <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
-                             
+
                             </div>
 
                         </div>
@@ -182,7 +182,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
+                            <th scope="col">Correo1</th>
+                            <th scope="col">Correo2</th>
+                            <th scope="col">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -193,7 +197,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <span><?= $exportador->nombre ?></span>
                                     <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
                                 </td>
-                                <td><?= $exportador->direccion ?></td>
+                                <td><?= $exportador->desc_pais ?></td>
+                                <td><?= $exportador->correo1 ?></td>
+                                <td><?= $exportador->correo2 ?></td>
+                                <td><?= $exportador->correo3 ?></td>
                             </tr>
                         <?php }  ?>
                     </tbody>
@@ -221,7 +228,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
+                            <th scope="col">Correo1</th>
+                            <th scope="col">Correo2</th>
+                            <th scope="col">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -232,7 +243,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <span><?= $importador->nombre ?></span>
                                     <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
                                 </td>
+                                <td><?= $importador->desc_pais ?></td>
                                 <td><?= $importador->direccion ?></td>
+                                <td><?= $importador->correo1 ?></td>
+                                <td><?= $importador->correo2 ?></td>
+                                <td><?= $importador->correo3 ?></td>
                             </tr>
                         <?php }  ?>
                     </tbody>
