@@ -38,7 +38,10 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
     $wpdb = query_getWPDB();
     $validations = [
         'nombre'                  =>  'required|max:50',
-        'direccion'                  => 'required|max:50',
+        'direccion'                  => 'max:50',
+        'correo1'                  => 'email|max:200',
+        'correo2'                  => 'email|max:200',
+        'correo3'                  => 'email|max:200',
         'id_pais'                  => 'required|numeric',
         'id_tipo'                  => 'required|numeric',
         'id_user'                  => 'required|numeric',
@@ -48,6 +51,9 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
         // se va crear un shipper
         $nombre = sanitize_text_field($request->get_json_params()["nombre"]);
         $direccion = sanitize_text_field($request->get_json_params()["direccion"]);
+        $correo1 = sanitize_text_field($request->get_json_params()["correo1"]);
+        $correo2 = sanitize_text_field($request->get_json_params()["correo2"]);
+        $correo3 = sanitize_text_field($request->get_json_params()["correo3"]);
         $id_pais = intval(sanitize_text_field($request->get_json_params()["id_pais"]));
         $id_user = intval(sanitize_text_field($request->get_json_params()["id_user"]));
         $id_tipo = intval(sanitize_text_field($request->get_json_params()["id_tipo"]));
@@ -57,6 +63,9 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
             'id_tipo' => $id_tipo,
             'descripcion' => $nombre,
             'direccion' => $direccion,
+            'correo1' => $correo1,
+            'correo2' => $correo2,
+            'correo3' => $correo3,
             'id_country' => $id_pais,
             'id_usuario_created' => $id_user,
             'created_at' => $fecha_actual
@@ -64,6 +73,7 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
 
         $format = array(
             '%d', '%s', '%s',
+            '%s', '%s', '%s', /* se agregaron los correos */
             '%d', '%d',  '%s'
         );
         if ($wpdb->insert($table, $data, $format)) {
