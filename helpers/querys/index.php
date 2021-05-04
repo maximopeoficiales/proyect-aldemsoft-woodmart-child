@@ -228,3 +228,15 @@ function query_getExportadores($idExportador = null)
     $wpdb->flush();
     return $result;
 }
+
+function query_getMarkenDelivery($idDelivery = null)
+{
+
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id AS id_delivery, descripcion FROM ${prefix}marken_delivery";
+    $sql .= $idDelivery != null ? " WHERE id= $idDelivery" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}

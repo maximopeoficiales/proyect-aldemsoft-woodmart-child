@@ -1,11 +1,14 @@
 <?php
 $update = $_GET["editjob"] != null || $_GET["editjob"] != "" ? true : false;
-$id_cargo_job = $update ? $_GET["editjob"] : null;
+$id_courier_job = $update ? $_GET["editjob"] : null;
 $countrys = (object) query_getCountrys();
 $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
 $importadores = query_getImportadores();
-$courierCurrent = $update ? query_getCargoJobs($id_cargo_job)[0] : null;
+$handlings = query_getMarkenHandlings();
+
+$deliverys = query_getMarkenDelivery();
+$courierCurrent = $update ? query_getCargoJobs($id_courier_job)[0] : null;
 // update
 $exportadorCurrent = $update ?  query_getExportadores($courierCurrent->id_exportador)[0] : null;
 $importadorCurrent = $update ?  query_getImportadores($importadorCurrent->id_importador)[0] : null;
@@ -25,153 +28,277 @@ aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion carga 😀", "Se ha actualizado correctamente el servicio de importacion carga😀", "Ocurrio un error 😢 en el registro del servicio de importacion carga");
 ?>
 
-
-<div class="row justify-content-center">
-    <div pcs="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
-                    <div class="form-group">
-                        <label for="job">Job</label>
-                        <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>">
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="manifiesto">Manifiesto</label>
-                                <input type="number" name="manifiesto" id="manifiesto" class="form-control" placeholder="Ingrese el Manifiesto" aria-describedby="manifiesto" value="<?= $courierCurrent->manifiesto ?>" maxlength="10">
+<div class="row justify-content-center p-4">
+    <div pcs="col-md-8" style="width: 100%;">
+        <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
+            <div class="card">
+                <div class="card-header bg-dark aldem_pointer" id="headingOne" data-toggle="collapse" data-target="#courier_importantes" aria-expanded="true" aria-controls="courier_importantes" style>
+                    <h2 class="mb-0">
+                        <div class="d-block text-white">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-white">
+                                    Datos Principales
+                                </h5>
+                                <div class="">
+                                    <i class="mx-2 fas fa-sort-down  fa-lg"></i>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="dua">DUA</label>
-                                <input type="text" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" maxlength="20" aria-describedby="DUA" value="<?= $courierCurrent->dua ?>">
+                    </h2>
+                </div>
+
+                <div id="courier_importantes" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="job">Job</label>
+                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>">
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-2">
+                                    <label for="manifiesto">Manifiesto</label>
+                                    <input type="number" name="manifiesto" id="manifiesto" class="form-control" placeholder="Ingrese el Manifiesto" aria-describedby="manifiesto" value="<?= $courierCurrent->manifiesto ?>" maxlength="10">
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-2">
+                                    <label for="dua">DUA</label>
+                                    <input type="text" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" aria-describedby="DUA" maxlength="20" value="<?= $courierCurrent->dua ?>">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="guia">Guia</label>
-                                <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" maxlength="12" value="<?= $courierCurrent->guia ?>">
+                        <div class="row mt-2">
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-2">
+                                    <label for="guia">Guia</label>
+                                    <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" value="<?= $courierCurrent->guia ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-2">
+                                    <label for="master">Master</label>
+                                    <input type="text" name="master" id="master" class="form-control" placeholder="Ingrese el Master" aria-describedby="master" maxlength="20" value="<?= $courierCurrent->guia_master ?>">
+                                    <!-- <small id="helpId" class="text-muted">Escriba los 10 caracteres de su guia master</small> -->
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="master">Master</label>
-                                <input type="text" name="master" id="master" class="form-control" placeholder="Ingrese el Master" aria-describedby="master" maxlength="20" value="<?= $courierCurrent->guia_master ?>">
-                                <!-- <small id="helpId" class="text-muted">Escriba los 10 caracteres de su guia master</small> -->
+                        <div class="row mt-2">
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-2">
+                                    <label for="">Pcs</label>
+                                    <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese las pcs" aria-describedby="pcs" value="<?= $courierCurrent->pcs ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-2">
+                                    <label for="kilos">Kilos: </label>
+                                    <input type="number" name="kilos" id="kilos" class="form-control" placeholder="Ingrese los kilos" aria-describedby="kilos" step="0.01" value="<?= $courierCurrent->peso ?>">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="">Pcs</label>
-                                <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese las pcs" aria-describedby="pcs" value="<?= $courierCurrent->pcs ?>">
+
+
+                        <label for="importador-text">Importador</label>
+                        <div class="input-group my-2">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador" value="<?= $importadorCurrent->nombre ?>">
+                            <div class="input-group-append">
+                                <button class="btn  bg-aldem-secondary dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Elije una opcion</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalImportador">Seleccionar Importador</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewImportador">Nuevo Importador</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="kilos">Kilos: </label>
-                                <input type="number" name="kilos" id="kilos" class="form-control" placeholder="Ingrese los kilos" aria-describedby="kilos" step="0.01" value="<?= $courierCurrent->peso ?>">
+                        <label for="exportador-text">Exportador</label>
+                        <div class="input-group my-2">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador" value="<?= $exportadorCurrent->nombre ?>">
+                            <div class="input-group-append">
+                                <button class="btn bg-aldem-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Elije una opcion</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExportador">Seleccionar Exportador</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewExportador">Nuevo Exportador</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class=" form-group my-2">
+                            <label for="incoterm">IncoTerm:</label>
+                            <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
 
+                                <?php foreach ($incoTerms as $key => $incoTerm) {
+                                ?>
 
-                    <label for="importador-text">Importador</label>
-                    <div class="input-group my-2">
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador" value="<?= $importadorCurrent->nombre ?>">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white;">Elije una opcion</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalImportador">Seleccionar Importador</a>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewImportador">Nuevo Importador</a>
-                            </div>
+                                    <option value="<?= $incoTerm->id_incoterm ?>"><?= $incoTerm->descripcion ?></option>
+                                <?php }  ?>
+                            </select>
                         </div>
-                    </div>
-                    <label for="exportador-text">Exportador</label>
-                    <div class="input-group my-2">
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador" value="<?= $exportadorCurrent->nombre ?>">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white;">Elije una opcion</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExportador">Seleccionar Exportador</a>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewExportador">Nuevo Exportador</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" form-group my-2">
-                        <label for="incoterm">IncoTerm:</label>
-                        <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
+                        <div class="row mt-2">
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-2">
+                                    <label for="collection">Schd Collection</label>
+                                    <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
 
-                            <?php foreach ($incoTerms as $key => $incoTerm) {
-                            ?>
-
-                                <option value="<?= $incoTerm->id_incoterm ?>"><?= $incoTerm->descripcion ?></option>
-                            <?php }  ?>
-                        </select>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="collection">Schd Collection</label>
-                                <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
+                                </div>
 
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <label for="delivery">Delivery: </label>
+                                    <input type="date" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
 
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-2">
-                                <label for="delivery">Delivery: </label>
-                                <input type="date" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
-                                <small class="text-muted text-center">Ingresa la Fecha en formato 24h</small>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="form-group my-2">
-                        <label for="protocolo">Protocolo: </label>
-                        <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" aria-describedby="protocolo" maxlength="50" value="<?= $courierCurrent->protocolo ?>">
-                        <!-- <textarea name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el protocolo" aria-describedby="protocolo" maxlength="50" style="min-height: 140px;"></textarea> -->
-                    </div>
-                    <div class="form-group my-2">
-                        <label for="instructions">Instructions: </label>
-                        <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
-                    </div>
-                    <div class="form-group my-2">
-                        <label for="observaciones">Observaciones: </label>
-                        <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Ingrese las observaciones" aria-describedby="observaciones" maxlength="250" style="min-height: 140px;"><?= $courierCurrent->observaciones ?></textarea>
-                    </div>
+                        <div class="form-group my-2">
+                            <label for="protocolo">Protocolo: </label>
+                            <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" aria-describedby="protocolo" maxlength="50" value="<?= $courierCurrent->protocolo ?>">
+                            <!-- <textarea name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el protocolo" aria-describedby="protocolo" maxlength="50" style="min-height: 140px;"></textarea> -->
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="instructions">Instructions: </label>
+                            <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
+                        </div>
 
-                    <?php aldem_set_input_hidden("id_user", get_current_user_id()); ?>
-                    <?php if ($update) {
-                        // aldem_set_input_hidden("master", $courierCurrent->guia_master);
-                        aldem_set_input_hidden("id_exportador", $courierCurrent->id_exportador);
-                        aldem_set_input_hidden("id_importador", $courierCurrent->id_importador);
-                        aldem_set_input_hidden("id_cargo_job", $id_cargo_job);
-                        aldem_set_action_name("update-cargo", "");
-                    } else {
-                        // aldem_set_input_hidden("master", "");
-                        aldem_set_input_hidden("id_exportador", "");
-                        aldem_set_input_hidden("id_importador", "");
-                        aldem_set_action_name("new-cargo", "");
-                    } ?>
-                    <?php aldem_set_proccess_form(); ?>
-                    <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
-                </form>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="card my-2">
+                <div class="card-header bg-dark aldem_pointer" id="headingOpcional" data-toggle="collapse" data-target="#courier_opcionales" aria-expanded="true" aria-controls="courier_opcionales" style>
+                    <h2 class="mb-0">
+                        <div class="d-block text-white">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-white">
+                                    Datos Opcionales
+                                </h5>
+                                <div class="">
+                                    <i class="mx-2 fas fa-sort-down  fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+
+                <div id="courier_opcionales" class="collapse my-2" aria-labelledby="headingOpcional" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class=" form-group my-2">
+                                    <label for="id_delivery">Delivery:</label>
+                                    <select name="id_delivery" id="id_delivery" class="form-control" placeholder="Elija el Delivery" aria-describedby="id_delivery" style="width: 100%;">
+
+                                        <?php foreach ($deliverys as $key => $delivery) {
+                                        ?>
+                                            <option value="<?= $delivery->id_delivery ?>"><?= $delivery->descripcion ?></option>
+                                        <?php }  ?>
+                                    </select>
+                                    <small id="helpId" class="text-muted">Entrega al importador por Guia Hija</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" form-group my-2">
+                                    <label for="id_handling">Handling:</label>
+                                    <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
+                                        <?php foreach ($handlings as $key => $handling) {
+                                        ?>
+                                            <option value="<?= $handling->id_handling ?>"><?= $handling->descripcion ?></option>
+                                        <?php }  ?>
+                                    </select>
+                                    <small id="helpId" class="text-muted">Entrega al importador por Guia Hija</small>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-md-4">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="ind_costo_delivery" id="ind_costo_delivery" value="1" <?= $courierCurrent->ind_costo_delivery == 1 ? "checked " : "" ?> <?= !$update ? " checked " : "" ?>>
+                                    <label class="form-check-label" for="ind_costo_delivery">
+                                        Costo Delivery
+                                    </label>
+                                    <small id="helpId" class="text-muted">Entrega al importador por Guia Hija</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> <?= !$update ? " checked " : "" ?>>
+                                    <label class="form-check-label" for="ind_servicio_aduana">
+                                        Tarifa Servicio Aduana
+                                    </label>
+                                    <small id="helpId" class="text-muted">No marcar si el cliente o Broker pagala tarifa sel servicio de aduana</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> <?= !$update ? " checked " : "" ?>>
+                                    <label class="form-check-label" for="ind_costo_aduana">
+                                        Costo Servicio Aduana
+                                    </label>
+                                    <small id="helpId" class="text-muted">No marcar si el cliente paga el costo de servicio de la aduana</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-header bg-dark aldem_pointer" id="grupoAlmacenajeOpcional" data-toggle="collapse" data-target="#grupo_almacenaje_opcionales" aria-expanded="true" aria-controls="grupo_almacenaje_opcionales" style>
+                    <h2 class="mb-0">
+                        <div class="d-block text-white">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-white">
+                                    Nuevo Grupo Almacenaje
+                                </h5>
+                                <div class="">
+                                    <i class="mx-2 fas fa-sort-down  fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+                <div id="grupo_almacenaje_opcionales" class="collapse my-2" aria-labelledby="grupoAlmacenajeOpcional" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="form-group mb-2">
+                            <label for="tarifa_almacenaje">Tarifa Almacenaje</label>
+                            <input type="number" name="tarifa_almacenaje" id="tarifa_almacenaje" class="form-control" placeholder="Ingrese la Tarifa Almacenaje" aria-describedby="tarifa_almacenaje" step="0.01" value="<?= $courierCurrent->tarifa_almacenaje ?>">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="tarifa_costo">Costo Almacenaje</label>
+                            <input type="number" name="tarifa_costo" id="tarifa_costo" class="form-control" placeholder="Ingrese el Costo Almacenaje" aria-describedby="tarifa_costo" step="0.01" value="<?= $courierCurrent->tarifa_costo ?>">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="tarifa_impuestos">Impuesto Tarifa</label>
+                            <input type="number" name="tarifa_impuestos" id="tarifa_impuestos" class="form-control" placeholder="Ingrese los Impuestos" aria-describedby="tarifa_impuestos" step="0.01" value="<?= $courierCurrent->tarifa_impuestos ?>">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php aldem_set_input_hidden("id_user", get_current_user_id()); ?>
+            <?php if ($update) {
+                // aldem_set_input_hidden("master", $courierCurrent->guia_master);
+                aldem_set_input_hidden("id_exportador", $courierCurrent->id_exportador);
+                aldem_set_input_hidden("id_importador", $courierCurrent->id_importador);
+                aldem_set_input_hidden("id_cargo_job", $id_courier_job);
+                aldem_set_action_name("update-cargo", "");
+            } else {
+                // aldem_set_input_hidden("master", "");
+                aldem_set_input_hidden("id_exportador", "");
+                aldem_set_input_hidden("id_importador", "");
+                aldem_set_action_name("new-cargo", "");
+            } ?>
+            <?php aldem_set_proccess_form(); ?>
+
+            <button type="submit" class="btn btn-success w-100 my-2" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
+        </form>
     </div>
 </div>
 
 <!-- modal de Exportador -->
-<div class="modal" id="modalExportador" tabindex="-1" role="dialog" aria-labelledby="modalExportador" aria-hidden="true" style="margin-top: 100px; ">
+<div class="modal" id="modalExportador" tabindex="-1" role="dialog" aria-labelledby="modalExportador" aria-hidden="true" style="margin-top: 100px;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
+            <div class="modal-header bg-dark aldem-text-white">
                 <h5 class="modal-title aldem-text-white">Elige un Exportador</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListExportador">
                     <span aria-hidden="true">&times;</span>
@@ -184,9 +311,9 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
-                            <th scope="col">Correo1</th>
-                            <th scope="col">Correo2</th>
-                            <th scope="col">Correo3</th>
+                            <th scope="col" class="none">Correo1</th>
+                            <th scope="col" class="none">Correo2</th>
+                            <th scope="col" class="none">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -195,9 +322,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $exportador->nombre ?></span>
-                                    <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
+                                    <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
                                 </td>
                                 <td><?= $exportador->desc_pais ?></td>
+                                <td><?= $exportador->direccion ?></td>
                                 <td><?= $exportador->correo1 ?></td>
                                 <td><?= $exportador->correo2 ?></td>
                                 <td><?= $exportador->correo3 ?></td>
@@ -230,9 +358,9 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
-                            <th scope="col">Correo1</th>
-                            <th scope="col">Correo2</th>
-                            <th scope="col">Correo3</th>
+                            <th scope="col" class="none">Correo1</th>
+                            <th scope="col" class="none">Correo2</th>
+                            <th scope="col" class="none">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -241,7 +369,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $importador->nombre ?></span>
-                                    <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
+                                    <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
                                 </td>
                                 <td><?= $importador->desc_pais ?></td>
                                 <td><?= $importador->direccion ?></td>
@@ -259,7 +387,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         </div>
     </div>
 </div>
-
+<!-- modales de creacion -->
 <div class="modal" id="modalNewExportador" tabindex="-1" role="dialog" aria-labelledby="modalNewExportador" aria-hidden="true" style="margin-top: 100px; ">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -279,8 +407,21 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     </div>
                     <div class="form-group">
                         <label for="direccionNewExportador">Direccion</label>
-                        <input type="text" name="direccionNewExportador" id="direccionNewExportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewExportador" required maxlength="50">
+                        <input type="text" name="direccionNewExportador" id="direccionNewExportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewExportador" maxlength="50">
                     </div>
+                    <div class="form-group">
+                        <label for="correo1NewExportador">Correo1</label>
+                        <input type="email" name="correo1NewExportador" id="correo1NewExportador" class="form-control" placeholder="Ingrese correo1" aria-describedby="correo1NewExportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo2NewExportador">Correo2</label>
+                        <input type="email" name="correo2NewExportador" id="correo2NewExportador" class="form-control" placeholder="Ingrese correo2" aria-describedby="correo2NewExportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo3NewExportador">Correo3</label>
+                        <input type="email" name="correo3NewExportador" id="correo3NewExportador" class="form-control" placeholder="Ingrese correo3" aria-describedby="correo3NewExportador" maxlength="200">
+                    </div>
+
                     <div class="form-group">
                         <label for="paisShipper" style="display: block;">Pais:</label>
                         <select class="form-control select-countrys" name="paisNewExportador" id="paisNewExportador" style="width: 100% !important;">
@@ -323,7 +464,19 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     </div>
                     <div class="form-group">
                         <label for="direcccionNewImportador">Direccion</label>
-                        <input type="text" name="direccionNewImportador" id="direccionNewImportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewImportador" required maxlength="50">
+                        <input type="text" name="direccionNewImportador" id="direccionNewImportador" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionNewImportador" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo1NewImportador">Correo1</label>
+                        <input type="email" name="correo1NewImportador" id="correo1NewImportador" class="form-control" placeholder="Ingrese correo1" aria-describedby="correo1NewImportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo2NewImportador">Correo2</label>
+                        <input type="email" name="correo2NewImportador" id="correo2NewImportador" class="form-control" placeholder="Ingrese correo2" aria-describedby="correo2NewImportador" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo3NewImportador">Correo3</label>
+                        <input type="email" name="correo3NewImportador" id="correo3NewImportador" class="form-control" placeholder="Ingrese correo3" aria-describedby="correo3NewImportador" maxlength="200">
                     </div>
                     <div class="form-group">
                         <label for="paisShipper" style="display: block;">Pais:</label>
@@ -337,7 +490,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <?php } ?>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success w-100" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                    <button type="submit" class="btn btn-success w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </div>
             </form>
             <div class="modal-footer">
@@ -354,13 +507,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         <?php aldem_datatables_in_spanish(); ?>
         $('#table-exportadores-select').DataTable();
         $('#table-importadores-select').DataTable();
-
     });
     <?php
 
     if ($update) {
     ?>
         $('#incoterm').val('<?= $courierCurrent->id_incoterm ?>');
+        $('#id_delivery').val('<?= $courierCurrent->id_delivery ?>');
+        $('#id_handling').val('<?= $courierCurrent->id_handling ?>');
     <?php        }
     ?>
     $('#incoterm').select2();
@@ -370,6 +524,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     $('#paisNewExportador').val('604');
     $('#paisNewImportador').select2();
     $('#paisNewExportador').select2();
+    $('#id_delivery').select2();
+    $('#id_handling').select2();
     (() => {
         const showSpinnerCargando = () => {
             Swal.fire({
@@ -410,7 +566,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Pais</th>
                             <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Correo1</th>
+                            <th scope="col" class="none">Correo2</th>
+                            <th scope="col" class="none">Correo3</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -420,9 +580,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <tr>
                         <td class="d-flex justify-content-between" style="align-items: center !important;">
                             <span>${shipper.nombre}</span>
-                            <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x" style="color: #32CC52;"></i></button>
+                            <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x ${tipo}-btn" style="color: #32CC52;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}"   data-nombre-${tipo}="${shipper.nombre}"></i></button>
                         </td>
+                        <td>${shipper.desc_pais}</td>
                         <td>${shipper.direccion}</td>
+                        <td>${shipper.correo1}</td>
+                        <td>${shipper.correo2}</td>
+                        <td>${shipper.correo3}</td>
                     </tr>
                     `;
                 });
@@ -448,6 +612,9 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             let raw = JSON.stringify({
                 "nombre": document.querySelector(`#nombreNew${tipo}`).value,
                 "direccion": document.querySelector(`#direccionNew${tipo}`).value,
+                "correo1": document.querySelector(`#correo1New${tipo}`).value,
+                "correo2": document.querySelector(`#correo2New${tipo}`).value,
+                "correo3": document.querySelector(`#correo3New${tipo}`).value,
                 "id_pais": document.querySelector(`#paisNew${tipo}`).value,
                 "id_tipo": id_tipo,
                 "id_user": <?= get_current_user_id() ?>,

@@ -437,6 +437,16 @@ function aldem_post_new_courier()
             'protocolo'                  => 'max:50',
             'observaciones'                  => 'max:250',
             'id_user'                  => 'required|numeric',
+
+            'id_delivery'                  => 'numeric',
+            'ind_costo_delivery'                  => 'numeric',
+            'id_handling'                  => 'numeric',
+            'ind_servicio_aduana'                  => 'numeric',
+            'ind_costo_aduana'                  => 'numeric',
+
+            'tarifa_almacenaje'                  => 'numeric',
+            'tarifa_costo'                  => 'numeric',
+            'tarifa_impuestos'                  => 'numeric',
         ];
         if ($action_name == "update-cargo") {
             $validations["id_cargo_job"] = "required|numeric";
@@ -461,6 +471,18 @@ function aldem_post_new_courier()
             $protocolo = sanitize_text_field($_POST['protocolo']);
             $fecha_actual = date("Y-m-d H:i:s");
             $id_user = sanitize_text_field($_POST['id_user']);
+
+            $id_delivery = intval(sanitize_text_field($_POST['id_delivery']));
+            $ind_costo_delivery = intval(sanitize_text_field(isset($_POST['ind_costo_delivery']) ? 1 : 0));
+            $id_handling = intval(sanitize_text_field($_POST['id_handling']));
+            $ind_transporte = intval(sanitize_text_field(isset($_POST['ind_transporte']) ? 1 : 0));
+            $ind_servicio_aduana = intval(sanitize_text_field(isset($_POST['ind_servicio_aduana']) ? 1 : 0));
+            $ind_costo_aduana = intval(sanitize_text_field(isset($_POST['ind_costo_aduana']) ? 1 : 0));
+
+            $tarifa_almacenaje = doubleval(sanitize_text_field($_POST['tarifa_almacenaje']));
+            $tarifa_costo = doubleval(sanitize_text_field($_POST['tarifa_costo']));
+            $tarifa_impuestos = doubleval(sanitize_text_field($_POST['tarifa_impuestos']));
+
             // query 1
             $table = "{$prefix}marken_job";
             $data = [
@@ -485,6 +507,17 @@ function aldem_post_new_courier()
                 "id_usuario_created" => $id_user,
                 "observaciones" => $observaciones,
 
+                "id_delivery" => $id_delivery,
+                "id_handling" => $id_handling,
+
+                "ind_costo_delivery" => $ind_costo_delivery,
+                "ind_servicio_aduana" => $ind_servicio_aduana,
+                "ind_costo_aduana" => $ind_costo_aduana,
+
+                "tarifa_almacenaje" => $tarifa_almacenaje,
+                "tarifa_costo" => $tarifa_costo,
+                "tarifa_impuestos" => $tarifa_impuestos,
+
                 "updated_at" => $fecha_actual,
                 "created_at" => $fecha_actual,
             ];
@@ -493,8 +526,13 @@ function aldem_post_new_courier()
                     '%d', '%s', '%d', '%s',
                     '%s', '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
-                    '%s', '%s', '%s', '%d',
-                    '%s', '%s', '%s'
+                    '%s', '%s', '%s', '%d', '%s',
+
+                    '%d', '%d',
+                    '%d', '%d', '%d', //ids
+                    '%s', '%s', '%s', //doubles
+
+                    '%s', '%s'
                 );
                 $queryExistoso = $wpdb->insert($table, $data, $format);
                 $wpdb->flush();
@@ -510,8 +548,13 @@ function aldem_post_new_courier()
                     '%d', '%s', '%d', '%s',
                     '%s', '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
-                    '%s', '%s', '%s', '%d',
-                    '%s', '%s'
+                    '%s', '%s', '%s', '%d', '%s',
+
+                    '%d', '%d',
+                    '%d', '%d', '%d', //ids
+                    '%s', '%s', '%s', //doubles
+
+                    '%s',
                 );
                 if ($wpdb->update($table, $data, [
                     "id" => $id_cargo_job

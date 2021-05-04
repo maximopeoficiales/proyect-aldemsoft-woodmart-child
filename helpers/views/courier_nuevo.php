@@ -184,7 +184,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <div class="col-md-6">
                                 <div class=" form-group my-2">
                                     <label for="id_site">Site:</label>
-                                    <select name="id_site" id="id_site" class="form-control" placeholder="Elija el Site" aria-describedby="site" required style="width: 100%;">
+                                    <select name="id_site" id="id_site" class="form-control" placeholder="Elija el Site" aria-describedby="site" style="width: 100%;">
 
                                         <?php foreach ($sites as $key => $site) {
                                         ?>
@@ -196,7 +196,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <div class="col-md-6">
                                 <div class=" form-group my-2">
                                     <label for="id_handling">Handling:</label>
-                                    <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" required style="width: 100%;">
+                                    <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
 
                                         <?php foreach ($handlings as $key => $handling) {
                                         ?>
@@ -210,7 +210,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="ind_transporte" id="ind_transporte" value="1" <?= $courierCurrent->ind_transporte == 1 ? "checked " : "" ?> <? !$update ? " checked " : "" ?>>
+                                    <input class="form-check-input" type="checkbox" name="ind_transporte" id="ind_transporte" value="1" <?= $courierCurrent->ind_transporte == 1 ? "checked " : "" ?> <?= !$update ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_transporte">
                                         Costo de Servicio de Transporte
                                     </label>
@@ -220,7 +220,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> <? !$update ? " checked " : "" ?>>
+                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> <?= !$update ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_servicio_aduana">
                                         Tarifa Servicio Aduana
                                     </label>
@@ -229,7 +229,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> <? !$update ? " checked " : "" ?>>
+                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> <?= !$update ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_costo_aduana">
                                         Costo Servicio Aduana
                                     </label>
