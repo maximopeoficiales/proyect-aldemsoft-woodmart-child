@@ -143,7 +143,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <div class="form-group mb-2">
                                     <label for="delivery">Delivery: </label>
                                     <input type="date" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
-                                    <small class="text-muted text-center">Ingresa la Fecha en formato 24h</small>
+
                                 </div>
                             </div>
                         </div>
@@ -188,7 +188,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                                         <?php foreach ($sites as $key => $site) {
                                         ?>
-                                            <option value="<?= $site->id_maken_site ?>"><?= $site->descripcion ?></option>
+                                            <option value="<?= $site->id_marken_site ?>"><?= $site->descripcion ?></option>
                                         <?php }  ?>
                                     </select>
                                 </div>
@@ -210,7 +210,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="ind_transporte" value="" id="ind_transporte" checked>
+                                    <input class="form-check-input" type="checkbox" name="ind_transporte" id="ind_transporte" value="1" <?= $courierCurrent->ind_transporte == 1 ? "checked " : "" ?> <? !$update ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_transporte">
                                         Costo de Servicio de Transporte
                                     </label>
@@ -220,7 +220,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="ind_servicio_aduana" checked>
+                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> <? !$update ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_servicio_aduana">
                                         Tarifa Servicio Aduana
                                     </label>
@@ -229,7 +229,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="ind_costo_aduana" checked>
+                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> <? !$update ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_costo_aduana">
                                         Costo Servicio Aduana
                                     </label>
@@ -487,6 +487,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     if ($update) {
     ?>
         $('#incoterm').val('<?= $courierCurrent->id_incoterm ?>');
+        $('#id_site').val('<?= $courierCurrent->id_site ?>');
+        $('#id_handling').val('<?= $courierCurrent->id_handling ?>');
     <?php        }
     ?>
     $('#incoterm').select2();
