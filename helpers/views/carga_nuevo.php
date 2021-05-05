@@ -248,7 +248,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="d-block text-white">
                             <div class="w-100 d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0 text-white">
-                                    Nuevo Grupo Almacenaje
+                                    Almacenaje
                                 </h5>
                                 <div class="">
                                     <i class="mx-2 fas fa-sort-down  fa-lg"></i>

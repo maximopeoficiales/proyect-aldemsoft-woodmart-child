@@ -29,7 +29,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 <div class="row justify-content-center p-4">
     <div pcs="col-md-8" style="width: 100%;">
         <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
-            <div class="card">
+            <div class="card my-2">
                 <div class="card-header bg-dark aldem_pointer" id="headingOne" data-toggle="collapse" data-target="#courier_importantes" aria-expanded="true" aria-controls="courier_importantes" style>
                     <h2 class="mb-0">
                         <div class="d-block text-white">
@@ -206,6 +206,33 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                             </div>
                         </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="card my-2">
+                <div class="card-header bg-dark aldem_pointer" id="headingOpcional2" data-toggle="collapse" data-target="#costos_tarifas" aria-expanded="true" aria-controls="costos_tarifas" style>
+                    <h2 class="mb-0">
+                        <div class="d-block text-white">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-white">
+                                    Costos y Tarifas
+                                </h5>
+                                <div class="">
+                                    <i class="mx-2 fas fa-sort-down  fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+                <div id="costos_tarifas" class="collapse my-2" aria-labelledby="headingOpcional2" data-parent="#accordionExample">
+                    <div class="card-body">
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
@@ -241,12 +268,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <label for="tarifa_almacenaje">Tarifa Almacenaje</label>
                             <input type="number" name="tarifa_almacenaje" id="tarifa_almacenaje" class="form-control" placeholder="Ingrese la Tarifa Almacenaje" aria-describedby="tarifa_almacenaje" step="0.01" value="<?= $courierCurrent->tarifa_almacenaje ?>">
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
+
             <?php aldem_set_input_hidden("id_user", get_current_user_id()); ?>
             <?php if ($update) {
                 // aldem_set_input_hidden("master", $courierCurrent->guia_master);
