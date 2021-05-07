@@ -6,12 +6,11 @@ $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
 $importadores = query_getImportadores();
 $handlings = query_getMarkenHandlings();
-
 $deliverys = query_getMarkenDelivery();
 $courierCurrent = $update ? query_getCargoJobs($id_courier_job)[0] : null;
 // update
 $exportadorCurrent = $update ?  query_getExportadores($courierCurrent->id_exportador)[0] : null;
-$importadorCurrent = $update ?  query_getImportadores($importadorCurrent->id_importador)[0] : null;
+$importadorCurrent = $update ?  query_getImportadores($courierCurrent->id_importador)[0] : null;
 
 
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
@@ -23,6 +22,7 @@ $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" .
     aldem_noAccess();
     return;
 } ?>
+
 <?php
 aldem_cargarStyles();
 aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion carga 😀", "Se ha actualizado correctamente el servicio de importacion carga😀", "Ocurrio un error 😢 en el registro del servicio de importacion carga");
@@ -122,7 +122,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         </div>
                         <div class=" form-group my-2">
                             <label for="incoterm">IncoTerm:</label>
-                            <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
+                            <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" style="width: 100%;">
                                 <option value="">Selecciona un Incoterm</option>
                                 <?php foreach ($incoTerms as $key => $incoTerm) {
                                 ?>
@@ -213,7 +213,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="ind_costo_delivery" id="ind_costo_delivery" value="1" <?= $courierCurrent->ind_costo_delivery == 1 ? "checked " : "" ?> >
+                                    <input class="form-check-input" type="checkbox" name="ind_costo_delivery" id="ind_costo_delivery" value="1" <?= $courierCurrent->ind_costo_delivery == 1 ? "checked " : "" ?>>
                                     <label class="form-check-label" for="ind_costo_delivery">
                                         Costo Delivery
                                     </label>
@@ -223,7 +223,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> >
+                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_servicio_aduana">
                                         Tarifa Servicio Aduana
                                     </label>
@@ -232,7 +232,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> >
+                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?>>
                                     <label class="form-check-label" for="ind_costo_aduana">
                                         Costo Servicio Aduana
                                     </label>

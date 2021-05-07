@@ -10,7 +10,7 @@ $sites = query_getMarkenSiteTipos();
 $courierCurrent = $update ? query_getCourierJobs($id_courier_job)[0] : null;
 // update
 $exportadorCurrent = $update ?  query_getExportadores($courierCurrent->id_exportador)[0] : null;
-$importadorCurrent = $update ?  query_getImportadores($importadorCurrent->id_importador)[0] : null;
+$importadorCurrent = $update ?  query_getImportadores($courierCurrent->id_importador)[0] : null;
 
 
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
@@ -142,7 +142,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <div class="card-body">
                         <div class=" form-group my-2">
                             <label for="incoterm">IncoTerm:</label>
-                            <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
+                            <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" style="width: 100%;">
                                 <option value="">Selecciona un Incoterm</option>
                                 <?php foreach ($incoTerms as $key => $incoTerm) {
                                 ?>
