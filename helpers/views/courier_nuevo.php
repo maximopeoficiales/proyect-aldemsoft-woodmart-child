@@ -118,6 +118,28 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 </div>
                             </div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-header bg-dark aldem_pointer" id="headingOpcional" data-toggle="collapse" data-target="#courier_opcionales" aria-expanded="true" aria-controls="courier_opcionales" style>
+                    <h2 class="mb-0">
+                        <div class="d-block text-white">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-white">
+                                    Datos Opcionales
+                                </h5>
+                                <div class="">
+                                    <i class="mx-2 fas fa-sort-down  fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+
+                <div id="courier_opcionales" class="collapse my-2" aria-labelledby="headingOpcional" data-parent="#accordionExample">
+                    <div class="card-body">
                         <div class=" form-group my-2">
                             <label for="incoterm">IncoTerm:</label>
                             <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
@@ -158,54 +180,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-            <div class="card my-2">
-                <div class="card-header bg-dark aldem_pointer" id="headingOpcional" data-toggle="collapse" data-target="#courier_opcionales" aria-expanded="true" aria-controls="courier_opcionales" style>
-                    <h2 class="mb-0">
-                        <div class="d-block text-white">
-                            <div class="w-100 d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0 text-white">
-                                    Datos Opcionales
-                                </h5>
-                                <div class="">
-                                    <i class="mx-2 fas fa-sort-down  fa-lg"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </h2>
-                </div>
-
-                <div id="courier_opcionales" class="collapse my-2" aria-labelledby="headingOpcional" data-parent="#accordionExample">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class=" form-group my-2">
-                                    <label for="id_site">Site:</label>
-                                    <select name="id_site" id="id_site" class="form-control" placeholder="Elija el Site" aria-describedby="site" style="width: 100%;">
-
-                                        <?php foreach ($sites as $key => $site) {
-                                        ?>
-                                            <option value="<?= $site->id_marken_site ?>"><?= $site->descripcion ?></option>
-                                        <?php }  ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class=" form-group my-2">
-                                    <label for="id_handling">Handling:</label>
-                                    <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
-
-                                        <?php foreach ($handlings as $key => $handling) {
-                                        ?>
-                                            <option value="<?= $handling->id_handling ?>"><?= $handling->descripcion ?></option>
-                                        <?php }  ?>
-                                    </select>
-                                </div>
-
-                            </div>
-                        </div>
 
 
 
@@ -233,6 +207,34 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 </div>
                 <div id="costos_tarifas" class="collapse my-2" aria-labelledby="headingOpcional2" data-parent="#accordionExample">
                     <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class=" form-group my-2">
+                                    <label for="id_site">Site:</label>
+                                    <select name="id_site" id="id_site" class="form-control" placeholder="Elija el Site" aria-describedby="site" style="width: 100%;">
+
+                                        <?php foreach ($sites as $key => $site) {
+                                        ?>
+                                            <option value="<?= $site->id_marken_site ?>"><?= $site->descripcion ?></option>
+                                        <?php }  ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" form-group my-2">
+                                    <label for="id_handling">Handling:</label>
+                                    <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
+
+                                        <?php foreach ($handlings as $key => $handling) {
+                                        ?>
+                                            <option value="<?= $handling->id_handling ?>"><?= $handling->descripcion ?></option>
+                                        <?php }  ?>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
