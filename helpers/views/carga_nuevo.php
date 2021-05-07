@@ -123,7 +123,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class=" form-group my-2">
                             <label for="incoterm">IncoTerm:</label>
                             <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
-
+                                <option value="">Selecciona un Incoterm</option>
                                 <?php foreach ($incoTerms as $key => $incoTerm) {
                                 ?>
 

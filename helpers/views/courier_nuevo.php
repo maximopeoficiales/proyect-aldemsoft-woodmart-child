@@ -143,7 +143,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class=" form-group my-2">
                             <label for="incoterm">IncoTerm:</label>
                             <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" required style="width: 100%;">
-
+                                <option value="">Selecciona un Incoterm</option>
                                 <?php foreach ($incoTerms as $key => $incoTerm) {
                                 ?>
 
@@ -225,7 +225,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <div class=" form-group my-2">
                                     <label for="id_handling">Handling:</label>
                                     <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
-                                        <option value="" >Selecciona un Handling</option>
+                                        <option value="">Selecciona un Handling</option>
                                         <?php foreach ($handlings as $key => $handling) {
                                         ?>
                                             <option value="<?= $handling->id_handling ?>"><?= $handling->descripcion ?></option>
@@ -238,7 +238,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="ind_transporte" id="ind_transporte" value="1" <?= $courierCurrent->ind_transporte == 1 ? "checked " : "" ?> >
+                                    <input class="form-check-input" type="checkbox" name="ind_transporte" id="ind_transporte" value="1" <?= $courierCurrent->ind_transporte == 1 ? "checked " : "" ?>>
                                     <label class="form-check-label" for="ind_transporte">
                                         Costo de Servicio de Transporte
                                     </label>
@@ -248,7 +248,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> >
+                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?>>
                                     <label class="form-check-label" for="ind_servicio_aduana">
                                         Tarifa Servicio Aduana
                                     </label>
@@ -257,7 +257,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> >
+                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?>>
                                     <label class="form-check-label" for="ind_costo_aduana">
                                         Costo Servicio Aduana
                                     </label>
