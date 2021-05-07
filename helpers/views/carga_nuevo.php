@@ -186,7 +186,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <div class=" form-group my-2">
                                     <label for="id_delivery">Delivery:</label>
                                     <select name="id_delivery" id="id_delivery" class="form-control" placeholder="Elija el Delivery" aria-describedby="id_delivery" style="width: 100%;">
-
+                                        <option value="">Selecciona un Delivery</option>
                                         <?php foreach ($deliverys as $key => $delivery) {
                                         ?>
                                             <option value="<?= $delivery->id_delivery ?>"><?= $delivery->descripcion ?></option>
@@ -199,6 +199,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <div class=" form-group my-2">
                                     <label for="id_handling">Handling:</label>
                                     <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
+                                        <option value="">Selecciona un Handling</option>
                                         <?php foreach ($handlings as $key => $handling) {
                                         ?>
                                             <option value="<?= $handling->id_handling ?>"><?= $handling->descripcion ?></option>
@@ -212,7 +213,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="ind_costo_delivery" id="ind_costo_delivery" value="1" <?= $courierCurrent->ind_costo_delivery == 1 ? "checked " : "" ?> <?= !$update ? " checked " : "" ?>>
+                                    <input class="form-check-input" type="checkbox" name="ind_costo_delivery" id="ind_costo_delivery" value="1" <?= $courierCurrent->ind_costo_delivery == 1 ? "checked " : "" ?> >
                                     <label class="form-check-label" for="ind_costo_delivery">
                                         Costo Delivery
                                     </label>
@@ -222,7 +223,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> <?= !$update ? " checked " : "" ?>>
+                                    <input class="form-check-input" name="ind_servicio_aduana" type="checkbox" id="ind_servicio_aduana" value="1" <?= $courierCurrent->ind_servicio_aduana == 1 ? " checked " : "" ?> >
                                     <label class="form-check-label" for="ind_servicio_aduana">
                                         Tarifa Servicio Aduana
                                     </label>
@@ -231,7 +232,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                             <div class="col-md-4">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> <?= !$update ? " checked " : "" ?>>
+                                    <input class="form-check-input" name="ind_costo_aduana" type="checkbox" id="ind_costo_aduana" value="1" <?= $courierCurrent->ind_costo_aduana == 1 ? " checked" : ""  ?> >
                                     <label class="form-check-label" for="ind_costo_aduana">
                                         Costo Servicio Aduana
                                     </label>
