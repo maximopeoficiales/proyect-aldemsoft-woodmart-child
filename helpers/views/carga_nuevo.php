@@ -1,4 +1,12 @@
 <?php
+
+// librerias datetime
+wp_enqueue_script("AldemflatPickrJS", "https://cdn.jsdelivr.net/npm/flatpickr", '', '1.0.0');
+
+// wp_enqueue_style("AldemflatPickrCSS", "https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css", '', '1.0.0');
+wp_enqueue_style("AldemflatPickrDarkCSS", "https://npmcdn.com/flatpickr/dist/themes/dark.css", '', '1.0.0');
+
+
 $update = $_GET["editjob"] != null || $_GET["editjob"] != "" ? true : false;
 $id_courier_job = $update ? $_GET["editjob"] : null;
 $countrys = (object) query_getCountrys();
@@ -159,6 +167,30 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <label for="instructions">Instructions: </label>
                             <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
                         </div>
+                        <!-- nuevos campos -->
+                        <div class="form-group my-2">
+                            <label for="fecha_levante">Fecha Levante: </label>
+                            <input type="text" class="form-control" id="fecha_levante" name="fecha_levante" placeholder="Ingresa la Fecha y Hora">
+                        </div>
+                        
+                        <label for="fecha_levante">Seleccione su Green Channel: </label>
+                        <div class="form-check form-check-inline d-flex justify-content-around my-2">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="green_channel" id="rb_verde" value="1" <?= $courierCurrent->green_channel == 1 ? " checked" : "" ?>> Verde
+                            </label>
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="green_channel" id="rb_amarillo" value="2" <?= $courierCurrent->green_channel == 2 ? " checked" : "" ?>> Amarillo
+                            </label><label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="green_channel" id="rb_rojo" value="3" <?= $courierCurrent->green_channel == 3 ? " checked" : "" ?>> Rojo
+                            </label>
+                        </div>
+
+                        <div class="form-group my-2">
+                            <label for="dam">Dam: </label>
+                            <input type="text" class="form-control" id="dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
+                        </div>
+                        <!-- nuevos campos  -->
+
 
                     </div>
                 </div>
@@ -508,6 +540,19 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         <?php aldem_datatables_in_spanish(); ?>
         $('#table-exportadores-select').DataTable();
         $('#table-importadores-select').DataTable();
+
+        $("#fecha_levante").flatpickr({
+            enableTime: true,
+            minTime: "09:00"
+        });
+        <?php if ($update) {
+        ?>
+            $("#fecha_levante").flatpickr({
+                enableTime: true,
+                defaultDate: "<?= $courierCurrent->fecha_levante ?>"
+            });
+        <?php        }
+        ?>
     });
     <?php
 

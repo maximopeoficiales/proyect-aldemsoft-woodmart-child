@@ -312,6 +312,11 @@ function aldem_post_new_courier()
             'ind_transporte'                  => 'numeric',
             'ind_servicio_aduana'                  => 'numeric',
             'ind_costo_aduana'                  => 'numeric',
+
+            'fecha_levante'                  => 'max:250',
+            'green_channel'                  => 'numeric',
+            'dam'                  => 'max:25',
+
         ];
         if ($action_name == "update-courier") {
             $validations["id_courier_job"] = "required|numeric";
@@ -342,6 +347,10 @@ function aldem_post_new_courier()
             $ind_transporte = intval(sanitize_text_field(isset($_POST['ind_transporte']) ? 1 : 0));
             $ind_servicio_aduana = intval(sanitize_text_field(isset($_POST['ind_servicio_aduana']) ? 1 : 0));
             $ind_costo_aduana = intval(sanitize_text_field(isset($_POST['ind_costo_aduana']) ? 1 : 0));
+
+            $fecha_levante = sanitize_text_field($_POST['fecha_levante']);
+            $green_channel = intval(sanitize_text_field(isset($_POST['green_channel']) ? $_POST['green_channel'] : 0));
+            $dam = sanitize_text_field($_POST['dam']);
             // query 1
             $table = "{$prefix}marken_job";
             $data = [
@@ -373,6 +382,11 @@ function aldem_post_new_courier()
                 "ind_servicio_aduana" => $ind_servicio_aduana,
                 "ind_costo_aduana" => $ind_costo_aduana,
 
+                // nuevos campos
+                "fecha_levante" => $fecha_levante,
+                "green_channel" => $green_channel,
+                "dam" => $dam,
+
                 "updated_at" => $fecha_actual,
                 "created_at" => $fecha_actual,
             ];
@@ -384,6 +398,9 @@ function aldem_post_new_courier()
                     '%s', '%s', '%s', '%d',
                     '%s', '%s', '%s',
                     '%d', '%d', '%d',
+
+                    '%s', '%d', '%s',
+
                     '%s', '%s'
                 );
                 $queryExistoso = $wpdb->insert($table, $data, $format);
@@ -403,6 +420,9 @@ function aldem_post_new_courier()
                     '%s', '%s', '%s', '%d',
                     '%s', '%s', '%s',
                     '%d', '%d', '%d',
+
+                    '%s', '%d', '%s',
+
                     '%s'
                 );
                 if ($wpdb->update($table, $data, [
@@ -447,6 +467,12 @@ function aldem_post_new_courier()
             'tarifa_almacenaje'                  => 'numeric',
             'tarifa_costo'                  => 'numeric',
             'tarifa_impuestos'                  => 'numeric',
+
+            'fecha_levante'                  => 'max:250',
+            'green_channel'                  => 'numeric',
+            'dam'                  => 'max:25',
+
+
         ];
         if ($action_name == "update-cargo") {
             $validations["id_cargo_job"] = "required|numeric";
@@ -482,6 +508,11 @@ function aldem_post_new_courier()
             $tarifa_almacenaje = doubleval(sanitize_text_field($_POST['tarifa_almacenaje']));
             $tarifa_costo = doubleval(sanitize_text_field($_POST['tarifa_costo']));
             $tarifa_impuestos = doubleval(sanitize_text_field($_POST['tarifa_impuestos']));
+            // nuevos 3 campos
+            $fecha_levante = sanitize_text_field($_POST['fecha_levante']);
+            $green_channel = intval(sanitize_text_field(isset($_POST['green_channel']) ? $_POST['green_channel'] : 0));
+            $dam = sanitize_text_field($_POST['dam']);
+
 
             // query 1
             $table = "{$prefix}marken_job";
@@ -518,6 +549,11 @@ function aldem_post_new_courier()
                 "tarifa_costo" => $tarifa_costo,
                 "tarifa_impuestos" => $tarifa_impuestos,
 
+                // nuevos campos
+                "fecha_levante" => $fecha_levante,
+                "green_channel" => $green_channel,
+                "dam" => $dam,
+
                 "updated_at" => $fecha_actual,
                 "created_at" => $fecha_actual,
             ];
@@ -531,6 +567,7 @@ function aldem_post_new_courier()
                     '%d', '%d',
                     '%d', '%d', '%d', //ids
                     '%s', '%s', '%s', //doubles
+                    '%s', '%d', '%s', //nuevos campos
 
                     '%s', '%s'
                 );
@@ -553,6 +590,8 @@ function aldem_post_new_courier()
                     '%d', '%d',
                     '%d', '%d', '%d', //ids
                     '%s', '%s', '%s', //doubles
+                    '%s', '%d', '%s', //nuevos campos
+
 
                     '%s',
                 );
