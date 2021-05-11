@@ -196,26 +196,39 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <label for="fecha_levante">Fecha Levante: </label>
                                 <input type="text" class="form-control" id="fecha_levante" name="fecha_levante" placeholder="Ingresa la Fecha y Hora">
                             </div>
+                            <div class="row my-4">
+                                <div class="col-md-6">
 
-                            <label for="fecha_levante">Seleccione su Green Channel: </label>
-                            <div class="form-check form-check-inline d-flex justify-content-around my-2">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="green_channel" id="rb_verde" value="1" <?= $courierCurrent->green_channel == 1 ? " checked" : "" ?>> Verde
-                                </label>
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="green_channel" id="rb_amarillo" value="2" <?= $courierCurrent->green_channel == 2 ? " checked" : "" ?>> Amarillo
-                                </label><label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="green_channel" id="rb_rojo" value="3" <?= $courierCurrent->green_channel == 3 ? " checked" : "" ?>> Rojo
-                                </label>
+                                    <label for="fecha_levante">Seleccione su Green Channel: </label>
+                                    <div class="form-check form-check-inline d-flex justify-content-center my-2 ">
+                                        <label class="form-check-label d-flex justify-content-center align-items-center mx-4">
+                                            <input class="form-check-input" type="radio" name="green_channel" id="rb_verde" value="1" <?= $courierCurrent->green_channel == 1 ? " checked" : "" ?>>
+                                            <div class="" style="border-radius: 50%; width: 50px; height: 50px; background-color: #32CC52; padding: 5px; margin-left: 10px;">
+                                            </div>
+                                        </label>
+                                        <label class="form-check-label d-flex justify-content-center align-items-center mx-4">
+                                            <input class="form-check-input" type="radio" name="green_channel" id="rb_amarillo" value="2" <?= $courierCurrent->green_channel == 2 ? " checked" : "" ?>>
+                                            <div class="" style="border-radius: 50%; width: 50px; height: 50px; background-color: #F6EB73; padding: 5px; margin-left: 10px;">
+                                            </div>
+                                        </label>
+                                        <label class="form-check-label d-flex justify-content-center align-items-center mx-4">
+                                            <input class="form-check-input" type="radio" name="green_channel" id="rb_rojo" value="3" <?= $courierCurrent->green_channel == 3 ? " checked" : "" ?>>
+                                            <div class="" style="border-radius: 50%; width: 50px; height: 50px; background-color: #DC3545; padding: 5px; margin-left: 10px;">
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group my-2">
+                                        <label for="dam">Dam: </label>
+                                        <input type="text" class="form-control" id="dam" placeholder="Ingrese Dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="form-group my-2">
-                                <label for="dam">Dam: </label>
-                                <input type="text" class="form-control" id="dam" placeholder="Ingrese Dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
-                            </div>
                             <!-- nuevos campos  -->
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
