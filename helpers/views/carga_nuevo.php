@@ -128,68 +128,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 </div>
                             </div>
                         </div>
-                        <div class=" form-group my-2">
-                            <label for="incoterm">IncoTerm:</label>
-                            <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" style="width: 100%;">
-                                <option value="">Selecciona un Incoterm</option>
-                                <?php foreach ($incoTerms as $key => $incoTerm) {
-                                ?>
-
-                                    <option value="<?= $incoTerm->id_incoterm ?>"><?= $incoTerm->descripcion ?></option>
-                                <?php }  ?>
-                            </select>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6 ">
-                                <div class="form-group mb-2">
-                                    <label for="collection">Schd Collection</label>
-                                    <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
-
-                                </div>
-
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-2">
-                                    <label for="delivery">Delivery: </label>
-                                    <input type="date" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group my-2">
-                            <label for="protocolo">Protocolo: </label>
-                            <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" aria-describedby="protocolo" maxlength="50" value="<?= $courierCurrent->protocolo ?>">
-                            <!-- <textarea name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el protocolo" aria-describedby="protocolo" maxlength="50" style="min-height: 140px;"></textarea> -->
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="instructions">Instructions: </label>
-                            <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
-                        </div>
-                        <!-- nuevos campos -->
-                        <div class="form-group my-2">
-                            <label for="fecha_levante">Fecha Levante: </label>
-                            <input type="text" class="form-control" id="fecha_levante" name="fecha_levante" placeholder="Ingresa la Fecha y Hora">
-                        </div>
-                        
-                        <label for="fecha_levante">Seleccione su Green Channel: </label>
-                        <div class="form-check form-check-inline d-flex justify-content-around my-2">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="green_channel" id="rb_verde" value="1" <?= $courierCurrent->green_channel == 1 ? " checked" : "" ?>> Verde
-                            </label>
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="green_channel" id="rb_amarillo" value="2" <?= $courierCurrent->green_channel == 2 ? " checked" : "" ?>> Amarillo
-                            </label><label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="green_channel" id="rb_rojo" value="3" <?= $courierCurrent->green_channel == 3 ? " checked" : "" ?>> Rojo
-                            </label>
-                        </div>
-
-                        <div class="form-group my-2">
-                            <label for="dam">Dam: </label>
-                            <input type="text" class="form-control" id="dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
-                        </div>
-                        <!-- nuevos campos  -->
 
 
                     </div>
@@ -212,6 +150,91 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 </div>
 
                 <div id="courier_opcionales" class="collapse my-2" aria-labelledby="headingOpcional" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="">
+                            <div class=" form-group my-2">
+                                <label for="incoterm">IncoTerm:</label>
+                                <select name="incoterm" id="incoterm" class="form-control" placeholder="Elija el Incoterm" aria-describedby="Mes" style="width: 100%;">
+                                    <option value="">Selecciona un Incoterm</option>
+                                    <?php foreach ($incoTerms as $key => $incoTerm) {
+                                    ?>
+
+                                        <option value="<?= $incoTerm->id_incoterm ?>"><?= $incoTerm->descripcion ?></option>
+                                    <?php }  ?>
+                                </select>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6 ">
+                                    <div class="form-group mb-2">
+                                        <label for="collection">Schd Collection</label>
+                                        <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-2">
+                                        <label for="delivery">Delivery: </label>
+                                        <input type="date" name="delivery" id="delivery" class="form-control" placeholder="Ingrese hora del delivery" aria-describedby="delivery" value="<?= $courierCurrent->schd_delivery ?>">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group my-2">
+                                <label for="protocolo">Protocolo: </label>
+                                <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" aria-describedby="protocolo" maxlength="50" value="<?= $courierCurrent->protocolo ?>">
+                                <!-- <textarea name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el protocolo" aria-describedby="protocolo" maxlength="50" style="min-height: 140px;"></textarea> -->
+                            </div>
+                            <div class="form-group my-2">
+                                <label for="instructions">Instructions: </label>
+                                <textarea name="instructions" id="instructions" class="form-control" placeholder="Ingrese las instrucciones" aria-describedby="instructions" maxlength="500" style="min-height: 140px;"><?= $courierCurrent->instrucciones ?></textarea>
+                            </div>
+                            <!-- nuevos campos -->
+                            <div class="form-group my-2">
+                                <label for="fecha_levante">Fecha Levante: </label>
+                                <input type="text" class="form-control" id="fecha_levante" name="fecha_levante" placeholder="Ingresa la Fecha y Hora">
+                            </div>
+
+                            <label for="fecha_levante">Seleccione su Green Channel: </label>
+                            <div class="form-check form-check-inline d-flex justify-content-around my-2">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="green_channel" id="rb_verde" value="1" <?= $courierCurrent->green_channel == 1 ? " checked" : "" ?>> Verde
+                                </label>
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="green_channel" id="rb_amarillo" value="2" <?= $courierCurrent->green_channel == 2 ? " checked" : "" ?>> Amarillo
+                                </label><label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="green_channel" id="rb_rojo" value="3" <?= $courierCurrent->green_channel == 3 ? " checked" : "" ?>> Rojo
+                                </label>
+                            </div>
+
+                            <div class="form-group my-2">
+                                <label for="dam">Dam: </label>
+                                <input type="text" class="form-control" id="dam" placeholder="Ingrese Dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
+                            </div>
+                            <!-- nuevos campos  -->
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-header bg-dark aldem_pointer" id="headingOpcional" data-toggle="collapse" data-target="#courier_costos_tarifas" aria-expanded="true" aria-controls="courier_costos_tarifas" style>
+                    <h2 class="mb-0">
+                        <div class="d-block text-white">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-white">
+                                    Costos y Tarifas
+                                </h5>
+                                <div class="">
+                                    <i class="mx-2 fas fa-sort-down  fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+                <div id="courier_costos_tarifas" class="collapse my-2" aria-labelledby="headingOpcional" data-parent="#accordionExample">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -259,7 +282,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <label class="form-check-label" for="ind_servicio_aduana">
                                         Tarifa Servicio Aduana
                                     </label>
-                                    <small id="helpId" class="text-muted">No marcar si el cliente o Broker pagala tarifa sel servicio de aduana</small>
+                                    <small id="helpId" class="text-muted">No marcar si el cliente o Broker paga la tarifa del servicio de aduana</small>
                                 </div>
                             </div>
                             <div class="col-md-4">

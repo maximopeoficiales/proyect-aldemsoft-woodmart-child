@@ -208,7 +208,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                         <div class="form-group my-2">
                             <label for="dam">Dam: </label>
-                            <input type="text" class="form-control" id="dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
+                            <input type="text" class="form-control" id="dam" placeholder="Ingrese Dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
                         </div>
                         <!-- nuevos campos  -->
 
@@ -281,7 +281,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <label class="form-check-label" for="ind_servicio_aduana">
                                         Tarifa Servicio Aduana
                                     </label>
-                                    <small id="helpId" class="text-muted">No marcar si el cliente o Broker pagala tarifa sel servicio de aduana</small>
+                                    <small id="helpId" class="text-muted">No marcar si el cliente o Broker paga la tarifa del servicio de aduana</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
