@@ -556,7 +556,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             enableTime: true,
             minTime: "09:00"
         });
-        <?php if ($update) {
+        <?php if ($update && $courierCurrent->fecha_levante != "0000-00-00 00:00:00") {
         ?>
             $("#fecha_levante").flatpickr({
                 enableTime: true,
