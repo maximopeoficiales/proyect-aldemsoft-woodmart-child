@@ -82,8 +82,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         </div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="reference">Reference: </label>
-                        <input type="text" name="reference" id="reference" class="form-control" placeholder="Ingrese la Referencia" aria-describedby="reference" maxlength="150"  value="<?= $markenJob->reference ?>">
+                        <label for="protocolo">Protocolo: </label>
+                        <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese Protocolo" aria-describedby="protocolo" maxlength="50" value="<?= $markenJob->protocolo ?>">
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12">

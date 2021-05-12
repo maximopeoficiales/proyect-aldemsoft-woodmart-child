@@ -152,7 +152,7 @@ function aldem_post_new_export()
             'id_pais'                  => 'numeric',
             'contacto'                  => 'max:50',
             'contacto_telf'                  => 'max:50',
-            'reference'                  => 'max:150',
+            'protocolo'                  => 'max:50',
             // 'content'                  => 'required|max:250',
             'pcs'                  => 'required|numeric',
             // 'range'                  => 'required|max:25',
@@ -179,7 +179,7 @@ function aldem_post_new_export()
             $id_pais = intval(sanitize_text_field($_POST['id_pais']));
             $contacto = sanitize_text_field($_POST['contacto']);
             $contacto_telf = sanitize_text_field($_POST['contacto_telf']);
-            $reference = sanitize_text_field($_POST['reference']);
+            $protocolo = sanitize_text_field($_POST['protocolo']);
 
             // $content = sanitize_text_field($_POST['content']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
@@ -210,7 +210,7 @@ function aldem_post_new_export()
                 "id_marken_type" => $id_marken_type,
                 "instrucciones" => $instrucciones,
                 "id_caja" => $id_caja,
-                "reference" => $reference,
+                "protocolo" => $protocolo,
                 "contact" => $contacto,
                 "contact_telephone" => $contacto_telf,
                 "fecha_hora" => $fechaHora,
