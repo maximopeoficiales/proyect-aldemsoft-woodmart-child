@@ -71,18 +71,18 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <div class="col-md-6 ">
                                 <div class="form-group mb-2">
                                     <label for="dua">DUA</label>
-                                    <input type="text" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" aria-describedby="DUA" maxlength="20" value="<?= $courierCurrent->dua ?>">
+                                    <input type="text" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" aria-describedby="DUA" maxlength="50" value="<?= $courierCurrent->dua ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6 ">
+                            <!-- <div class="col-md-6 ">
                                 <div class="form-group mb-2">
                                     <label for="guia">Guia</label>
                                     <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" value="<?= $courierCurrent->guia ?>">
                                 </div>
-                            </div>
-                            <div class="col-md-6 ">
+                            </div> -->
+                            <div class="col-md-12 ">
                                 <div class="form-group mb-2">
                                     <label for="master">Master</label>
                                     <input type="text" name="master" id="master" class="form-control" placeholder="Ingrese el Master" aria-describedby="master" maxlength="20" value="<?= $courierCurrent->guia_master ?>">

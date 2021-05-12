@@ -293,8 +293,8 @@ function aldem_post_new_courier()
         $validations = [
             'job'                  =>  'required|max:35',
             'manifiesto'                  => 'numeric',
-            'dua'                  => 'max:20',
-            'guia'                  => 'max:12',
+            'dua'                  => 'max:50',
+            // 'guia'                  => 'max:12',
             'master'                  => 'max:20',
             'pcs'                  => 'numeric',
             'kilos'                  => 'numeric',
@@ -327,7 +327,7 @@ function aldem_post_new_courier()
             $waybill = sanitize_text_field($_POST['job']);
             $manifiesto = intval(sanitize_text_field($_POST['manifiesto']));
             $dua = sanitize_text_field($_POST['dua']);
-            $guia = sanitize_text_field($_POST['guia']);
+            // $guia = sanitize_text_field($_POST['guia']);
             $guia_master = sanitize_text_field($_POST['master']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
             $peso = doubleval(sanitize_text_field($_POST['kilos']));
@@ -359,7 +359,7 @@ function aldem_post_new_courier()
                 "manifiesto" => $manifiesto,
                 "dua" => $dua,
 
-                "guia" => $guia,
+                // "guia" => $guia,
                 "guia_master" => $guia_master,
                 "peso" => $peso,
                 "pcs" => $pcs,
@@ -393,7 +393,7 @@ function aldem_post_new_courier()
             if ($action_name == "new-courier") {
                 $format = array(
                     '%d', '%s', '%d', '%s',
-                    '%s', '%s', '%s', '%d',
+                    '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
                     '%s', '%s', '%s',
@@ -415,7 +415,7 @@ function aldem_post_new_courier()
                 unset($data["created_at"]);
                 $format2 = $format = array(
                     '%d', '%s', '%d', '%s',
-                    '%s', '%s', '%s', '%d',
+                    '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
                     '%s', '%s', '%s',
@@ -443,8 +443,8 @@ function aldem_post_new_courier()
         $validations = [
             'job'                  =>  'required|max:35',
             'manifiesto'                  => 'numeric',
-            'dua'                  => 'max:20',
-            'guia'                  => 'max:12',
+            'dua'                  => 'max:50',
+            // 'guia'                  => 'max:12',
             'master'                  => 'max:20',
             'pcs'                  => 'numeric',
             'kilos'                  => 'numeric',
@@ -483,7 +483,7 @@ function aldem_post_new_courier()
             $waybill = sanitize_text_field($_POST['job']);
             $manifiesto = intval(sanitize_text_field($_POST['manifiesto']));
             $dua = sanitize_text_field($_POST['dua']);
-            $guia = sanitize_text_field($_POST['guia']);
+            // $guia = sanitize_text_field($_POST['guia']);
             $guia_master = sanitize_text_field($_POST['master']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
             $peso = doubleval(sanitize_text_field($_POST['kilos']));
@@ -522,7 +522,7 @@ function aldem_post_new_courier()
                 "manifiesto" => $manifiesto,
                 "dua" => $dua,
 
-                "guia" => $guia,
+                // "guia" => $guia,
                 "guia_master" => $guia_master,
                 "peso" => $peso,
                 "pcs" => $pcs,
@@ -560,7 +560,7 @@ function aldem_post_new_courier()
             if ($action_name == "new-cargo") {
                 $format = array(
                     '%d', '%s', '%d', '%s',
-                    '%s', '%s', '%s', '%d',
+                    '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d', '%s',
 
@@ -583,7 +583,7 @@ function aldem_post_new_courier()
                 unset($data["created_at"]);
                 $format2 = array(
                     '%d', '%s', '%d', '%s',
-                    '%s', '%s', '%s', '%d',
+                    '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d', '%s',
 
