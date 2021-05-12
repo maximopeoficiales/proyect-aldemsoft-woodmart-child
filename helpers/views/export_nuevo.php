@@ -271,7 +271,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                 <form action="" method="post" id="formNewShipper">
                     <div class="form-group">
                         <label for="nombreShipper">Nombre: </label>
-                        <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId" required>
+                        <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId" required maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="direccionShipper">Direccion:</label>

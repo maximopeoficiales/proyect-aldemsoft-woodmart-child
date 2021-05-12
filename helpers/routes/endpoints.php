@@ -138,7 +138,7 @@ function post_aldem_marken_shippers_standar(WP_REST_Request $request)
     $prefix = query_getAldemPrefix();
     $wpdb = query_getWPDB();
     $validations = [
-        'nombreShipper'                  =>  'required',
+        'nombreShipper'                  =>  'required|max:50',
         'direccionShipper'                  => 'required|max:50',
         'paisShipper'                  => 'required|numeric',
         'siteShipper'                  => 'required|numeric',
