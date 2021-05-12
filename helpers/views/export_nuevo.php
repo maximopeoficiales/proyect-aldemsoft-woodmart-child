@@ -275,7 +275,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     </div>
                     <div class="form-group">
                         <label for="direccionShipper">Direccion:</label>
-                        <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" required>
+                        <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" required maxlength="50">
                     </div>
 
                     <div class="row mt-2">
