@@ -172,7 +172,39 @@ function post_aldem_marken_shippers_standar(WP_REST_Request $request)
         if ($wpdb->insert($table, $data, $format)) {
             return  aldem_rest_response(["id_marken_shipper" => $wpdb->insert_id, "descripcion" => $nombreShipper, "direccion" => $direccionShipper], "Marken Shipper creado correctamente");
         } else {
-            aldem_rest_response("", "Error en la creacion de Shipper", 500);
+            return aldem_rest_response("", "Error en la creacion de Shipper", 500);
+        }
+    } else {
+        return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
+    }
+}
+
+// verifica si waybill esta disponible
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/existsWaybill/(?P<username>\w+)/', array(
+        'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
+        'callback' => 'post_aldem_existsWaybill',
+        'args' => array(),
+    ));
+});
+function post_aldem_existsWaybill(WP_REST_Request $request)
+{
+    $prefix = query_getAldemPrefix();
+    $wpdb = query_getWPDB();
+    $validations = [
+        'waybill'                  =>  'required|max:35',
+    ];
+    $responseValidator = adldem_UtilityValidator($request->get_json_params(), $validations);
+    if ($responseValidator["validate"]) {
+        $waybill = sanitize_text_field($request->get_json_params()['waybill']);
+        $table = "{$prefix}marken_job";
+        // verifica si existe el waybill
+        $sql = "SELECT * FROM {$table} WHERE waybill = %s";
+        if (count($wpdb->get_results($wpdb->prepare($sql, $waybill))) == 0) {
+            return aldem_rest_response("", "Waybill Disponible");
+        } else {
+            return aldem_rest_response("", "Error Waybill ya registrado", 500);
         }
     } else {
         return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
