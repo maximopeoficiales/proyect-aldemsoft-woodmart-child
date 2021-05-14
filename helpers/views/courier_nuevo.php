@@ -23,7 +23,7 @@ $importadorCurrent = $update ?  query_getImportadores($courierCurrent->id_import
 
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
 $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
-
+$urlVerifyWaybill = get_site_url() . "/wp-json/aldem/v1/existsWaybill/" . aldem_getUserNameCurrent();
 ?>
 <?php if ($update && !aldem_isUserCreated($courierCurrent->id_usuario_created)) {
     aldem_noAccess();
@@ -36,7 +36,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
 <div class="row justify-content-center p-4">
     <div pcs="col-md-8" style="width: 100%;">
-        <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
+        <form action="<?php echo admin_url('admin-post.php') ?>" method="post" id="form_courier_nuevo">
             <div class="card my-2">
                 <div class="card-header bg-dark aldem_pointer" id="headingOne" data-toggle="collapse" data-target="#courier_importantes" aria-expanded="true" aria-controls="courier_importantes" style>
                     <h2 class="mb-0">
@@ -785,6 +785,54 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             // $('#master-text').val(formatearTargetaBanco($('#master-text').val()));
         <?php        }
         ?>
-
+        const verifyWaybill = async () => {
+            try {
+                let myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+                let raw = JSON.stringify({
+                    "waybill": document.querySelector("#job").value,
+                });
+                let requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+                let response = await (await (fetch('<?= $urlVerifyWaybill  ?>', requestOptions))).json();
+                if (response.status == 200) {
+                    return true;
+                } else if (response.status == 404) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        html: `${response.data.replace("Waybill","Job")}`,
+                    })
+                    return false;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Error Job ya registrado, ingrese otro por favor!',
+                    })
+                    return false;
+                }
+            } catch (error) {
+                // error en el servidor
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ocurrio un error en Servidor!',
+                })
+                return false;
+            }
+        }
+        document.querySelector("#form_courier_nuevo").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            // verificacion de waybill disponible
+            if (await verifyWaybill()) {
+                e.target.submit();
+            }
+        })
     })()
 </script>

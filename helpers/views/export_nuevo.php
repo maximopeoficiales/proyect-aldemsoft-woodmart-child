@@ -14,6 +14,7 @@ $ubigeosPeru = (object) query_getUbigeo(604);
 // para los API REST
 $urlUbigeos = get_site_url() . "/wp-json/aldem/v1/ubigeos/" . aldem_getUserNameCurrent();
 $urlShippers = get_site_url() . "/wp-json/aldem/v1/shippers/" . aldem_getUserNameCurrent();
+$urlVerifyWaybill = get_site_url() . "/wp-json/aldem/v1/existsWaybill/" . aldem_getUserNameCurrent();
 
 // para el update
 $update = $_GET["editjob"] != null || $_GET["editjob"] != "" ? true : false;
@@ -359,10 +360,55 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
             preferredCountries: ["pe"],
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
-        document.querySelector("#formNewExport").addEventListener("submit", (e) => {
+        const verifyWaybill = async () => {
+            try {
+                let myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+                let raw = JSON.stringify({
+                    "waybill": document.querySelector("#waybill").value,
+                });
+                let requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+                let response = await (await (fetch('<?= $urlVerifyWaybill  ?>', requestOptions))).json();
+                if (response.status == 200) {
+                    return true;
+                } else if (response.status == 404) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        html: `${response.data}`,
+                    })
+                    return false;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Error Waybill ya registrado, ingrese otro por favor!',
+                    })
+                    return false;
+                }
+            } catch (error) {
+                // error en el servidor
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ocurrio un error en Servidor!',
+                })
+                return false;
+            }
+        }
+        document.querySelector("#formNewExport").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#contacto_telf").value = phoneInput.getNumber();
-            e.target.submit();
+            // verificacion de waybill disponible
+            if (await verifyWaybill()) {
+                e.target.submit();
+            }
         })
     });
 
