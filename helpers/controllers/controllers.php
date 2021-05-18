@@ -315,7 +315,7 @@ function aldem_post_new_courier()
 
             'fecha_levante'                  => 'max:250',
             'green_channel'                  => 'numeric',
-            'dam'                  => 'max:25',
+            'dam'                  => 'max:150',
 
         ];
         if ($action_name == "update-courier") {
@@ -470,7 +470,7 @@ function aldem_post_new_courier()
 
             'fecha_levante'                  => 'max:250',
             'green_channel'                  => 'numeric',
-            'dam'                  => 'max:25',
+            'dam'                  => 'max:150',
 
 
         ];

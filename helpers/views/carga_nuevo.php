@@ -221,7 +221,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <div class="col-md-6">
                                     <div class="form-group my-2">
                                         <label for="dam">Dam: </label>
-                                        <input type="text" class="form-control" id="dam" placeholder="Ingrese Dam" name="dam" maxlength="25" value="<?= $courierCurrent->dam ?>">
+                                        <input type="text" class="form-control" id="dam" placeholder="Ingrese Dam" name="dam" maxlength="150" value="<?= $courierCurrent->dam ?>">
                                     </div>
                                 </div>
                             </div>
