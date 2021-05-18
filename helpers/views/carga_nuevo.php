@@ -62,6 +62,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>"
                             <?= $update ? " disabled" : "" ?>
                             >
+                            <?php if($update){
+                              ?> 
+                            <input type="hidden" name="job" value="<?= $courierCurrent->waybill ?>">
+                            <?php } ?>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6 ">
