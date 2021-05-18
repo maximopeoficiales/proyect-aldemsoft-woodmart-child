@@ -59,7 +59,9 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <div class="card-body">
                         <div class="form-group">
                             <label for="job">Job</label>
-                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>">
+                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>"
+                            <?= $update ? " disabled" : "" ?>
+                            >
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6 ">
@@ -855,7 +857,12 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         document.querySelector("#form_carga_nuevo").addEventListener("submit", async (e) => {
             e.preventDefault();
             // verificacion de waybill disponible
-            if (await verifyWaybill()) {
+            let update = <?= $update ? "true" : "false" ?>;
+            if (!update) {
+                if (await verifyWaybill()) {
+                    e.target.submit();
+                }
+            } else {
                 e.target.submit();
             }
         })

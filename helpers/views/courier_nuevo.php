@@ -57,7 +57,9 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <div class="card-body">
                         <div class="form-group">
                             <label for="job">Job</label>
-                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>">
+                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>"
+                            <?= $update ? " disabled" : "" ?>
+                            >
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6 ">
@@ -312,6 +314,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="form-group mb-2">
                             <label for="tarifa_almacenaje">Tarifa Almacenaje</label>
                             <input type="number" name="tarifa_almacenaje" id="tarifa_almacenaje" class="form-control" placeholder="Ingrese la Tarifa Almacenaje" aria-describedby="tarifa_almacenaje" step="0.01" value="<?= $courierCurrent->tarifa_almacenaje ?>">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="tarifa_costo">Costo Almacenaje</label>
+                            <input type="number" name="tarifa_costo" id="tarifa_costo" class="form-control" placeholder="Ingrese el Costo Almacenaje" aria-describedby="tarifa_costo" step="0.01" value="<?= $courierCurrent->tarifa_costo ?>">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="tarifa_impuestos">Impuesto Tarifa</label>
+                            <input type="number" name="tarifa_impuestos" id="tarifa_impuestos" class="form-control" placeholder="Ingrese los Impuestos" aria-describedby="tarifa_impuestos" step="0.01" value="<?= $courierCurrent->tarifa_impuestos ?>">
                         </div>
                     </div>
                 </div>
@@ -830,9 +840,15 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         document.querySelector("#form_courier_nuevo").addEventListener("submit", async (e) => {
             e.preventDefault();
             // verificacion de waybill disponible
-            if (await verifyWaybill()) {
+            let update = <?= $update ? "true" : "false" ?>;
+            if (!update) {
+                if (await verifyWaybill()) {
+                    e.target.submit();
+                }
+            } else {
                 e.target.submit();
             }
+
         })
     })()
 </script>

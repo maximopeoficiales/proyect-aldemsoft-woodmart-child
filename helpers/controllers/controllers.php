@@ -308,7 +308,11 @@ function aldem_post_new_courier()
             'id_user'                  => 'required|numeric',
             'id_site'                  => 'numeric',
             'id_handling'                  => 'numeric',
+
             'tarifa_almacenaje'                  => 'numeric',
+            'tarifa_costo'                  => 'numeric',
+            'tarifa_impuestos'                  => 'numeric',
+
             'ind_transporte'                  => 'numeric',
             'ind_servicio_aduana'                  => 'numeric',
             'ind_costo_aduana'                  => 'numeric',
@@ -343,6 +347,8 @@ function aldem_post_new_courier()
             $id_site = intval(sanitize_text_field($_POST['id_site']));
             $id_handling = intval(sanitize_text_field($_POST['id_handling']));
             $tarifa_almacenaje = doubleval(sanitize_text_field($_POST['tarifa_almacenaje']));
+            $tarifa_costo = doubleval(sanitize_text_field($_POST['tarifa_costo']));
+            $tarifa_impuestos = doubleval(sanitize_text_field($_POST['tarifa_impuestos']));
 
             $ind_transporte = intval(sanitize_text_field(isset($_POST['ind_transporte']) ? 1 : 0));
             $ind_servicio_aduana = intval(sanitize_text_field(isset($_POST['ind_servicio_aduana']) ? 1 : 0));
@@ -377,7 +383,9 @@ function aldem_post_new_courier()
                 "id_site" => $id_site,
                 "id_handling" => $id_handling,
                 "tarifa_almacenaje" => $tarifa_almacenaje,
-
+                "tarifa_costo" => $tarifa_costo,
+                "tarifa_impuestos" => $tarifa_impuestos,
+                
                 "ind_transporte" => $ind_transporte,
                 "ind_servicio_aduana" => $ind_servicio_aduana,
                 "ind_costo_aduana" => $ind_costo_aduana,
@@ -396,7 +404,8 @@ function aldem_post_new_courier()
                     '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
-                    '%s', '%s', '%s',
+                    // se agrego tarifas
+                    '%s', '%s', '%s','%s','%s',
                     '%d', '%d', '%d',
 
                     '%s', '%d', '%s',
@@ -418,7 +427,7 @@ function aldem_post_new_courier()
                     '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
-                    '%s', '%s', '%s',
+                    '%s', '%s', '%s','%s','%s',
                     '%d', '%d', '%d',
 
                     '%s', '%d', '%s',
