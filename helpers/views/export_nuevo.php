@@ -49,7 +49,13 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-12">
                             <div class="form-group mb-2" style="width: 100%;">
                                 <label for="waybill">Waybill: </label>
-                                <input type="text" name="waybill" id="waybill" class="form-control" placeholder="Ingrese el Waybill" aria-describedby="waybill" required maxlength="35" value="<?= $markenJob->waybill ?>">
+                                <input type="text" name="waybill" id="waybill" class="form-control" placeholder="Ingrese el Waybill" aria-describedby="waybill" required maxlength="35" value="<?= $markenJob->waybill ?>"
+                                 <?= $update ? " disabled" : "" ?>
+                                >
+                                <?php if ($update) {
+                                ?>
+                                    <input type="hidden" name="waybill" value="<?=  $markenJob->waybill ?>">
+                                <?php } ?>
                             </div>
 
                             <label for="exportador-text">Shipper:</label>
@@ -406,7 +412,13 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
             e.preventDefault();
             document.querySelector("#contacto_telf").value = phoneInput.getNumber();
             // verificacion de waybill disponible
-            if (await verifyWaybill()) {
+            // verificacion de waybill disponible
+            let update = <?= $update ? "true" : "false" ?>;
+            if (!update) {
+                if (await verifyWaybill()) {
+                    e.target.submit();
+                }
+            } else {
                 e.target.submit();
             }
         })
