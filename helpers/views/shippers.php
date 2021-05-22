@@ -162,7 +162,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                 <div class="modal" id="modal-newShipper" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px;">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
+                            <form action="<?php echo admin_url('admin-post.php') ?>" method="post" id="formNewShipper">
 
                                 <div class="modal-header bg-dark text-white">
                                     <h5 class="modal-title" id="exampleModalLabel">Nuevo Shipper</h5>
@@ -240,7 +240,7 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
                                     <?php aldem_set_action_name("new-shipper"); ?>
                                     <input type="hidden" name="id_user" value="<?= get_current_user_id() ?>">
                                     <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
-                                    <button type="submit" class="btn btn-success text-capitalize">
+                                    <button type="submit" id="btnSubmit" class="btn btn-success text-capitalize">
                                         <i class="fa fa-save mr-1"></i> Guardar</button>
                                 </div>
                             </form>
@@ -251,69 +251,73 @@ aldem_show_message_custom("Se ha registrado correctamente el shipper 😀", "Se 
         </div>
     </div>
 </div>
-
 <script>
-    (() => {
-        const getUbigeos = async (id_country = 0) => {
-            try {
-                let myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
-                let raw = JSON.stringify({
-                    "id_country": id_country,
-                });
+    document.querySelector("#formNewShipper").addEventListener("submit", (e) => {
+            e.preventDefault();
+            document.querySelector("#btnSubmit").setAttribute("disabled", "true");
+            e.target.submit();
+        })
+        (() => {
+            const getUbigeos = async (id_country = 0) => {
+                try {
+                    let myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+                    let raw = JSON.stringify({
+                        "id_country": id_country,
+                    });
 
-                let requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                };
-                return await (await (fetch('<?= $urlUbigeos  ?>', requestOptions))).json();
-            } catch (error) {
-                return null;
+                    let requestOptions = {
+                        method: 'POST',
+                        headers: myHeaders,
+                        body: raw,
+                        redirect: 'follow'
+                    };
+                    return await (await (fetch('<?= $urlUbigeos  ?>', requestOptions))).json();
+                } catch (error) {
+                    return null;
+                }
             }
-        }
-        const setUbigeosAsync = async (id_country = 0, name_select = "") => {
-            let ubigeos = await getUbigeos(id_country);
-            let selectUbigeo = document.querySelector(name_select);
-            // si no tiene error
-            if (!ubigeos.data) {
-                // cargar los ubigeos en el select
-                selectUbigeo.innerHTML = "";
-                let htmlTemporal = "";
-                ubigeos.forEach(ubigeo => {
-                    htmlTemporal += `<option value="${ubigeo.id_ubigeo}">${ubigeo.descripcion}</option>`
-                });
-                selectUbigeo.innerHTML = htmlTemporal;
-                $(name_select).select2();
-            } else {
-                selectUbigeo.innerHTML = `<option value="">No tiene Ubigeos Registrados</option>`;
+            const setUbigeosAsync = async (id_country = 0, name_select = "") => {
+                let ubigeos = await getUbigeos(id_country);
+                let selectUbigeo = document.querySelector(name_select);
+                // si no tiene error
+                if (!ubigeos.data) {
+                    // cargar los ubigeos en el select
+                    selectUbigeo.innerHTML = "";
+                    let htmlTemporal = "";
+                    ubigeos.forEach(ubigeo => {
+                        htmlTemporal += `<option value="${ubigeo.id_ubigeo}">${ubigeo.descripcion}</option>`
+                    });
+                    selectUbigeo.innerHTML = htmlTemporal;
+                    $(name_select).select2();
+                } else {
+                    selectUbigeo.innerHTML = `<option value="">No tiene Ubigeos Registrados</option>`;
+                }
             }
-        }
-        $(document).ready(function() {
-            <?php aldem_datatables_in_spanish(); ?>
+            $(document).ready(function() {
+                <?php aldem_datatables_in_spanish(); ?>
 
-            $('#table-shippers').DataTable();
-
-        });
-
-        $('#newshipper-paisShipper').on('select2:select', async function(e) {
-            let id_country = (e.params.data.id);
-            await setUbigeosAsync(id_country, "#newshipper-ubigeoShipper");
-
-        });
-
-        <?php
-        foreach ($shippers as $key4 => $value) {
-        ?>
-            $('.select-countrys-<?= $key4 + 1 ?>').on('select2:select', async function(e) {
-                let id_country = (e.params.data.id);
-                console.log(id_country);
-                await setUbigeosAsync(id_country, "#ubigeoShipper-<?= $key4 + 1 ?>");
+                $('#table-shippers').DataTable();
 
             });
-        <?php } ?>
 
-    })()
+            $('#newshipper-paisShipper').on('select2:select', async function(e) {
+                let id_country = (e.params.data.id);
+                await setUbigeosAsync(id_country, "#newshipper-ubigeoShipper");
+
+            });
+
+            <?php
+            foreach ($shippers as $key4 => $value) {
+            ?>
+                $('.select-countrys-<?= $key4 + 1 ?>').on('select2:select', async function(e) {
+                    let id_country = (e.params.data.id);
+                    console.log(id_country);
+                    await setUbigeosAsync(id_country, "#ubigeoShipper-<?= $key4 + 1 ?>");
+
+                });
+            <?php } ?>
+
+        })()
 </script>

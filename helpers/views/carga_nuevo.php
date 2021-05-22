@@ -364,7 +364,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             } ?>
             <?php aldem_set_proccess_form(); ?>
 
-            <button type="submit" class="btn btn-success w-100 my-2" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
+            <button id="btnSubmit" type="submit" class="btn btn-success w-100 my-2" style="background-color: #98ddca; color: white; border-radius: 5px;"> <i class="fa fa-save mr-1"></i>Guardar</button>
         </form>
     </div>
 </div>
@@ -861,6 +861,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         document.querySelector("#form_carga_nuevo").addEventListener("submit", async (e) => {
             e.preventDefault();
             // verificacion de waybill disponible
+            document.querySelector("#btnSubmit").setAttribute("disabled", "true");
             let update = <?= $update ? "true" : "false" ?>;
             if (!update) {
                 if (await verifyWaybill()) {

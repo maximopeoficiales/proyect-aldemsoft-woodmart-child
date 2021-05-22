@@ -38,7 +38,7 @@ aldem_cargarStyles();
                             </div>
                         </div>
                         <div class="col-md-4 mt-4">
-                            <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="far fa-file-alt mr-2"></i>Ver Reporte</button>
+                            <button id="btnSubmit" type="submit" class="btn btn-primary" style="width: 100%;"><i class="far fa-file-alt mr-2"></i>Ver Reporte</button>
                         </div>
                     </div>
 
@@ -52,6 +52,7 @@ aldem_cargarStyles();
                 $('#mes').select2();
                 document.querySelector("#form_export_reporte_general").addEventListener("submit", (e) => {
                     e.preventDefault();
+                    document.querySelector("#btnSubmit").setAttribute("disabled", "true");
                     let ano = document.querySelector("#ano").value;
                     let mes = document.querySelector("#mes").value;
                     let anoMes = `${ano}${mes}`;

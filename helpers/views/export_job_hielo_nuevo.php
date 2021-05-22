@@ -5,7 +5,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
-            <form action="<?php echo admin_url('admin-post.php') ?>" method="post">
+            <form action="<?php echo admin_url('admin-post.php') ?>" method="post" id="formHieloNuevo">
                 <div class="card-body">
                     <div class="row mt-2">
                         <div class="col-md-12">
@@ -46,7 +46,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
                     <?php aldem_set_input_hidden("waybill", $_GET["waybill"]); ?>
                     <?php aldem_set_input_hidden("user_id", get_current_user_id()); ?>
                     <?php aldem_set_action_name("new-export-hielo"); ?>
-                    <button type="submit" class="btn btn-success w-100"> <i class="fa fa-save mr-1"></i>Agregar</button>
+                    <button id="btnSubmit" type="submit" class="btn btn-success w-100"> <i class="fa fa-save mr-1"></i>Agregar</button>
                 </div>
             </form>
         </div>
@@ -54,3 +54,12 @@ aldem_show_message_custom("Se ha registrado correctamente el Export Hielo Nuevo 
 </div>
 
 </div>
+
+<script>
+    document.querySelector("#formHieloNuevo").addEventListener("submit", (e) => {
+        e.preventDefault();
+        // envitara el doble click
+        document.querySelector("#btnSubmit").setAttribute("disabled", "true");
+        e.target.submit();
+    })
+</script>

@@ -49,12 +49,10 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-12">
                             <div class="form-group mb-2" style="width: 100%;">
                                 <label for="waybill">Waybill: </label>
-                                <input type="text" name="waybill" id="waybill" class="form-control" placeholder="Ingrese el Waybill" aria-describedby="waybill" required maxlength="35" value="<?= $markenJob->waybill ?>"
-                                 <?= $update ? " disabled" : "" ?>
-                                >
+                                <input type="text" name="waybill" id="waybill" class="form-control" placeholder="Ingrese el Waybill" aria-describedby="waybill" required maxlength="35" value="<?= $markenJob->waybill ?>" <?= $update ? " disabled" : "" ?>>
                                 <?php if ($update) {
                                 ?>
-                                    <input type="hidden" name="waybill" value="<?=  $markenJob->waybill ?>">
+                                    <input type="hidden" name="waybill" value="<?= $markenJob->waybill ?>">
                                 <?php } ?>
                             </div>
 
@@ -213,7 +211,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         aldem_set_input_hidden("contacto_telf", "", false);
                         aldem_set_action_name("new-job");
                     } ?>
-                    <button type="submit" class="btn  w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                    <button type="submit" class="btn  w-100 btn-aldem-verde" id="btnSubmit"> <i class="fa fa-save mr-1"></i>Guardar</button>
                 </form>
             </div>
         </div>
@@ -410,6 +408,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
         }
         document.querySelector("#formNewExport").addEventListener("submit", async (e) => {
             e.preventDefault();
+            // envitara el doble click
+            document.querySelector("#btnSubmit").setAttribute("disabled", "true");
             document.querySelector("#contacto_telf").value = phoneInput.getNumber();
             // verificacion de waybill disponible
             // verificacion de waybill disponible
