@@ -127,7 +127,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <div class="col-md-12">
                             <div class="form-group mb-2">
                                 <label for="pcs">PCs: </label>
-                                <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese el numero de Pcs" required aria-describedby="pcs" min="1" value="<?= $markenJob->pcs ?>">
+                                <input type="number" name="pcs" id="pcs" class="form-control" placeholder="Ingrese el numero de Pcs" required aria-describedby="pcs" min="1" value="<?= $update ? $markenJob->pcs : 1 ?>">
                             </div>
                         </div>
 
@@ -348,7 +348,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
     <?php        }
     ?>
 
-    $('#id_pais').val('604');
+    $('#id_pais').val('840');
     $('#paisShipper').val('604');
     $('#id_pais').select2();
     $('#id_caja').select2();
