@@ -1,5 +1,13 @@
 <?php
 date_default_timezone_set('America/Lima');
+// librerias datetime
+wp_enqueue_script("AldemflatPickrJS", "https://cdn.jsdelivr.net/npm/flatpickr", '', '1.0.0');
+
+// wp_enqueue_style("AldemflatPickrCSS", "https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css", '', '1.0.0');
+wp_enqueue_style("AldemflatPickrDarkCSS", "https://npmcdn.com/flatpickr/dist/themes/dark.css", '', '1.0.0');
+
+
+
 wp_enqueue_script("intTelinputJS", "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js", '', '1.0.0');
 
 wp_enqueue_style("intTelinputCSS", "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css", '', '1.0.0');
@@ -22,8 +30,8 @@ $id_marken_job = $update ? $_GET["editjob"] : null;
 $markenJob = $update ? (object) query_getMarkenJobs($id_marken_job)[0] : null;
 $shipperCurrent = $update ? (object) query_getShippers($markenJob->id_shipper)[0] : null;
 $consiggneCurrent = $update ? (object) query_getMarkenConsiggne(null, $markenJob->id)[0] : null;
-$fechaJob = $update ? explode(" ", $markenJob->fecha_hora)[0] : null;
-$horaJob = $update ? substr(explode(" ", $markenJob->fecha_hora)[1], 0, -3) : null;
+// $fechaJob = $update ? explode(" ", $markenJob->fecha_hora)[0] : null;
+// $horaJob = $update ? substr(explode(" ", $markenJob->fecha_hora)[1], 0, -3) : null;
 ?>
 
 <?php if ($update && !aldem_isUserCreated($markenJob->id_usuario_created)) {
@@ -177,25 +185,25 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     <div class="row mt-2">
                         <div class="col-md-6 mt-1">
                             <div class="form-group mb-2">
-                                <label for="fecha">Fecha de Recoleccion: </label>
-                                <input type="date" name="fecha" id="fecha" class="form-control" placeholder="Ingrese el numero de fecha" required aria-describedby="fecha" value="<?= $fechaJob ?>">
+                                <label for="fecha">Fecha y Hora de Recoleccion: </label>
+                                <input type="text" name="fecha" id="fecha" class="form-control" placeholder="Ingrese el numero de fecha" required aria-describedby="fecha">
                             </div>
                         </div>
                         <div class="col-md-6 mt-1">
-
-                            <div class="form-group mb-2">
+                            <div class="form-group">
+                                <label for="ind_activo">Estado</label>
+                                <select class="form-control" name="ind_activo" id="ind_activo">
+                                    <option value="1" <?= $markenType->ind_activo == 1  ? "selected" : "" ?>>Activo</option>
+                                    <option value="2" <?= $markenType->ind_activo == 2  ? "selected" : "" ?>>Inactivo</option>
+                                </select>
+                            </div>
+                            <!-- <div class="form-group mb-2">
                                 <label for="hora">Hora de Recoleccion: </label>
                                 <input type="time" name="hora" id="hora" class="form-control" placeholder="Ingrese el numero de hora" required aria-describedby="hora" value="<?= $horaJob ?>">
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ind_activo">Estado</label>
-                        <select class="form-control" name="ind_activo" id="ind_activo">
-                            <option value="1" <?= $markenType->ind_activo == 1  ? "selected" : "" ?>>Activo</option>
-                            <option value="2" <?= $markenType->ind_activo == 2  ? "selected" : "" ?>>Inactivo</option>
-                        </select>
-                    </div>
+
                     <?php aldem_set_proccess_form(); ?>
                     <?php aldem_set_input_hidden("user_id", get_current_user_id()); ?>
                     <!-- <?php aldem_set_input_hidden("id_shipper", ""); ?> -->
@@ -347,6 +355,9 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
         $('#id_caja').val('<?= $markenJob->id_caja ?>');
     <?php        }
     ?>
+    
+
+
 
     $('#id_pais').val('840');
     $('#paisShipper').val('604');
@@ -357,6 +368,21 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
     $('#ubigeoShipper').select2();
 
     $(document).ready(function() {
+        // fecha
+        $("#fecha").flatpickr({
+            enableTime: true,
+            minTime: "09:00"
+        });
+        <?php if ($update && $markenJob->fecha_hora != "0000-00-00 00:00:00") {
+        ?>
+            $("#fecha").flatpickr({
+                enableTime: true,
+                defaultDate: "<?= $markenJob->fecha_hora ?>"
+            });
+        <?php        }
+        ?>
+
+
         <?php aldem_datatables_in_spanish(); ?>
         $('#table-shippers-select').DataTable();
         const phoneInputField = document.querySelector("#contacto_telf_text");

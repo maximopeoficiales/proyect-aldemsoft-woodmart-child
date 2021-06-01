@@ -159,8 +159,8 @@ function aldem_post_new_export()
             'id_marken_type'                  => 'required|numeric',
             'id_caja'                  => 'required|numeric',
             'instrucciones'                  => 'max:250',
-            'fecha'                  => 'required|max:10|date:Y-m-d',
-            'hora'                  => 'required|max:5',
+            'fecha'                  => 'required',
+            // 'hora'                  => 'required|max:5',
             'user_id'                  => 'required|numeric',
             'ind_activo'                  => 'required|numeric',
         ];
@@ -187,7 +187,7 @@ function aldem_post_new_export()
             $id_marken_type = intval(sanitize_text_field($_POST['id_marken_type']));
             $id_caja = intval(sanitize_text_field($_POST['id_caja']));
             $instrucciones = sanitize_text_field($_POST['instrucciones']);
-            $fechaHora = sanitize_text_field($_POST['fecha']) . " " . sanitize_text_field($_POST['hora']) . ":00";
+            $fechaHora = sanitize_text_field($_POST['fecha']);
             $fecha_actual = date("Y-m-d H:i:s");
             $user_id = sanitize_text_field($_POST['user_id']);
             $ind_activo = intval(sanitize_text_field($_POST['ind_activo']));
