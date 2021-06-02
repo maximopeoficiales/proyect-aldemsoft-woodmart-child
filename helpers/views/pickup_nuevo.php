@@ -77,7 +77,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 <div class="col-md-6 ">
                     <div class="form-group mb-2">
                         <label for="protocolo">Protocolo:</label>
-                        <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese la Fecha de Servicio" maxlength="50" aria-describedby="Protocolo" value="<?= $pickupCurrent->protocolo ?>">
+                        <input type="text" name="protocolo" id="protocolo" class="form-control" placeholder="Ingrese el Protocolo" maxlength="50" aria-describedby="Protocolo" value="<?= $pickupCurrent->protocolo ?>">
                     </div>
                 </div>
             </div>
@@ -516,7 +516,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 // todo salio correctamente
                 Swal.fire({
                     icon: "success",
-                    title: "Se Ha Creado Nuevo " + idTipoReal == 4 ? "Remitente" : "Consignatorio",
+                    title: "Se Ha Creado Nuevo " + (idTipoReal == 4 ? "Remitente" : "Consignatorio"),
                     showConfirmButton: false,
                     timer: 1500
                 })
