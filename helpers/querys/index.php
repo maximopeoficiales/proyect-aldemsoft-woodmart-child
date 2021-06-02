@@ -275,7 +275,7 @@ function query_getRemitentes($idRemitente = null)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT t1.id AS id_Remitente,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 4";
+    $sql = "SELECT t1.id AS id_remitente,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 4";
     $sql .= $idRemitente != null ? " AND t1.id= $idRemitente" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();

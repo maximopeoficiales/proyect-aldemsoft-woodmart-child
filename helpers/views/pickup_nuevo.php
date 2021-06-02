@@ -24,7 +24,7 @@ $pickupCurrent = $update ? query_getPickupJobs($id_courier_job)[0] : null;
 $remitenteCurrent = $update ?  query_getRemitentes($pickupCurrent->id_exportador)[0] : null;
 $consignatorioCurrent = $update ?  query_getConsignatorios($pickupCurrent->id_importador)[0] : null;
 
-$uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
+$uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper_pickup/" . aldem_getUserNameCurrent();
 $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
 $urlVerifyWaybill = get_site_url() . "/wp-json/aldem/v1/existsWaybill/" . aldem_getUserNameCurrent();
 ?>
@@ -40,8 +40,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
 <div class="row justify-content-center p-4">
     <div pcs="col-md-8" style="width: 100%;">
-        <!-- <form action="<?php echo admin_url('admin-post.php') ?>" method="post" id="form_courier_nuevo"> -->
-        <form method="post" id="form_pickup_nuevo">
+        <form action="<?php echo admin_url('admin-post.php') ?>" method="post" id="form_pickup_nuevo">
             <div class="row mt-2">
                 <div class="col-md-6 ">
                     <div class="form-group mb-2">
@@ -304,7 +303,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         </div>
     </div>
 </div>
-<!-- modales de creacion -->
+<!-- modales de creacion de Exportador -->
 <div class="modal" id="modalNewExportador" tabindex="-1" role="dialog" aria-labelledby="modalNewExportador" aria-hidden="true" style="margin-top: 100px; ">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -349,6 +348,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     </div>
 </div>
 
+<!-- modales de creacion de Importador -->
 <div class="modal" id="modalNewImportador" tabindex="-1" role="dialog" aria-labelledby="modalNewImportador" aria-hidden="true" style="margin-top: 100px; ">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -557,28 +557,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
         }
 
-        // function formatearTargetaBanco(string) {
-        //     var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
-        //     if (cleaned != "") {
-        //         if (cleaned.length > 10) {
-        //             cleaned = cleaned.substring(0, 10);
-        //             // console.log(cleaned.length);
-        //         } else if (cleaned.length < 10) {
-        //             cleaned = cleaned.padEnd(10);
-        //             // console.log("mi tamaño es", cleaned.length);
-        //         }
-        //         return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
-        //     } else {
-        //         return "";
-        //     }
-        // }
-        // document.querySelector("#master-text").addEventListener("keyup", (e) => {
-
-        //     setTimeout(() => {
-        //         e.target.value = formatearTargetaBanco(e.target.value);
-        //         document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
-        //     }, 500);
-        // })
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnCloseModalExportador").click();
@@ -616,12 +594,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 document.querySelector("#btnCloseListImportador").click();
             }
         })
-        <?php
-        if ($update) {
-        ?>
-            // $('#master-text').val(formatearTargetaBanco($('#master-text').val()));
-        <?php        }
-        ?>
+
         const verifyWaybill = async () => {
             try {
                 let myHeaders = new Headers();
@@ -664,18 +637,19 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 return false;
             }
         }
-        document.querySelector("#form_courier_nuevo").addEventListener("submit", async (e) => {
+        document.querySelector("#form_pickup_nuevo").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnSubmit").setAttribute("disabled", "true");
-            // verificacion de waybill disponible
-            let update = <?= $update ? "true" : "false" ?>;
-            if (!update) {
-                if (await verifyWaybill()) {
-                    e.target.submit();
-                }
-            } else {
-                e.target.submit();
-            }
+            
+            // // verificacion de waybill disponible
+            // let update = <?= $update ? "true" : "false" ?>;
+            // if (!update) {
+            //     if (await verifyWaybill()) {
+            //         e.target.submit();
+            //     }
+            // } else {
+            //     e.target.submit();
+            // }
 
         })
     })()
