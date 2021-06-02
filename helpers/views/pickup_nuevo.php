@@ -34,7 +34,7 @@ $urlVerifyWaybill = get_site_url() . "/wp-json/aldem/v1/existsWaybill/" . aldem_
 } ?>
 <?php
 aldem_cargarStyles();
-aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion courier 😀", "Se ha actualizado correctamente el servicio de importacion courier😀", "Ocurrio un error 😢 en el registro del servicio de importacion courier");
+aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha actualizado correctamente el Job😀", "Ocurrio un error 😢 en el registro del Job");
 ?>
 
 <div class="row justify-content-center p-4">
