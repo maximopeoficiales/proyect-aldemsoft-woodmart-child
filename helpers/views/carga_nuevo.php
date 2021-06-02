@@ -846,6 +846,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         title: 'Oops...',
                         text: 'Error Job ya registrado, ingrese otro por favor!',
                     })
+                    document.querySelector("#btnSubmit").removeAttribute("disabled");
+
                     return false;
                 }
             } catch (error) {

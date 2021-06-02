@@ -355,7 +355,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
         $('#id_caja').val('<?= $markenJob->id_caja ?>');
     <?php        }
     ?>
-    
+
 
 
 
@@ -420,6 +420,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         title: 'Oops...',
                         text: 'Error Waybill ya registrado, ingrese otro por favor!',
                     })
+                    document.querySelector("#btnSubmit").removeAttribute("disabled");
                     return false;
                 }
             } catch (error) {

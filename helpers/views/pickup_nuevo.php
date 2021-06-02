@@ -17,12 +17,11 @@ $countrys =  query_getCountrys();
 $remitentes = query_getRemitentes();
 $consignatarios = query_getConsignatorios();
 
-
 $pickupCurrent = $update ? query_getPickupJobs($id_courier_job)[0] : null;
 
 // update
-$remitenteCurrent = $update ?  query_getRemitentes($pickupCurrent->id_exportador)[0] : null;
-$consignatorioCurrent = $update ?  query_getConsignatorios($pickupCurrent->id_importador)[0] : null;
+$remitenteCurrent = $update ?  query_getRemitentes($pickupCurrent->id_importador)[0] : null;
+$consignatorioCurrent = $update ?  query_getConsignatorios($pickupCurrent->id_exportador)[0] : null;
 
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper_pickup/" . aldem_getUserNameCurrent();
 $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
@@ -87,7 +86,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 <div class="col-md-6">
                     <div class="form-group mb-2">
                         <label for="pcs">Bultos</label>
-                        <input type="number" name="pcs" id="pcs" class="form-control" min="0" placeholder="Ingrese los Bultos" aria-describedby="bultos" value="<?= $pickupCurrent->bultos ?>">
+                        <input type="number" name="pcs" id="pcs" class="form-control" min="0" placeholder="Ingrese los Bultos" aria-describedby="bultos" value="<?= $pickupCurrent->pcs ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -117,7 +116,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 <div class="col-md-12">
                     <label for="exportador-text">Consignatorio</label>
                     <div class="input-group my-2">
-                        <input type="text" class="form-control" aria-label="Elija un Consignatorio" disabled id="exportador-text" placeholder="Elija un Consignatorio" value="<?= $exportadorCurrent->nombre ?>">
+                        <input type="text" class="form-control" aria-label="Elija un Consignatorio" disabled id="exportador-text" placeholder="Elija un Consignatorio" value="<?= $consignatorioCurrent->nombre ?>">
                         <div class="input-group-append">
                             <button class="btn bg-aldem-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Elije una opcion</button>
                             <div class="dropdown-menu">
@@ -244,7 +243,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $exportador->nombre ?></span>
-                                    <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
+                                    <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_consignatorio  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_consignatorio  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
                                 </td>
                                 <td><?= $exportador->desc_pais ?></td>
                                 <td><?= $exportador->direccion ?></td>
@@ -285,7 +284,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $importador->nombre ?></span>
-                                    <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
+                                    <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_remitente  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_remitente  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
                                 </td>
                                 <td><?= $importador->desc_pais ?></td>
                                 <td><?= $importador->direccion ?></td>
@@ -403,8 +402,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     if ($update) {
     ?>
         $('#id_cliente_subsubtipo').val('<?= $pickupCurrent->id_cliente_subsubtipo ?>');
-        $('#id_site').val('<?= $pickupCurrent->id_site ?>');
-        $('#id_handling').val('<?= $pickupCurrent->id_handling ?>');
+        $('#id_marken_site').val('<?= $pickupCurrent->id_site ?>');
+        $('#ind_facturado').val('<?= $pickupCurrent->ind_facturado ?>');
+        $('#id_ubigeo').val('<?= $pickupCurrent->id_ubigeo ?>');
+        $('#id_transporte').val('<?= $pickupCurrent->id_transporte ?>');
     <?php        }
     ?>
 
@@ -571,12 +572,15 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             if (e.target.classList.value.includes("exportador-btn")) {
                 let idShipper = e.target.getAttribute("data-id-exportador");
                 let nombreShipper = e.target.getAttribute("data-nombre-exportador");
+                console.log(idShipper, nombreShipper);
                 document.querySelector("#id_exportador").value = idShipper;
                 document.querySelector("#exportador-text").value = nombreShipper;
                 document.querySelector("#btnCloseListExportador").click();
             } else if (e.target.classList.value.includes("importador-btn")) {
                 let idShipper = e.target.getAttribute("data-id-importador");
                 let nombreShipper = e.target.getAttribute("data-nombre-importador");
+                console.log(idShipper, nombreShipper);
+
                 document.querySelector("#id_importador").value = idShipper;
                 document.querySelector("#importador-text").value = nombreShipper;
                 document.querySelector("#btnCloseListImportador").click();
@@ -612,7 +616,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Error Guia ya registrado, ingrese otro por favor!',
-                    })
+                    });
+                    document.querySelector("#btnSubmit").removeAttribute("disabled");
                     return false;
                 }
             } catch (error) {
@@ -629,15 +634,15 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             e.preventDefault();
             document.querySelector("#btnSubmit").setAttribute("disabled", "true");
 
-            // // verificacion de waybill disponible
-            // let update = <?= $update ? "true" : "false" ?>;
-            // if (!update) {
-            //     if (await verifyWaybill()) {
-            //         e.target.submit();
-            //     }
-            // } else {
-            //     e.target.submit();
-            // }
+            // verificacion de waybill disponible
+            let update = <?= $update ? "true" : "false" ?>;
+            if (!update) {
+                if (await verifyWaybill()) {
+                    e.target.submit();
+                }
+            } else {
+                e.target.submit();
+            }
 
         })
     })()

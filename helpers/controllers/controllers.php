@@ -7,6 +7,7 @@ add_action('admin_post_process_form', 'aldem_post_new_shipper_data');
 add_action('admin_post_process_form', 'aldem_post_new_export_job_hielo');
 add_action('admin_post_process_form', 'aldem_post_new_export');
 add_action('admin_post_process_form', 'aldem_post_new_courier');
+add_action('admin_post_process_form', 'aldem_post_new_pickup');
 // Funcion callback
 function aldem_post_new_shipper_data()
 {
@@ -385,7 +386,7 @@ function aldem_post_new_courier()
                 "tarifa_almacenaje" => $tarifa_almacenaje,
                 "tarifa_costo" => $tarifa_costo,
                 "tarifa_impuestos" => $tarifa_impuestos,
-                
+
                 "ind_transporte" => $ind_transporte,
                 "ind_servicio_aduana" => $ind_servicio_aduana,
                 "ind_costo_aduana" => $ind_costo_aduana,
@@ -405,7 +406,7 @@ function aldem_post_new_courier()
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
                     // se agrego tarifas
-                    '%s', '%s', '%s','%s','%s',
+                    '%s', '%s', '%s', '%s', '%s',
                     '%d', '%d', '%d',
 
                     '%s', '%d', '%s',
@@ -427,7 +428,7 @@ function aldem_post_new_courier()
                     '%s', '%s', '%d',
                     '%d', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
-                    '%s', '%s', '%s','%s','%s',
+                    '%s', '%s', '%s', '%s', '%s',
                     '%d', '%d', '%d',
 
                     '%s', '%d', '%s',
@@ -614,6 +615,116 @@ function aldem_post_new_courier()
             }
         } else {
             wp_redirect(home_url($pagina2) . "?errors=" . $responseValidator["message"]);
+        }
+    }
+}
+
+
+function aldem_post_new_pickup()
+{
+    $prefix = query_getAldemPrefix();
+    $wpdb = query_getWPDB();
+    $pagina = "marken_pickup_nuevo";
+    $action_name = $_POST["action_name"];
+    if ($action_name === "new-pickup" || $action_name === "update-pickup") {
+        $validations = [
+            'id_cliente_subsubtipo'                  =>  'numeric',
+            'schd_collection'                  => 'date:Y-m-d',
+            'waybill'                  =>  'required|max:35',
+            'protocolo'                  => 'max:50',
+            'pcs'                  => 'numeric',
+            'peso'                  => 'numeric',
+            'id_exportador'                  => 'numeric',
+            'id_importador'                  => 'numeric',
+            'id_ubigeo'                  => 'numeric',
+            'id_transporte'                  => 'numeric',
+            'id_marken_site'                  => 'numeric',
+            'ind_facturado'                  => 'numeric',
+            'factura'                  => 'max:25',
+            'guia_master'                  => 'max:20',
+            'id_user'                  => 'required|numeric',
+        ];
+        if ($action_name == "update-pickup") {
+            $validations["id_courier_job"] = "required|numeric";
+        }
+        $responseValidator = adldem_UtilityValidator($_POST, $validations);
+        if ($responseValidator["validate"]) {
+            // variables sanificadas
+            $id_cliente_subsubtipo = intval(sanitize_text_field($_POST['id_cliente_subsubtipo']));
+            $schd_collection = sanitize_text_field($_POST['schd_collection']);
+            $waybill = sanitize_text_field($_POST['waybill']);
+            $protocolo = sanitize_text_field($_POST['protocolo']);
+            $factura = sanitize_text_field($_POST['factura']);
+            $pcs = intval(sanitize_text_field($_POST['pcs']));
+            $peso = intval(sanitize_text_field($_POST['peso']));
+            $id_exportador = intval(sanitize_text_field($_POST['id_exportador']));
+            $id_importador = intval(sanitize_text_field($_POST['id_importador']));
+            $id_ubigeo = intval(sanitize_text_field($_POST['id_ubigeo']));
+            $id_transporte = intval(sanitize_text_field($_POST['id_transporte']));
+            $id_marken_site = intval(sanitize_text_field($_POST['id_marken_site']));
+            $ind_facturado = intval(sanitize_text_field($_POST['ind_facturado']));
+            $guia_master = (sanitize_text_field($_POST['guia_master']));
+            $id_user = intval(sanitize_text_field($_POST['id_user']));
+            $fecha_actual = date("Y-m-d H:i:s");
+
+            // query 1
+            $table = "{$prefix}marken_job";
+            $data = [
+                "id_cliente_subtipo" => 4,
+                "id_cliente_subsubtipo" => $id_cliente_subsubtipo,
+                "schd_collection" => $schd_collection,
+                "waybill" => $waybill,
+                "factura" => $factura,
+
+                "protocolo" => $protocolo,
+                "pcs" => $pcs,
+                "peso" => $peso,
+                "id_exportador" => $id_exportador,
+
+                "id_importador" => $id_importador,
+                "id_ubigeo" => $id_ubigeo,
+                "id_transporte" => $id_transporte,
+                "id_site" => $id_marken_site,
+
+                "ind_facturado" => $ind_facturado,
+                "guia_master" => $guia_master,
+                "id_usuario_created" => $id_user,
+                "updated_at" => $fecha_actual,
+                "created_at" => $fecha_actual,
+            ];
+            if ($action_name == "new-pickup") {
+                $format = array(
+                    '%d', '%d', '%s', '%s', '%s',
+                    '%s', '%d', '%s', '%d',
+                    '%d', '%d', '%d', '%d',
+                    '%d', '%s', '%d', '%s', '%s',
+                );
+                $queryExistoso = $wpdb->insert($table, $data, $format);
+                $wpdb->flush();
+                if ($queryExistoso) {
+                    wp_redirect(home_url($pagina) . "?msg=" . 1);
+                } else {
+                    wp_redirect(home_url($pagina) . "?msg=");
+                }
+            } else if ($action_name == "update-pickup") {
+                $id_courier_job = intval(sanitize_text_field($_POST['id_courier_job']));
+                unset($data["created_at"]);
+                $format2 = $format = array(
+                    '%d', '%d', '%s', '%s', '%s',
+                    '%s', '%d', '%s', '%d',
+                    '%d', '%d', '%d', '%d',
+                    '%d', '%s', '%d', '%s',
+                );
+                if ($wpdb->update($table, $data, [
+                    "id" => $id_courier_job
+                ], $format2)) {
+                    wp_redirect(home_url($pagina) . "?editjob=$id_courier_job&msg=" . 2);
+                } else {
+                    wp_redirect(home_url($pagina) . "?editjob=$id_courier_job&msg=");
+                }
+            }
+        } else {
+            wp_redirect(home_url($pagina) . "?errors=" . $responseValidator["message"]);
         }
     }
 }

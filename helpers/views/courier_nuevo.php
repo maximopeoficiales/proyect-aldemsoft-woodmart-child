@@ -57,12 +57,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <div class="card-body">
                         <div class="form-group">
                             <label for="job">Job</label>
-                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>"
-                            <?= $update ? " disabled" : "" ?>
-                            >
-                            <?php if($update){
-                              ?> 
-                            <input type="hidden" name="job" value="<?= $courierCurrent->waybill ?>">
+                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>" <?= $update ? " disabled" : "" ?>>
+                            <?php if ($update) {
+                            ?>
+                                <input type="hidden" name="job" value="<?= $courierCurrent->waybill ?>">
                             <?php } ?>
                         </div>
                         <div class="row mt-2">
@@ -828,7 +826,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Error Job ya registrado, ingrese otro por favor!',
-                    })
+                    });
+                    document.querySelector("#btnSubmit").removeAttribute("disabled");
                     return false;
                 }
             } catch (error) {
