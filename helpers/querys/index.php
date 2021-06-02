@@ -49,6 +49,18 @@ function query_getCargoJobs($idMarkenJob = null)
     return $result;
 }
 
+function query_getPickupJobs($idMarkenJob = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+
+    $sql = "SELECT id AS id_marken_job,t1.* FROM {$prefix}marken_job as t1 WHERE id_cliente_subtipo = 4";
+    $sql .= $idMarkenJob != null ? " AND id= $idMarkenJob" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
 
 function query_getMarkenJobs($idMarkenJob = null)
 {
@@ -124,7 +136,37 @@ function query_getMarkenSite($idMarkenSite = null)
     $wpdb->flush();
     return $result;
 }
-function query_getMarkenSiteTipos($idMarkenSite = null, $tipo = 3)
+//  se mejoro funcion 
+function query_getMarkenSiteTipos($idMarkenSite = null, $tipo = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id AS id_marken_site, descripcion FROM ${prefix}marken_site";
+    if ($idMarkenSite == null && $tipo == null) {
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+    if ($idMarkenSite != null) {
+        $sql .= " WHERE id= $idMarkenSite";
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+    if ($tipo != null) {
+        $sql .= " WHERE id_cliente_subtipo= $tipo";
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+    if ($idMarkenSite != null && $tipo != null) {
+        $sql .= " WHERE id=$idMarkenSite AND id_cliente_subtipo=$tipo";
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+}
+function query_getMarkenSites($idMarkenSite = null, $tipo = 3)
 {
 
     $wpdb = query_getWPDB();
@@ -169,7 +211,7 @@ function query_getUsers()
 {
     // $prefix = query_getAldemPrefix();
     $wpdb = query_getWPDB();
-    $result = $wpdb->get_results("SELECT * FROM wp_users");
+    $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}users");
     $wpdb->flush();
     return $result;
 }
@@ -177,14 +219,14 @@ function query_getUsers()
 function query_getNameComplete($id_user = null)
 {
     // $prefix = query_getAldemPrefix();
+    $wpdb = query_getWPDB();
     $id_user = $id_user ?? get_current_user_id();
-    $sql = "SELECT replace(GROUP_CONCAT(t2.meta_value),',',' ') AS name FROM wp_users t1
-    INNER JOIN wp_usermeta t2
+    $sql = "SELECT replace(GROUP_CONCAT(t2.meta_value),',',' ') AS name FROM {$wpdb->prefix}users t1
+    INNER JOIN {$wpdb->prefix}usermeta t2
     ON t1.id = t2.user_id
     WHERE t1.id = $id_user AND t2.meta_key IN ('last_name', 'first_name')
     ORDER BY t2.meta_key DESC";
 
-    $wpdb = query_getWPDB();
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
     return $result[0];
@@ -228,6 +270,27 @@ function query_getExportadores($idExportador = null)
     $wpdb->flush();
     return $result;
 }
+// se agregaron remitente y consignatorios
+function query_getRemitentes($idRemitente = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t1.id AS id_Remitente,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 4";
+    $sql .= $idRemitente != null ? " AND t1.id= $idRemitente" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+function query_getConsignatorios($idConsignatorio = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t1.id AS id_consignatorio,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 5";
+    $sql .= $idConsignatorio != null ? " AND t1.id= $idConsignatorio" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
 
 function query_getMarkenDelivery($idDelivery = null)
 {
@@ -236,6 +299,48 @@ function query_getMarkenDelivery($idDelivery = null)
     $prefix = query_getAldemPrefix();
     $sql = "SELECT id AS id_delivery, descripcion FROM ${prefix}marken_delivery";
     $sql .= $idDelivery != null ? " WHERE id= $idDelivery" : "";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
+function query_getSubsubTipo($id = null, $idClienteSubtipo = null)
+{
+
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id AS id_cliente_subsubtipo, descripcion FROM ${prefix}cliente_subsubtipo";
+    if ($id == null && $idClienteSubtipo == null) {
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+    if ($id != null) {
+        $sql .= " WHERE id= $id";
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+    if ($idClienteSubtipo != null) {
+        $sql .= " WHERE id_cliente_subtipo= $idClienteSubtipo";
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+    if ($id != null && $idClienteSubtipo != null) {
+        $sql .= " WHERE id=$id AND id_cliente_subtipo=$idClienteSubtipo";
+        $result = $wpdb->get_results($sql);
+        $wpdb->flush();
+        return $result;
+    }
+}
+
+function query_getMarkenTransporte($id = null)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id AS id_transporte, descripcion FROM ${prefix}marken_transporte";
+    $sql .= $id != null ? " WHERE id= $id" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
     return $result;
