@@ -588,8 +588,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             <form action="#" method="post" id="formEditMarken">
 
                 <div class="modal-body">
-                    <div class="" id="validacionesFormEdit">
-                    </div>
                     <input type="hidden" id="editTipo">
                     <input type="hidden" id="idEditMarken">
                     <div class="form-group">
@@ -705,6 +703,50 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             $(" .close").click();
         }
         // necesarios para marken shipper
+
+        const verifyWaybill = async () => {
+            try {
+                let myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+                let raw = JSON.stringify({
+                    "waybill": document.querySelector("#job").value,
+                });
+                let requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+                let response = await (await (fetch('<?= $urlVerifyWaybill  ?>', requestOptions))).json();
+                if (response.status == 200) {
+                    return true;
+                } else if (response.status == 404) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        html: `${response.data.replace("Waybill","Job")}`,
+                    })
+                    return false;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Error Job ya registrado, ingrese otro por favor!',
+                    });
+                    document.querySelector("#btnSubmit").removeAttribute("disabled");
+                    return false;
+                }
+            } catch (error) {
+                // error en el servidor
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ocurrio un error en Servidor!',
+                })
+                return false;
+            }
+        }
         const getMarkenShippersAsync = async (id_tipo = 2, id_table) => {
             // No mover esta parte importante para el modal
             let tipo = id_tipo == 2 ? "exportador" : "importador";
@@ -844,7 +886,27 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             }
 
         }
-
+        const getMarkenShipperByIDAsync = async (id) => {
+            showSpinnerCargando();
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+            myHeaders.append("Content-Type", "application/json");
+            let raw = JSON.stringify({
+                "id": id,
+            });
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let response = await (await fetch("<?= $uriGETMarkenShipperId ?>", requestOptions)).json();
+            closeSpinnerCargando();
+            if (response.status == 200) {
+                console.log(response.data[0]);
+                return (response.data[0]);
+            }
+        }
         const getJsonMarkenShipper = () => {
             return {
                 "id": $getValue(`#idEditMarken`),
@@ -879,9 +941,19 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             }
             return descripcion;
         }
+        const setDataFormEdit = (data) => {
+            $setValue("#nombreEdit", data.nombre);
+            $setValue("#direccionEdit", data.direccion);
+            $setValue("#correo1Edit", data.correo1);
+            $setValue("#correo2Edit", data.correo2);
+            $setValue("#correo3Edit", data.correo3);
+            // seteo valor al select y notifica al select
+            // si es nulo ponle peru
+            $("#paisEdit").val(data.id_country ?? 604);
+            $("#paisEdit").trigger("change");
+        }
 
-
-        const executeEventFormEditMarken = (e) => {
+        const executeEventFormEditMarken = async (e) => {
             if (e.target.classList.value.includes("edit-btn")) {
                 let id = e.target.getAttribute("data-id");
                 let idTipo = e.target.getAttribute("data-id-tipo");
@@ -890,9 +962,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 document.querySelector("#idEditMarken").value = id;
                 document.querySelector("#editTipo").value = idTipo;
                 document.querySelector("#titleEdit").innerHTML = "Editar " + getTypeDescription(idTipo);
-
+                // extraer datos del shipper 
                 // cierra todos los modales abiertos de boostrap
                 closeModalsBoostrap();
+                // obtener data del shipper
+                setDataFormEdit(await getMarkenShipperByIDAsync(id));
                 document.querySelector("#btnOpenModalEdit").click();
             }
         }
@@ -954,10 +1028,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
 
         // fin de nuevas funciones
-
-
-
-
+        // eventos
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnCloseModalExportador").click();
@@ -979,7 +1050,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             }
         })
         // seleccionador del modal
-        document.addEventListener("click", (e) => {
+        document.addEventListener("click", async (e) => {
             if (e.target.classList.value.includes("exportador-btn")) {
                 let idShipper = e.target.getAttribute("data-id-exportador");
                 let nombreShipper = e.target.getAttribute("data-nombre-exportador");
@@ -994,53 +1065,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 document.querySelector("#btnCloseListImportador").click();
             }
             // evento click del modal edit
-            executeEventFormEditMarken(e);
+            await executeEventFormEditMarken(e);
             // fin de evento modal
         })
 
-        const verifyWaybill = async () => {
-            try {
-                let myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
-                let raw = JSON.stringify({
-                    "waybill": document.querySelector("#job").value,
-                });
-                let requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                };
-                let response = await (await (fetch('<?= $urlVerifyWaybill  ?>', requestOptions))).json();
-                if (response.status == 200) {
-                    return true;
-                } else if (response.status == 404) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        html: `${response.data.replace("Waybill","Job")}`,
-                    })
-                    return false;
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Error Job ya registrado, ingrese otro por favor!',
-                    });
-                    document.querySelector("#btnSubmit").removeAttribute("disabled");
-                    return false;
-                }
-            } catch (error) {
-                // error en el servidor
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Ocurrio un error en Servidor!',
-                })
-                return false;
-            }
-        }
         document.querySelector("#form_courier_nuevo").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnSubmit").setAttribute("disabled", "true");
