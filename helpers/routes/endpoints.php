@@ -70,14 +70,16 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
                 'correo2' => $correo2,
                 'correo3' => $correo3,
                 'id_country' => $id_pais,
+                'updated_at' => $fecha_actual,
             ];
 
             $formatUpdated = array(
                 '%d', '%s', '%s',
                 '%s', '%s', '%s',
-                '%d'
+                '%d', "%s"
             );
             if ($wpdb->update($table, $data, ["id" => $id], $formatUpdated)) {
+                $wpdb->flush();
                 return  aldem_rest_response(null, "Marken Shipper Actualizado");
             } else {
                 return  aldem_rest_response("", "Error en la actualizacion de Marken Shipper", 500);

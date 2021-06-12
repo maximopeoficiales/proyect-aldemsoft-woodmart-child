@@ -23,6 +23,7 @@ $importadorCurrent = $update ?  query_getImportadores($courierCurrent->id_import
 
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
 $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
+$uriGETMarkenShipperId = get_site_url() . "/wp-json/aldem/v1/getMarkenShipper/" . aldem_getUserNameCurrent();
 $urlVerifyWaybill = get_site_url() . "/wp-json/aldem/v1/existsWaybill/" . aldem_getUserNameCurrent();
 
 ?>
@@ -59,12 +60,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <div class="card-body">
                         <div class="form-group">
                             <label for="job">Job</label>
-                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>"
-                            <?= $update ? " disabled" : "" ?>
-                            >
-                            <?php if($update){
-                              ?> 
-                            <input type="hidden" name="job" value="<?= $courierCurrent->waybill ?>">
+                            <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>" <?= $update ? " disabled" : "" ?>>
+                            <?php if ($update) {
+                            ?>
+                                <input type="hidden" name="job" value="<?= $courierCurrent->waybill ?>">
                             <?php } ?>
                         </div>
                         <div class="row mt-2">
@@ -397,7 +396,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $exportador->nombre ?></span>
-                                    <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
+                                    <div class="">
+                                        <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $exportador->id_exportador  ?>" data-id-tipo="2">
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="<?= $exportador->id_exportador  ?>" data-id-tipo="2" style="color: #17A2B8"></i></button>
+
+                                        <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
+
+                                    </div>
                                 </td>
                                 <td><?= $exportador->desc_pais ?></td>
                                 <td><?= $exportador->direccion ?></td>
@@ -444,7 +449,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $importador->nombre ?></span>
-                                    <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
+
+                                    <div class="">
+                                        <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $importador->id_importador  ?>" data-id-tipo="3">
+
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="<?= $importador->id_importador  ?>" data-id-tipo="3" style="color: #17A2B8"></i></button>
+
+                                        <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
+                                    </div>
                                 </td>
                                 <td><?= $importador->desc_pais ?></td>
                                 <td><?= $importador->direccion ?></td>
@@ -574,7 +586,67 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         </div>
     </div>
 </div>
+<!-- formulario de edicion -->
+<button type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#modalEdit" id="btnOpenModalEdit">
+</button>
 
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true" style="margin-top: 100px; ">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title aldem-text-white text-capitalize" id="titleEdit"></h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseModalEdit">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="#" method="post" id="formEditMarken">
+
+                <div class="modal-body">
+                    <input type="hidden" id="editTipo">
+                    <input type="hidden" id="idEditMarken">
+                    <div class="form-group">
+                        <label for="nombreEdit">Nombre</label>
+                        <input type="text" name="nombreEdit" id="nombreEdit" class="form-control" placeholder="Ingrese nombre" aria-describedby="nombreEdit" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccionEdit">Direccion</label>
+                        <input type="text" name="direccionEdit" id="direccionEdit" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionEdit" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo1Edit">Correo1</label>
+                        <input type="email" name="correo1Edit" id="correo1Edit" class="form-control" placeholder="Ingrese correo1" aria-describedby="correo1Edit" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo2Edit">Correo2</label>
+                        <input type="email" name="correo2Edit" id="correo2Edit" class="form-control" placeholder="Ingrese correo2" aria-describedby="correo2Edit" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo3Edit">Correo3</label>
+                        <input type="email" name="correo3Edit" id="correo3Edit" class="form-control" placeholder="Ingrese correo3" aria-describedby="correo3Edit" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="paisShipper" style="display: block;">Pais:</label>
+                        <select class="form-control select-countrys" name="paisEdit" id="paisEdit" style="width: 100% !important;">
+                            <?php
+                            foreach ($countrys as $country) {
+                            ?>
+                                <option value="<?= $country->id_pais ?>">
+                                    <?= $country->desc_pais ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -612,9 +684,25 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     $('#paisNewExportador').val('604');
     $('#paisNewImportador').select2();
     $('#paisNewExportador').select2();
+    $('#paisEdit').select2();
     $('#id_delivery').select2();
     $('#id_handling').select2();
     (() => {
+        // nuevas funciones
+        const $getValue = (id) => {
+            try {
+                return document.querySelector(id).value
+            } catch (error) {
+                return "";
+            }
+        };
+        const $setValue = (id, value = "") => {
+            try {
+                return document.querySelector(id).value = value;
+            } catch (error) {
+                return "";
+            }
+        };
         const showSpinnerCargando = () => {
             Swal.fire({
                 title: '<strong>Cargando...</strong>',
@@ -625,8 +713,56 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         const closeSpinnerCargando = () => {
             Swal.closeModal();
         }
+        const closeModalsBoostrap = () => {
+            $(" .close").click();
+        }
+        // necesarios para marken shipper
 
+        const verifyWaybill = async () => {
+            try {
+                let myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+                let raw = JSON.stringify({
+                    "waybill": document.querySelector("#job").value,
+                });
+                let requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+                let response = await (await (fetch('<?= $urlVerifyWaybill  ?>', requestOptions))).json();
+                if (response.status == 200) {
+                    return true;
+                } else if (response.status == 404) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        html: `${response.data.replace("Waybill","Job")}`,
+                    })
+                    return false;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Error Job ya registrado, ingrese otro por favor!',
+                    });
+                    document.querySelector("#btnSubmit").removeAttribute("disabled");
+                    return false;
+                }
+            } catch (error) {
+                // error en el servidor
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ocurrio un error en Servidor!',
+                })
+                return false;
+            }
+        }
         const getMarkenShippersAsync = async (id_tipo = 2, id_table) => {
+            // No mover esta parte importante para el modal
             let tipo = id_tipo == 2 ? "exportador" : "importador";
             let myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
@@ -668,8 +804,16 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <tr>
                         <td class="d-flex justify-content-between" style="align-items: center !important;">
                             <span>${shipper.nombre}</span>
+                            <div>
+                            <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $importador->id_importador  ?>" data-id-tipo="3">
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="${shipper.id_shipper}" data-id-tipo="${id_tipo}" style="color: #17A2B8"></i></button>
+                        
+
                             <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x ${tipo}-btn" style="color: #32CC52;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}"   data-nombre-${tipo}="${shipper.nombre}"></i></button>
-                        </td>
+                        
+                            </div>
+
+                            </td>
                         <td>${shipper.desc_pais}</td>
                         <td>${shipper.direccion}</td>
                         <td>${shipper.correo1}</td>
@@ -689,6 +833,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 // algo salio mal
                 console.error(response.message)
             }
+        }
+        const charginAllTables = async (idTipoReal) => {
+            // aqui envia el tipo real segun el tabla correspondiente
+            await getMarkenShippersAsync(2, "#table-exportadores-select");
+            await getMarkenShippersAsync(3, "#table-importadores-select");
+            // await getMarkenShippersAsync(4, "#table-exportadores-select");
+            // await getMarkenShippersAsync(5, "#table-importadores-select");
         }
         const saveMarkenShipperAsync = async (exportador = false) => {
             showSpinnerCargando();
@@ -749,29 +900,147 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             }
 
         }
+        const getMarkenShipperByIDAsync = async (id) => {
+            showSpinnerCargando();
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+            myHeaders.append("Content-Type", "application/json");
+            let raw = JSON.stringify({
+                "id": id,
+            });
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let response = await (await fetch("<?= $uriGETMarkenShipperId ?>", requestOptions)).json();
+            closeSpinnerCargando();
+            if (response.status == 200) {
+                console.log(response.data[0]);
+                return (response.data[0]);
+            }
+        }
+        const getJsonMarkenShipper = () => {
+            return {
+                "id": $getValue(`#idEditMarken`),
+                "nombre": $getValue(`#nombreEdit`),
+                "direccion": $getValue(`#direccionEdit`),
+                "correo1": $getValue(`#correo1Edit`),
+                "correo2": $getValue(`#correo2Edit`),
+                "correo3": $getValue(`#correo3Edit`),
+                "id_pais": $getValue(`#paisEdit`),
+                "id_tipo": $getValue(`#editTipo`),
+                "id_user": <?= get_current_user_id() ?>,
+            }
+        }
+        const getTypeDescription = (idTipo = 0) => {
+            let descripcion = "";
+            switch (parseInt(idTipo)) {
+                case 2:
+                    descripcion = "Exportador";
+                    break;
+                case 3:
+                    descripcion = "Importador";
+                    break;
+                case 4:
+                    descripcion = "Remitente";
+                    break;
+                case 5:
+                    descripcion = "Consignatorio";
+                    break;
+                default:
+                    descripcion = "desconocido"
+                    break;
+            }
+            return descripcion;
+        }
+        const setDataFormEdit = (data) => {
+            $setValue("#nombreEdit", data.nombre);
+            $setValue("#direccionEdit", data.direccion);
+            $setValue("#correo1Edit", data.correo1);
+            $setValue("#correo2Edit", data.correo2);
+            $setValue("#correo3Edit", data.correo3);
+            // seteo valor al select y notifica al select
+            // si es nulo ponle peru
+            $("#paisEdit").val(data.id_country ?? 604);
+            $("#paisEdit").trigger("change");
+        }
 
-        // function formatearTargetaBanco(string) {
-        //     var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
-        //     if (cleaned != "") {
-        //         if (cleaned.length > 10) {
-        //             cleaned = cleaned.substring(0, 10);
-        //             // console.log(cleaned.length);
-        //         } else if (cleaned.length < 10) {
-        //             cleaned = cleaned.padEnd(10);
-        //             // console.log("mi tamaño es", cleaned.length);
-        //         }
-        //         return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
-        //     } else {
-        //         return "";
-        //     }
-        // }
-        // document.querySelector("#master-text").addEventListener("keyup", (e) => {
+        const executeEventFormEditMarken = async (e) => {
+            if (e.target.classList.value.includes("edit-btn")) {
+                let id = e.target.getAttribute("data-id");
+                let idTipo = e.target.getAttribute("data-id-tipo");
+                console.log(id, idTipo);
+                console.log(getTypeDescription(idTipo));
+                document.querySelector("#idEditMarken").value = id;
+                document.querySelector("#editTipo").value = idTipo;
+                document.querySelector("#titleEdit").innerHTML = "Editar " + getTypeDescription(idTipo);
+                // extraer datos del shipper 
+                // cierra todos los modales abiertos de boostrap
+                closeModalsBoostrap();
+                // obtener data del shipper
+                setDataFormEdit(await getMarkenShipperByIDAsync(id));
+                document.querySelector("#btnOpenModalEdit").click();
+            }
+        }
+        const updateMarkenShipperAsync = async () => {
+            showSpinnerCargando();
+            let tipo = getTypeDescription($getValue("#editTipo"));
+            let id_tipo = $getValue("#idEditMarken");
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+            myHeaders.append("Content-Type", "application/json");
+            let raw = JSON.stringify(getJsonMarkenShipper());
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let response = await (await fetch("<?= $uriMarkenShipper ?>", requestOptions)).json();
+            if (response.status == 200) {
+                // todo salio correctamente
+                Swal.fire({
+                    icon: "success",
+                    title: "Se Ha Actualizado Correctamente El " + tipo,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 
-        //     setTimeout(() => {
-        //         e.target.value = formatearTargetaBanco(e.target.value);
-        //         document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
-        //     }, 500);
-        // })
+                await charginAllTables();
+                closeSpinnerCargando();
+            } else if (response.status == 404) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `${response.data}`,
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `${response.message}`,
+                })
+            }
+
+        }
+
+        // div de validaciones => #validacionesFormEdit
+        const eventSubmitFormEditMarken = () => {
+
+            document.querySelector("#formEditMarken").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                console.log(getJsonMarkenShipper());
+                await updateMarkenShipperAsync();
+                e.target.reset();
+                closeModalsBoostrap();
+                // actualizar el marken shipper
+            })
+        }
+
+
+
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnCloseModalExportador").click();
@@ -794,7 +1063,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         })
         // seleccionador del modal
 
-        document.addEventListener("click", (e) => {
+        document.addEventListener("click", async (e) => {
             if (e.target.classList.value.includes("exportador-btn")) {
                 let idShipper = e.target.getAttribute("data-id-exportador");
                 let nombreShipper = e.target.getAttribute("data-nombre-exportador");
@@ -808,58 +1077,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 document.querySelector("#importador-text").value = nombreShipper;
                 document.querySelector("#btnCloseListImportador").click();
             }
+
+
+            // evento click del modal edit
+            await executeEventFormEditMarken(e);
+            // fin de evento modal
         })
-        <?php
-        if ($update) {
-        ?>
-            // $('#master-text').val(formatearTargetaBanco($('#master-text').val()));
-        <?php        }
-        ?>
 
-        const verifyWaybill = async () => {
-            try {
-                let myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-                myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
-                let raw = JSON.stringify({
-                    "waybill": document.querySelector("#job").value,
-                });
-                let requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                };
-                let response = await (await (fetch('<?= $urlVerifyWaybill  ?>', requestOptions))).json();
-                if (response.status == 200) {
-                    return true;
-                } else if (response.status == 404) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        html: `${response.data.replace("Waybill","Job")}`,
-                    })
-                    return false;
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Error Job ya registrado, ingrese otro por favor!',
-                    })
-                    document.querySelector("#btnSubmit").removeAttribute("disabled");
-
-                    return false;
-                }
-            } catch (error) {
-                // error en el servidor
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Ocurrio un error en Servidor!',
-                })
-                return false;
-            }
-        }
         document.querySelector("#form_carga_nuevo").addEventListener("submit", async (e) => {
             e.preventDefault();
             // verificacion de waybill disponible
@@ -873,5 +1097,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 e.target.submit();
             }
         })
+        eventSubmitFormEditMarken();
     })()
 </script>
