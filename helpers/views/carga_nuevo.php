@@ -385,7 +385,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
-                            <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Direccion</th>
                             <th scope="col" class="none">Correo1</th>
                             <th scope="col" class="none">Correo2</th>
                             <th scope="col" class="none">Correo3</th>
@@ -432,7 +432,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
-                            <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Direccion</th>
                             <th scope="col" class="none">Correo1</th>
                             <th scope="col" class="none">Correo2</th>
                             <th scope="col" class="none">Correo3</th>
@@ -655,7 +655,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
-                            <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Direccion</th>
                             <th scope="col" class="none">Correo1</th>
                             <th scope="col" class="none">Correo2</th>
                             <th scope="col" class="none">Correo3</th>

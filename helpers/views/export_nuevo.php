@@ -242,7 +242,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Direccion</th>
-                            <th scope="col">Site</th>
+                            <th scope="col" class="none">Site</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -527,7 +527,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Direccion</th>
-                            <th scope="col">Site</th>
+                            <th scope="col" class="none">Site</th>
                         </tr>
                     </thead>
                     <tbody>`;

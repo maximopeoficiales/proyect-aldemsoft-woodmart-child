@@ -365,7 +365,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
-                            <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Direccion</th>
                             <th scope="col" class="none">Correo1</th>
                             <th scope="col" class="none">Correo2</th>
                             <th scope="col" class="none">Correo3</th>
@@ -412,7 +412,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
-                            <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Direccion</th>
                             <th scope="col" class="none">Correo1</th>
                             <th scope="col" class="none">Correo2</th>
                             <th scope="col" class="none">Correo3</th>
@@ -637,7 +637,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Pais</th>
-                            <th scope="col">Direccion</th>
+                            <th scope="col" class="none">Direccion</th>
                             <th scope="col" class="none">Correo1</th>
                             <th scope="col" class="none">Correo2</th>
                             <th scope="col" class="none">Correo3</th>
@@ -732,28 +732,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
         }
 
-        // function formatearTargetaBanco(string) {
-        //     var cleaned = ("" + string).replace(/\D/g, '').replace("-", "");
-        //     if (cleaned != "") {
-        //         if (cleaned.length > 10) {
-        //             cleaned = cleaned.substring(0, 10);
-        //             // console.log(cleaned.length);
-        //         } else if (cleaned.length < 10) {
-        //             cleaned = cleaned.padEnd(10);
-        //             // console.log("mi tamaño es", cleaned.length);
-        //         }
-        //         return cleaned.substring(0, 3) + "-" + cleaned.substring(3, 6) + "-" + cleaned.substring(6, 10)
-        //     } else {
-        //         return "";
-        //     }
-        // }
-        // document.querySelector("#master-text").addEventListener("keyup", (e) => {
-
-        //     setTimeout(() => {
-        //         e.target.value = formatearTargetaBanco(e.target.value);
-        //         document.querySelector("#master").value = formatearTargetaBanco(e.target.value).replace(/\D/g, '').replace("-", "");
-        //     }, 500);
-        // })
+        
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnCloseModalExportador").click();
