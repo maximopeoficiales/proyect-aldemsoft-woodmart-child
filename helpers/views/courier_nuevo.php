@@ -377,7 +377,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $exportador->nombre ?></span>
-                                    <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
+                                    <div class="">
+                                        <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $exportador->id_exportador  ?>" data-id-tipo="2">
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="<?= $exportador->id_exportador  ?>" data-id-tipo="2" style="color: #17A2B8"></i></button>
+
+                                        <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
+
+                                    </div>
                                 </td>
                                 <td><?= $exportador->desc_pais ?></td>
                                 <td><?= $exportador->direccion ?></td>
@@ -424,7 +430,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <tr>
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $importador->nombre ?></span>
-                                    <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
+
+                                    <div class="">
+                                        <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $importador->id_importador  ?>" data-id-tipo="3">
+
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="<?= $importador->id_importador  ?>" data-id-tipo="3" style="color: #17A2B8"></i></button>
+
+                                        <button type="button" class="btn importador-btn" style="background: transparent;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"><i class="fas fa-check-circle fa-2x importador-btn" style="color: #32CC52;" data-id-importador="<?= $importador->id_importador  ?>" data-nombre-importador="<?= $importador->nombre ?>"></i></button>
+                                    </div>
                                 </td>
                                 <td><?= $importador->desc_pais ?></td>
                                 <td><?= $importador->direccion ?></td>
@@ -556,6 +569,71 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 </div>
 
 
+<!-- formulario de edicion -->
+<button type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#modalEdit" id="btnOpenModalEdit">
+</button>
+
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true" style="margin-top: 100px; ">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title aldem-text-white text-capitalize" id="titleEdit"></h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseModalEdit">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="#" method="post" id="formEditMarken">
+
+                <div class="modal-body">
+                    <div class="" id="validacionesFormEdit">
+                    </div>
+                    <input type="hidden" id="editTipo">
+                    <input type="hidden" id="idEditMarken">
+                    <div class="form-group">
+                        <label for="nombreEdit">Nombre</label>
+                        <input type="text" name="nombreEdit" id="nombreEdit" class="form-control" placeholder="Ingrese nombre" aria-describedby="nombreEdit" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccionEdit">Direccion</label>
+                        <input type="text" name="direccionEdit" id="direccionEdit" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionEdit" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo1Edit">Correo1</label>
+                        <input type="email" name="correo1Edit" id="correo1Edit" class="form-control" placeholder="Ingrese correo1" aria-describedby="correo1Edit" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo2Edit">Correo2</label>
+                        <input type="email" name="correo2Edit" id="correo2Edit" class="form-control" placeholder="Ingrese correo2" aria-describedby="correo2Edit" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo3Edit">Correo3</label>
+                        <input type="email" name="correo3Edit" id="correo3Edit" class="form-control" placeholder="Ingrese correo3" aria-describedby="correo3Edit" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="paisShipper" style="display: block;">Pais:</label>
+                        <select class="form-control select-countrys" name="paisEdit" id="paisEdit" style="width: 100% !important;">
+                            <?php
+                            foreach ($countrys as $country) {
+                            ?>
+                                <option value="<?= $country->id_pais ?>">
+                                    <?= $country->desc_pais ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     $(document).ready(function() {
@@ -588,15 +666,23 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     ?>
 
     $('#incoterm').select2();
-
-
     $('#paisNewImportador').val('604');
     $('#paisNewExportador').val('604');
     $('#paisNewImportador').select2();
     $('#paisNewExportador').select2();
+    // formulario edit
+    $('#paisEdit').select2();
     $('#id_site').select2();
     $('#id_handling').select2();
     (() => {
+        // nuevas funciones
+        const $getValue = (id) => {
+            try {
+                return document.querySelector(id).value
+            } catch (error) {
+                return "";
+            }
+        };
         const showSpinnerCargando = () => {
             Swal.fire({
                 title: '<strong>Cargando...</strong>',
@@ -607,6 +693,66 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         const closeSpinnerCargando = () => {
             Swal.closeModal();
         }
+        const getTypeDescription = (idTipo = 0) => {
+            let descripcion = "";
+            switch (parseInt(idTipo)) {
+                case 2:
+                    descripcion = "Exportador";
+                    break;
+                case 3:
+                    descripcion = "Importador";
+                    break;
+                case 4:
+                    descripcion = "Remitente";
+                    break;
+                case 5:
+                    descripcion = "Consignatorio";
+                    break;
+                default:
+                    descripcion = "desconocido"
+                    break;
+            }
+            return descripcion;
+        }
+        const executeEventFormEditMarken = (e) => {
+            if (e.target.classList.value.includes("edit-btn")) {
+                let id = e.target.getAttribute("data-id");
+                let idTipo = e.target.getAttribute("data-id-tipo");
+                console.log(id, idTipo);
+                console.log(getTypeDescription(idTipo));
+                document.querySelector("#idEditMarken").value = id;
+                document.querySelector("#editTipo").value = idTipo;
+                document.querySelector("#titleEdit").innerHTML = "Editar " + getTypeDescription(idTipo);
+
+                // cierra todos los modales abiertos de boostrap
+                $(" .close").click()
+                document.querySelector("#btnOpenModalEdit").click();
+            }
+        }
+
+        // div de validaciones => #validacionesFormEdit
+        const eventSubmitFormEditMarken = () => {
+            const getJsonMarkenShipper = () => {
+                return {
+                    "id": $getValue(`#idEditMarken`),
+                    "nombre": $getValue(`#nombreEdit`),
+                    "direccion": $getValue(`#direccionEdit`),
+                    "correo1": $getValue(`#correo1Edit`),
+                    "correo2": $getValue(`#correo2Edit`),
+                    "correo3": $getValue(`#correo3Edit`),
+                    "id_pais": $getValue(`#paisEdit`),
+                    "id_tipo": $getValue(`#editTipo`),
+                    "id_user": <?= get_current_user_id() ?>,
+                }
+            }
+            document.querySelector("#formEditMarken").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                console.log(getJsonMarkenShipper());
+                // actualizar el marken shipper
+            })
+        }
+        // fin de nuevas funciones
+
 
         const getMarkenShippersAsync = async (id_tipo = 2, id_table) => {
             let tipo = id_tipo == 2 ? "exportador" : "importador";
@@ -732,7 +878,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
         }
 
-        
+
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnCloseModalExportador").click();
@@ -754,7 +900,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             }
         })
         // seleccionador del modal
-
         document.addEventListener("click", (e) => {
             if (e.target.classList.value.includes("exportador-btn")) {
                 let idShipper = e.target.getAttribute("data-id-exportador");
@@ -769,13 +914,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 document.querySelector("#importador-text").value = nombreShipper;
                 document.querySelector("#btnCloseListImportador").click();
             }
+            // evento click del modal edit
+            executeEventFormEditMarken(e);
+            // fin de evento modal
         })
-        <?php
-        if ($update) {
-        ?>
-            // $('#master-text').val(formatearTargetaBanco($('#master-text').val()));
-        <?php        }
-        ?>
+
         const verifyWaybill = async () => {
             try {
                 let myHeaders = new Headers();
@@ -833,5 +976,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             }
 
         })
+
+        eventSubmitFormEditMarken();
     })()
 </script>
