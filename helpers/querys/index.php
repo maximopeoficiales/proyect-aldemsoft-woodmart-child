@@ -248,12 +248,20 @@ function query_getIncoterms($incoterm = null)
     return $result;
 }
 
-
+function query_getMarkenShipperByID($id = 0)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t1.id AS id_importador,t1.id AS id_shipper,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id= $id";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
 function query_getImportadores($idImportador = null)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT t1.id AS id_importador,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 3";
+    $sql = "SELECT t1.id AS id_importador,t1.id AS id_shipper,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 3";
     $sql .= $idImportador != null ? " AND t1.id= $idImportador" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
@@ -264,7 +272,7 @@ function query_getExportadores($idExportador = null)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT t1.id AS id_exportador,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 2";
+    $sql = "SELECT t1.id AS id_exportador,t1.id AS id_shipper,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 2";
     $sql .= $idExportador != null ? " AND t1.id= $idExportador" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
@@ -275,7 +283,7 @@ function query_getRemitentes($idRemitente = null)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT t1.id AS id_remitente,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 4";
+    $sql = "SELECT t1.id AS id_remitente,t1.id AS id_shipper,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 4";
     $sql .= $idRemitente != null ? " AND t1.id= $idRemitente" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
@@ -285,7 +293,7 @@ function query_getConsignatorios($idConsignatorio = null)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT t1.id AS id_consignatorio,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 5";
+    $sql = "SELECT t1.id AS id_consignatorio,t1.id AS id_shipper,t1.descripcion as nombre,t1.direccion,t1.*,t2.* FROM ${prefix}marken_shipper AS t1 INNER JOIN ${prefix}pais t2 ON t2.id = t1.id_country WHERE t1.id_tipo = 5";
     $sql .= $idConsignatorio != null ? " AND t1.id= $idConsignatorio" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();

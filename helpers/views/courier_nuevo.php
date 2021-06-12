@@ -23,6 +23,7 @@ $importadorCurrent = $update ?  query_getImportadores($courierCurrent->id_import
 
 $uriMarkenShipper = get_site_url() . "/wp-json/aldem/v1/marken_shipper/" . aldem_getUserNameCurrent();
 $uriGETMarkenShipper = get_site_url() . "/wp-json/aldem/v1/getMarkenShippers/" . aldem_getUserNameCurrent();
+$uriGETMarkenShipperId = get_site_url() . "/wp-json/aldem/v1/getMarkenShipper/" . aldem_getUserNameCurrent();
 $urlVerifyWaybill = get_site_url() . "/wp-json/aldem/v1/existsWaybill/" . aldem_getUserNameCurrent();
 ?>
 <?php if ($update && !aldem_isUserCreated($courierCurrent->id_usuario_created)) {
@@ -683,6 +684,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 return "";
             }
         };
+        const $setValue = (id, value = "") => {
+            try {
+                return document.querySelector(id).value = value;
+            } catch (error) {
+                return "";
+            }
+        };
         const showSpinnerCargando = () => {
             Swal.fire({
                 title: '<strong>Cargando...</strong>',
@@ -693,68 +701,12 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         const closeSpinnerCargando = () => {
             Swal.closeModal();
         }
-        const getTypeDescription = (idTipo = 0) => {
-            let descripcion = "";
-            switch (parseInt(idTipo)) {
-                case 2:
-                    descripcion = "Exportador";
-                    break;
-                case 3:
-                    descripcion = "Importador";
-                    break;
-                case 4:
-                    descripcion = "Remitente";
-                    break;
-                case 5:
-                    descripcion = "Consignatorio";
-                    break;
-                default:
-                    descripcion = "desconocido"
-                    break;
-            }
-            return descripcion;
+        const closeModalsBoostrap = () => {
+            $(" .close").click();
         }
-        const executeEventFormEditMarken = (e) => {
-            if (e.target.classList.value.includes("edit-btn")) {
-                let id = e.target.getAttribute("data-id");
-                let idTipo = e.target.getAttribute("data-id-tipo");
-                console.log(id, idTipo);
-                console.log(getTypeDescription(idTipo));
-                document.querySelector("#idEditMarken").value = id;
-                document.querySelector("#editTipo").value = idTipo;
-                document.querySelector("#titleEdit").innerHTML = "Editar " + getTypeDescription(idTipo);
-
-                // cierra todos los modales abiertos de boostrap
-                $(" .close").click()
-                document.querySelector("#btnOpenModalEdit").click();
-            }
-        }
-
-        // div de validaciones => #validacionesFormEdit
-        const eventSubmitFormEditMarken = () => {
-            const getJsonMarkenShipper = () => {
-                return {
-                    "id": $getValue(`#idEditMarken`),
-                    "nombre": $getValue(`#nombreEdit`),
-                    "direccion": $getValue(`#direccionEdit`),
-                    "correo1": $getValue(`#correo1Edit`),
-                    "correo2": $getValue(`#correo2Edit`),
-                    "correo3": $getValue(`#correo3Edit`),
-                    "id_pais": $getValue(`#paisEdit`),
-                    "id_tipo": $getValue(`#editTipo`),
-                    "id_user": <?= get_current_user_id() ?>,
-                }
-            }
-            document.querySelector("#formEditMarken").addEventListener("submit", async (e) => {
-                e.preventDefault();
-                console.log(getJsonMarkenShipper());
-                // actualizar el marken shipper
-            })
-        }
-        // fin de nuevas funciones
-
-
+        // necesarios para marken shipper
         const getMarkenShippersAsync = async (id_tipo = 2, id_table) => {
+            // No mover esta parte importante para el modal
             let tipo = id_tipo == 2 ? "exportador" : "importador";
             let myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
@@ -796,8 +748,16 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <tr>
                         <td class="d-flex justify-content-between" style="align-items: center !important;">
                             <span>${shipper.nombre}</span>
+                            <div>
+                            <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $importador->id_importador  ?>" data-id-tipo="3">
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="${shipper.id_shipper}" data-id-tipo="${id_tipo}" style="color: #17A2B8"></i></button>
+                        
+
                             <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x ${tipo}-btn" style="color: #32CC52;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}"   data-nombre-${tipo}="${shipper.nombre}"></i></button>
-                        </td>
+                        
+                            </div>
+
+                            </td>
                         <td>${shipper.desc_pais}</td>
                         <td>${shipper.direccion}</td>
                         <td>${shipper.correo1}</td>
@@ -817,6 +777,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 // algo salio mal
                 console.error(response.message)
             }
+        }
+        const charginAllTables = async (idTipoReal) => {
+            // aqui envia el tipo real segun el tabla correspondiente
+            await getMarkenShippersAsync(2, "#table-exportadores-select");
+            await getMarkenShippersAsync(3, "#table-importadores-select");
+            // await getMarkenShippersAsync(4, "#table-exportadores-select");
+            // await getMarkenShippersAsync(5, "#table-importadores-select");
         }
         const saveMarkenShipperAsync = async (exportador = false) => {
             showSpinnerCargando();
@@ -877,6 +844,118 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             }
 
         }
+
+        const getJsonMarkenShipper = () => {
+            return {
+                "id": $getValue(`#idEditMarken`),
+                "nombre": $getValue(`#nombreEdit`),
+                "direccion": $getValue(`#direccionEdit`),
+                "correo1": $getValue(`#correo1Edit`),
+                "correo2": $getValue(`#correo2Edit`),
+                "correo3": $getValue(`#correo3Edit`),
+                "id_pais": $getValue(`#paisEdit`),
+                "id_tipo": $getValue(`#editTipo`),
+                "id_user": <?= get_current_user_id() ?>,
+            }
+        }
+        const getTypeDescription = (idTipo = 0) => {
+            let descripcion = "";
+            switch (parseInt(idTipo)) {
+                case 2:
+                    descripcion = "Exportador";
+                    break;
+                case 3:
+                    descripcion = "Importador";
+                    break;
+                case 4:
+                    descripcion = "Remitente";
+                    break;
+                case 5:
+                    descripcion = "Consignatorio";
+                    break;
+                default:
+                    descripcion = "desconocido"
+                    break;
+            }
+            return descripcion;
+        }
+
+
+        const executeEventFormEditMarken = (e) => {
+            if (e.target.classList.value.includes("edit-btn")) {
+                let id = e.target.getAttribute("data-id");
+                let idTipo = e.target.getAttribute("data-id-tipo");
+                console.log(id, idTipo);
+                console.log(getTypeDescription(idTipo));
+                document.querySelector("#idEditMarken").value = id;
+                document.querySelector("#editTipo").value = idTipo;
+                document.querySelector("#titleEdit").innerHTML = "Editar " + getTypeDescription(idTipo);
+
+                // cierra todos los modales abiertos de boostrap
+                closeModalsBoostrap();
+                document.querySelector("#btnOpenModalEdit").click();
+            }
+        }
+        const updateMarkenShipperAsync = async () => {
+            showSpinnerCargando();
+            let tipo = getTypeDescription($getValue("#editTipo"));
+            let id_tipo = $getValue("#idEditMarken");
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+            myHeaders.append("Content-Type", "application/json");
+            let raw = JSON.stringify(getJsonMarkenShipper());
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            let response = await (await fetch("<?= $uriMarkenShipper ?>", requestOptions)).json();
+            if (response.status == 200) {
+                // todo salio correctamente
+                Swal.fire({
+                    icon: "success",
+                    title: "Se Ha Actualizado Correctamente El " + tipo,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                await charginAllTables();
+                closeSpinnerCargando();
+            } else if (response.status == 404) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `${response.data}`,
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `${response.message}`,
+                })
+            }
+
+        }
+
+        // div de validaciones => #validacionesFormEdit
+        const eventSubmitFormEditMarken = () => {
+
+            document.querySelector("#formEditMarken").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                console.log(getJsonMarkenShipper());
+                await updateMarkenShipperAsync();
+                e.target.reset();
+                closeModalsBoostrap();
+                // actualizar el marken shipper
+            })
+        }
+
+
+
+        // fin de nuevas funciones
+
+
 
 
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {

@@ -37,6 +37,7 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
     $prefix = query_getAldemPrefix();
     $wpdb = query_getWPDB();
     $validations = [
+        'id'                  =>  'numeric',
         'nombre'                  =>  'required|max:50',
         'direccion'                  => 'max:50',
         'correo1'                  => 'email|max:200',
@@ -57,29 +58,54 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
         $id_pais = intval(sanitize_text_field($request->get_json_params()["id_pais"]));
         $id_user = intval(sanitize_text_field($request->get_json_params()["id_user"]));
         $id_tipo = intval(sanitize_text_field($request->get_json_params()["id_tipo"]));
+        $id = intval(sanitize_text_field($request->get_json_params()["id"]));
         $fecha_actual = date("Y-m-d H:i:s");
         $table = "{$prefix}marken_shipper";
-        $data = [
-            'id_tipo' => $id_tipo,
-            'descripcion' => $nombre,
-            'direccion' => $direccion,
-            'correo1' => $correo1,
-            'correo2' => $correo2,
-            'correo3' => $correo3,
-            'id_country' => $id_pais,
-            'id_usuario_created' => $id_user,
-            'created_at' => $fecha_actual
-        ];
+        if ($id != null) {
+            $data = [
+                'id_tipo' => $id_tipo,
+                'descripcion' => $nombre,
+                'direccion' => $direccion,
+                'correo1' => $correo1,
+                'correo2' => $correo2,
+                'correo3' => $correo3,
+                'id_country' => $id_pais,
+            ];
 
-        $format = array(
-            '%d', '%s', '%s',
-            '%s', '%s', '%s', /* se agregaron los correos */
-            '%d', '%d',  '%s'
-        );
-        if ($wpdb->insert($table, $data, $format)) {
-            return  aldem_rest_response(["id_marken_shipper" => $wpdb->insert_id, "nombre" => $nombre, "direccion" => $direccion], "Marken Shipper creado correctamente");
+            $formatUpdated = array(
+                '%d', '%s', '%s',
+                '%s', '%s', '%s',
+                '%d'
+            );
+            if ($wpdb->update($table, $data, ["id" => $id], $formatUpdated)) {
+                return  aldem_rest_response(null, "Marken Shipper Actualizado");
+            } else {
+                return  aldem_rest_response("", "Error en la actualizacion de Marken Shipper", 500);
+            }
         } else {
-            return  aldem_rest_response("", "Error en la creacion de Marken Shipper", 500);
+            $data = [
+                'id_tipo' => $id_tipo,
+                'descripcion' => $nombre,
+                'direccion' => $direccion,
+                'correo1' => $correo1,
+                'correo2' => $correo2,
+                'correo3' => $correo3,
+                'id_country' => $id_pais,
+                'id_usuario_created' => $id_user,
+                'created_at' => $fecha_actual
+            ];
+
+            $format = array(
+                '%d', '%s', '%s',
+                '%s', '%s', '%s', /* se agregaron los correos */
+                '%d', '%d',  '%s'
+            );
+
+            if ($wpdb->insert($table, $data, $format)) {
+                return  aldem_rest_response(["id_marken_shipper" => $wpdb->insert_id, "nombre" => $nombre, "direccion" => $direccion], "Marken Shipper creado correctamente");
+            } else {
+                return  aldem_rest_response("", "Error en la creacion de Marken Shipper", 500);
+            }
         }
     } else {
         return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
@@ -176,6 +202,25 @@ function get_aldem_shippers(WP_REST_Request $request)
     }
     return  aldem_rest_response($shippers);
 }
+
+// obtener un shipper por el id
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/getMarkenShipper/(?P<username>\w+)/', array(
+        'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
+        'callback' => 'get_aldem_shipper',
+        'args' => array(),
+    ));
+});
+
+function get_aldem_shipper(WP_REST_Request $request)
+{
+    //obtengo el id_country del parametros
+    $id = intval(sanitize_text_field($request->get_json_params()["id"]));
+    $shipper = query_getMarkenShipperByID($id);
+    return  aldem_rest_response($shipper);
+}
+
 
 add_action('rest_api_init', function () {
     register_rest_route('aldem/v1', '/shippers/(?P<username>\w+)/', array(
