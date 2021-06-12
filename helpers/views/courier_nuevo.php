@@ -791,8 +791,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <td class="d-flex justify-content-between" style="align-items: center !important;">
                             <span>${shipper.nombre}</span>
                             <div>
-                            <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $importador->id_importador  ?>" data-id-tipo="3">
-                                            <i class="fas fa-edit fa-2x edit-btn" data-id="${shipper.id_shipper}" data-id-tipo="${id_tipo}" style="color: #17A2B8"></i></button>
+                            <button type="button" class="btn edit-btn" style="background: transparent;" data-id="${shipper.id_shipper}" data-id-tipo="${id_tipo}>
+                                            
+                            <i class="fas fa-edit fa-2x edit-btn" data-id="${shipper.id_shipper}" data-id-tipo="${id_tipo}" style="color: #17A2B8"></i>
+                            </button>
                         
 
                             <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x ${tipo}-btn" style="color: #32CC52;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}"   data-nombre-${tipo}="${shipper.nombre}"></i></button>
