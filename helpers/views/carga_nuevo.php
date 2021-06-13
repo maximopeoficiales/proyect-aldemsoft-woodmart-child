@@ -397,8 +397,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <td class="d-flex justify-content-between" style="align-items: center !important;">
                                     <span><?= $exportador->nombre ?></span>
                                     <div class="">
-                                        <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $exportador->id_exportador  ?>" data-id-tipo="2">
-                                            <i class="fas fa-edit fa-2x edit-btn" data-id="<?= $exportador->id_exportador  ?>" data-id-tipo="2" style="color: #17A2B8"></i></button>
+                                        <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $exportador->id_shipper  ?>" data-id-tipo="2">
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="<?= $exportador->id_shipper  ?>" data-id-tipo="2" style="color: #17A2B8"></i></button>
 
                                         <button type="button" class="btn exportador-btn" style="background: transparent;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"><i class="fas fa-check-circle fa-2x exportador-btn" style="color: #32CC52;" data-id-exportador="<?= $exportador->id_exportador  ?>" data-nombre-exportador="<?= $exportador->nombre ?>"></i></button>
 
@@ -688,6 +688,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     $('#id_delivery').select2();
     $('#id_handling').select2();
     (() => {
+        const isPickup = false;
         // nuevas funciones
         const $getValue = (id) => {
             try {
@@ -761,14 +762,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 return false;
             }
         }
-        const getMarkenShippersAsync = async (id_tipo = 2, id_table) => {
+        const getMarkenShippersAsync = async (id_tipo = 2, id_table, idTipoReal) => {
             // No mover esta parte importante para el modal
             let tipo = id_tipo == 2 ? "exportador" : "importador";
             let myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
             myHeaders.append("Content-Type", "application/json");
             let raw = JSON.stringify({
-                "id_tipo": id_tipo,
+                "id_tipo": idTipoReal,
             });
 
             let requestOptions = {
@@ -805,11 +806,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <td class="d-flex justify-content-between" style="align-items: center !important;">
                             <span>${shipper.nombre}</span>
                             <div>
-                            <button type="button" class="btn edit-btn" style="background: transparent;" data-id="${shipper.id_shipper}" data-id-tipo="${id_tipo}>
+                            <button type="button" class="btn edit-btn" style="background: transparent;" data-id="${shipper.id_shipper}" data-id-tipo="${idTipoReal}">
                                             
-                            <i class="fas fa-edit fa-2x edit-btn" data-id="${shipper.id_shipper}" data-id-tipo="${id_tipo}" style="color: #17A2B8"></i>
-                            </button>
-                        
+                                            <i class="fas fa-edit fa-2x edit-btn" data-id="${shipper.id_shipper}" data-id-tipo="${idTipoReal}" style="color: #17A2B8"></i>
+                                            </button>
 
                             <button type="button" class="btn ${tipo}-btn" style="background: transparent;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}" data-nombre-${tipo}="${shipper.nombre}"><i class="fas fa-check-circle fa-2x ${tipo}-btn" style="color: #32CC52;" data-id-${tipo}="${id_tipo==2 ? shipper.id_exportador : shipper.id_importador}"   data-nombre-${tipo}="${shipper.nombre}"></i></button>
                         
@@ -838,12 +838,17 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         }
         const charginAllTables = async (idTipoReal) => {
             // aqui envia el tipo real segun el tabla correspondiente
-            await getMarkenShippersAsync(2, "#table-exportadores-select");
-            await getMarkenShippersAsync(3, "#table-importadores-select");
-            // await getMarkenShippersAsync(4, "#table-exportadores-select");
-            // await getMarkenShippersAsync(5, "#table-importadores-select");
+            if (!isPickup) {
+                await getMarkenShippersAsync(2, "#table-exportadores-select", 2);
+                await getMarkenShippersAsync(3, "#table-importadores-select", 3);
+            } else {
+                // para pickup
+                await getMarkenShippersAsync(4, "#table-exportadores-select", 4);
+                await getMarkenShippersAsync(5, "#table-importadores-select", 5);
+            }
+
         }
-        const saveMarkenShipperAsync = async (exportador = false) => {
+        const saveMarkenShipperAsync = async (exportador = false, idTipoReal) => {
             showSpinnerCargando();
             let tipo = exportador ? "Exportador" : "Importador";
             let id_tipo = exportador ? 2 : 3;
@@ -851,13 +856,13 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
             myHeaders.append("Content-Type", "application/json");
             let raw = JSON.stringify({
-                "nombre": document.querySelector(`#nombreNew${tipo}`).value,
-                "direccion": document.querySelector(`#direccionNew${tipo}`).value,
-                "correo1": document.querySelector(`#correo1New${tipo}`).value,
-                "correo2": document.querySelector(`#correo2New${tipo}`).value,
-                "correo3": document.querySelector(`#correo3New${tipo}`).value,
-                "id_pais": document.querySelector(`#paisNew${tipo}`).value,
-                "id_tipo": id_tipo,
+                "nombre": $getValue(`#nombreNew${tipo}`),
+                "direccion": $getValue(`#direccionNew${tipo}`),
+                "correo1": $getValue(`#correo1New${tipo}`),
+                "correo2": $getValue(`#correo2New${tipo}`),
+                "correo3": $getValue(`#correo3New${tipo}`),
+                "id_pais": $getValue(`#paisNew${tipo}`),
+                "id_tipo": idTipoReal,
                 "id_user": <?= get_current_user_id() ?>,
             });
 
@@ -873,7 +878,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 // todo salio correctamente
                 Swal.fire({
                     icon: "success",
-                    title: "Se Ha Creado Nuevo " + tipo,
+                    title: "Se Ha Creado Nuevo " + getTypeDescription(idTipoReal),
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -885,7 +890,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     document.querySelector(`#importador-text`).value = response.data.nombre;
                     document.querySelector(`#id_importador`).value = response.data.id_marken_shipper;
                 }
-                await getMarkenShippersAsync(id_tipo, id_tipo == 2 ? "#table-exportadores-select" : "#table-importadores-select");
+                await charginAllTables();
             } else if (response.status == 404) {
                 Swal.fire({
                     icon: 'error',
@@ -919,7 +924,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             let response = await (await fetch("<?= $uriGETMarkenShipperId ?>", requestOptions)).json();
             closeSpinnerCargando();
             if (response.status == 200) {
-                console.log(response.data[0]);
                 return (response.data[0]);
             }
         }
@@ -973,8 +977,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             if (e.target.classList.value.includes("edit-btn")) {
                 let id = e.target.getAttribute("data-id");
                 let idTipo = e.target.getAttribute("data-id-tipo");
-                console.log(id, idTipo);
-                console.log(getTypeDescription(idTipo));
                 document.querySelector("#idEditMarken").value = id;
                 document.querySelector("#editTipo").value = idTipo;
                 document.querySelector("#titleEdit").innerHTML = "Editar " + getTypeDescription(idTipo);
@@ -1033,7 +1035,6 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
             document.querySelector("#formEditMarken").addEventListener("submit", async (e) => {
                 e.preventDefault();
-                console.log(getJsonMarkenShipper());
                 await updateMarkenShipperAsync();
                 e.target.reset();
                 closeModalsBoostrap();
@@ -1042,12 +1043,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         }
 
 
-
         document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
             e.preventDefault();
             document.querySelector("#btnCloseModalExportador").click();
             try {
-                await saveMarkenShipperAsync(true);
+                await saveMarkenShipperAsync(true, 2);
                 e.target.reset();
             } catch (error) {
                 console.error(error);
@@ -1057,7 +1057,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             e.preventDefault();
             document.querySelector("#btnCloseModalImportador").click();
             try {
-                await saveMarkenShipperAsync(false);
+                await saveMarkenShipperAsync(false, 3);
                 e.target.reset();
             } catch (error) {
                 console.error(error);

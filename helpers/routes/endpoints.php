@@ -63,7 +63,7 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
         $table = "{$prefix}marken_shipper";
         if ($id != null) {
             $data = [
-                'id_tipo' => $id_tipo,
+                // 'id_tipo' => $id_tipo,
                 'descripcion' => $nombre,
                 'direccion' => $direccion,
                 'correo1' => $correo1,
@@ -74,7 +74,7 @@ function post_aldem_marken_shipper(WP_REST_Request $request)
             ];
 
             $formatUpdated = array(
-                '%d', '%s', '%s',
+                '%s', '%s',
                 '%s', '%s', '%s',
                 '%d', "%s"
             );
