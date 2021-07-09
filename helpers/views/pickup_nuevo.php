@@ -526,7 +526,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                 myHeaders.append("Content-Type", "application/json");
                 myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
                 let raw = JSON.stringify({
-                    "waybill": document.querySelector("#job").value,
+                    "waybill": document.querySelector("#waybill").value,
                 });
                 let requestOptions = {
                     method: 'POST',
