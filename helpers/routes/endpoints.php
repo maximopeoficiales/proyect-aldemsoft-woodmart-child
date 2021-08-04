@@ -348,3 +348,52 @@ function post_aldem_existsWaybill(WP_REST_Request $request)
         return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
     }
 }
+
+
+// verifica si waybill esta disponible
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/verificarLevante/(?P<username>\w+)/', array(
+        'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
+        'callback' => 'post_aldem_verificar_levante',
+        'args' => array(),
+    ));
+});
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/verificarLevante/', array(
+        'methods' => 'GET',
+        'callback' => 'post_aldem_verificar_levante',
+        'args' => array(),
+    ));
+});
+function post_aldem_verificar_levante(WP_REST_Request $request)
+{
+    require __DIR__ . "/wss/AduanaWS.php";
+
+    $prefix = query_getAldemPrefix();
+    $wpdb = query_getWPDB();
+
+    // $validations = [
+    //     'waybill'                  =>  'required|max:35',
+    // ];
+    // $responseValidator = adldem_UtilityValidator($request->get_json_params(), $validations);
+    // if ($responseValidator["validate"]) {
+    //     $waybill = sanitize_text_field($request->get_json_params()['waybill']);
+    //     $table = "{$prefix}marken_job";
+    //     // verifica si existe el waybill
+    //     $sql = "SELECT * FROM {$table} WHERE waybill = %s";
+    //     if (count($wpdb->get_results($wpdb->prepare($sql, $waybill))) == 0) {
+    //         return aldem_rest_response("", "Waybill Disponible");
+    //     } else {
+    //         return aldem_rest_response("", "Error Waybill ya registrado", 500);
+    //     }
+    // } else {
+    //     return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
+    // }
+    try {
+        //code...
+        return  aldem_rest_response(AduanaWS::verificarLevanteDefault());
+    } catch (\Throwable $th) {
+        return  aldem_rest_response(null, $th);
+    }
+}

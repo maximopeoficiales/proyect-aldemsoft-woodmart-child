@@ -1,0 +1,30 @@
+<LevanteRequest>
+	<!-- Zero or more repetitions: -->
+	<Submitter>
+		<!-- Optional: -->
+		<RoleCode>
+			33
+		</RoleCode>
+	</Submitter>
+	<!-- Optional: -->
+	<DeclarationOfficeID>
+		235
+	</DeclarationOfficeID>
+	<!-- Optional: -->
+	<IssueDateTime>
+		<DateTimeString formatCode="">
+			2021
+		</DateTimeString>
+	</IssueDateTime>
+	<!-- Zero or more repetitions: -->
+	<GovernmentProcedure>
+		<!-- Optional: -->
+		<CurrentCode>
+			28
+		</CurrentCode>
+	</GovernmentProcedure>
+	<!-- Optional: -->
+	<ID>
+		429634
+	</ID>
+</LevanteRequest>

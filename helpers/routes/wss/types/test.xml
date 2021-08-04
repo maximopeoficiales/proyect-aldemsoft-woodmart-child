@@ -1,0 +1,200 @@
+<Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<Body>
+		<LevanteResponse xmlns:NS1="urn:wco:datamodel:pe:gob:sunat:controladuanero:ingreso:reconfisico:DeclaracionReconocimientoFisicoResponse:2">
+			<StatusCode>
+				1
+			</StatusCode>
+			<AcceptanceDateTime>
+				<DateTimeString formatCode="204" xmlns:NS2="urn:wco:datamodel:WCO:Declaration_DS:1">
+					20210519173713
+				</DateTimeString>
+			</AcceptanceDateTime>
+			<ID>
+				461262
+			</ID>
+			<IssueDateTime>
+				<DateTimeString formatCode="602" xmlns:NS3="urn:wco:datamodel:WCO:Declaration_DS:1">
+					2021
+				</DateTimeString>
+			</IssueDateTime>
+			<DeclarationOfficeID>
+				235
+			</DeclarationOfficeID>
+			<TotalGrossMassMeasure>
+				1.400
+			</TotalGrossMassMeasure>
+			<TotalPackageQuantity>
+				1
+			</TotalPackageQuantity>
+			<AdditionalDocument>
+				<ID>
+					4640
+				</ID>
+				<IssueDateTime>
+					<DateTimeString formatCode="602" xmlns:NS4="urn:wco:datamodel:WCO:Declaration_DS:1">
+						2021
+					</DateTimeString>
+				</IssueDateTime>
+				<issueLocationID>
+					235
+				</issueLocationID>
+				<TypeCode>
+					785
+				</TypeCode>
+			</AdditionalDocument>
+			<AdditionalInformation>
+				<StatementCode>
+					10
+				</StatementCode>
+				<StatementTypeCode>
+					ABL
+				</StatementTypeCode>
+			</AdditionalInformation>
+			<AdditionalInformation>
+				<StatementCode>
+					V
+				</StatementCode>
+				<StatementTypeCode>
+					RAH
+				</StatementTypeCode>
+			</AdditionalInformation>
+			<AdditionalInformation>
+				<StatementCode>
+					00
+				</StatementCode>
+				<StatementTypeCode>
+					ACE
+				</StatementTypeCode>
+			</AdditionalInformation>
+			<AdditionalInformation>
+				<LimitDateTime>
+					<DateTimeString formatCode="204" xmlns:NS5="urn:wco:datamodel:WCO:Declaration_DS:1">
+						20210802143820
+					</DateTimeString>
+				</LimitDateTime>
+				<StatementTypeCode>
+					ALQ
+				</StatementTypeCode>
+			</AdditionalInformation>
+			<Agent>
+				<Name>
+					ALDEM S.A.C.
+				</Name>
+				<ID>
+					20422696548
+				</ID>
+				<QualityAssuranceCode>
+					167
+				</QualityAssuranceCode>
+			</Agent>
+			<BorderTransportMeans>
+				<ModeCode>
+					4
+				</ModeCode>
+			</BorderTransportMeans>
+			<GoodsShipment>
+				<Consignee>
+					<Name>
+						NOVARTIS BIOSCIENCES PERU S.A.
+					</Name>
+					<ID>
+						20100129028
+					</ID>
+				</Consignee>
+				<Consignment>
+					<ExpectedArrivalDateTime>
+						<DateTimeString formatCode="204" xmlns:NS6="urn:wco:datamodel:WCO:Declaration_DS:1">
+							20210520012000
+						</DateTimeString>
+					</ExpectedArrivalDateTime>
+					<TransportContractDocument>
+						<ID>
+							620X16031680
+						</ID>
+					</TransportContractDocument>
+				</Consignment>
+				<CustomsValuation>
+					<ExitToEntryChargeAmount>
+						61.287
+					</ExitToEntryChargeAmount>
+				</CustomsValuation>
+				<DeliveryDestination>
+					<Name>
+						ALDEM S.A.C.
+					</Name>
+					<ID>
+						20422696548
+					</ID>
+					<Address>
+						<CountrySubDivisionCode />
+						<Line>
+							QUILCA 630
+						</Line>
+					</Address>
+				</DeliveryDestination>
+				<GovernmentAgencyGoodsItem>
+					<SequenceNumeric>
+						1
+					</SequenceNumeric>
+					<Commodity>
+						<Description />
+						<PhysicalStateCode>
+							10
+						</PhysicalStateCode>
+						<CommercialDescription>
+							KIT DE LABORATORIO
+						</CommercialDescription>
+						<IntendedUse>
+							PROTOCOLO CACZ885T2301
+						</IntendedUse>
+						<Classification>
+							<ID>
+								9809000030
+							</ID>
+						</Classification>
+						<ProductCharacteristics>
+							<Description>
+								KIT DE LABORATORIO
+							</Description>
+							<QualifierCode>
+								134
+							</QualifierCode>
+						</ProductCharacteristics>
+						<ProductCharacteristics>
+							<Description>
+								Q2 SOLUTIONS
+							</Description>
+							<QualifierCode>
+								201
+							</QualifierCode>
+						</ProductCharacteristics>
+					</Commodity>
+				</GovernmentAgencyGoodsItem>
+				<Status>
+					<ReleaseDateTime>
+						<DateTimeString formatCode="204" xmlns:NS7="urn:wco:datamodel:WCO:Declaration_DS:1">
+							20210521121333
+						</DateTimeString>
+					</ReleaseDateTime>
+				</Status>
+				<Warehouse>
+					<DepartureDateTime>
+						<DateTimeString formatCode="204" xmlns:NS8="urn:wco:datamodel:WCO:Declaration_DS:1">
+							20210525154301
+						</DateTimeString>
+					</DepartureDateTime>
+					<ArrivalDateTime>
+						<DateTimeString formatCode="204" xmlns:NS9="urn:wco:datamodel:WCO:Declaration_DS:1">
+							20210521114836
+						</DateTimeString>
+					</ArrivalDateTime>
+				</Warehouse>
+			</GoodsShipment>
+			<GovernmentProcedure>
+				<CurrentCode>
+					28
+				</CurrentCode>
+			</GovernmentProcedure>
+		</LevanteResponse>
+	</Body>
+</Envelope>
