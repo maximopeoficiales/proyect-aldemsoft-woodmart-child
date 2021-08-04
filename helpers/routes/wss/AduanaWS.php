@@ -105,7 +105,7 @@ class AduanaWS
         }
         // $newService
         $newService->job = $job;
-        $newService->manifesto = $manifesto;
+        $newService->manifiesto = $manifesto;
         $newService->pcs = $response->TotalPackageQuantity->_;
         $newService->kilos = $kilos;
         $newService->id_importador = $response->GoodsShipment->Consignee->ID->_;

@@ -1064,10 +1064,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
             myHeaders.append("Content-Type", "application/json");
             let raw = JSON.stringify({
-                dua1: 235,
-                dua2: 2021,
-                dua3: 28,
-                dua4: 461262
+                dua1: $getValue("#dua1"),
+                dua2: parseInt($getValue("#dua2")) + 2000,
+                dua3: $getValue("#dua3"),
+                dua4: $getValue("#dua4")
             });
             let requestOptions = {
                 method: 'POST',
@@ -1079,13 +1079,44 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             closeSpinnerCargando();
             if (response.status == 200) {
                 // todo salio correctamente
-                // Swal.fire({
-                //     icon: "success",
-                //     title: "Se Ha Creado Nuevo " + getTypeDescription(idTipoReal),
-                //     showConfirmButton: false,
-                //     timer: 1500
-                // })
                 console.log(response);
+                const {
+                    data: {
+                        fecha_levante,
+                        green_channel,
+                        id_importador,
+                        job,
+                        kilos,
+                        manifiesto,
+                        pcs,
+                        protocolo,
+                        semaforo
+                    }
+                } = response;
+                $setValue("#job", job);
+                $setValue("#manifiesto", manifiesto);
+                $setValue("#pcs", pcs);
+                $setValue("#kilos", kilos);
+                $setValue("#protocolo", protocolo);
+                $("#fecha_levante").flatpickr({
+                    defaultDate: fecha_levante ?? "",
+                    enableTime: true
+                })
+                // seleccion de semaforo
+                switch (green_channel) {
+                    case 1:
+                        document.querySelector("#rb_verde").checked = true
+                        break;
+                    case 2:
+                        document.querySelector("#rb_amarillo").checked = true
+                        break;
+                    case 3:
+                        document.querySelector("#rb_rojo").checked = true
+                        break;
+                    default:
+                        break;
+                }
+
             } else if (response.status == 404) {
                 Swal.fire({
                     icon: 'error',
@@ -1095,8 +1126,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    html: `${response.message}`,
+                    title: `${response.message}`,
+                    html: `${response.data ?? ""}`,
                 })
                 console.error(response);
             }
