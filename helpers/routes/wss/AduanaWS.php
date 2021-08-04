@@ -40,19 +40,20 @@ class AduanaWS
         }
     }
 
-    static function verificarLevante(string $dua1, string $dua2, string $dua3, string $dua4, int $currentCode = 33)
+    static function verificarLevante(string $dua1, string $dua2, string $dua3, string $dua4, int $roleCode = 33)
     {
         try {
             $response = self::getService()->verificarLevante(
                 array(
-                    "Submitter" => array("RoleCode" => array("_" => $currentCode)),
+                    "Submitter" => array("RoleCode" => array("_" => $roleCode)),
                     "DeclarationOfficeID" => array("_" => $dua1),
                     "IssueDateTime" => array("DateTimeString" => array("_" => $dua2, "formatCode" => "")),
                     "GovernmentProcedure" => array("CurrentCode" => array("_" => $dua3)),
                     "ID" => $dua4,
                 )
             );
-            return $response;
+            return self::getObjectByService($response);
+            // return ($response);
         } catch (\Throwable $th) {
             return $th;
         }
@@ -60,10 +61,14 @@ class AduanaWS
 
     static function getObjectByService($response)
     {
+        // si es igual a 8 no existe
+        if ($response->StatusCode->_ == 8) return null;
+
         $newService = new  stdClass();
         // variables
         $manifesto =
             $response->AdditionalDocument->IssueDateTime->DateTimeString->_ . sprintf("%05d", $response->AdditionalDocument->ID->_);
+
         $kilos = number_format($response->TotalGrossMassMeasure->_, 2);
         $fecha_levante = $response->GoodsShipment->Status->ReleaseDateTime->DateTimeString->_;
         $fecha_levante =
@@ -91,15 +96,20 @@ class AduanaWS
             $semaforo = "ambar";
         }
 
-
-
+        // protocolo
+        $protocolo = null;
+        if (is_array($response->GoodsShipment->GovernmentAgencyGoodsItem)) {
+            $protocolo = $response->GoodsShipment->GovernmentAgencyGoodsItem[0]->Commodity->IntendedUse->_;
+        } else {
+            $protocolo = $response->GoodsShipment->GovernmentAgencyGoodsItem->Commodity->IntendedUse->_;
+        }
         // $newService
         $newService->job = $job;
         $newService->manifesto = $manifesto;
         $newService->pcs = $response->TotalPackageQuantity->_;
         $newService->kilos = $kilos;
         $newService->id_importador = $response->GoodsShipment->Consignee->ID->_;
-        $newService->protocolo = $response->GoodsShipment->GovernmentAgencyGoodsItem[0]->Commodity->IntendedUse->_;
+        $newService->protocolo = $protocolo;
         $newService->fecha_levante = $fecha_levante;
         $newService->green_channel = $green_channelValue;
         $newService->semaforo = $semaforo;

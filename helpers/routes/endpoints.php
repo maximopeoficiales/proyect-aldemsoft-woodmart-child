@@ -363,16 +363,59 @@ add_action('rest_api_init', function () {
 add_action('rest_api_init', function () {
     register_rest_route('aldem/v1', '/verificarLevante/', array(
         'methods' => 'GET',
-        'callback' => 'post_aldem_verificar_levante',
+        'callback' => 'post_aldem_verificar_levante_default',
         'args' => array(),
     ));
 });
 
 function post_aldem_verificar_levante(WP_REST_Request $request)
 {
+    try {
+        require __DIR__ . "/wss/AduanaWS.php";
+        // este sera el que usara
+        $validations = [
+            'dua1'                  =>  'required|numeric',
+            'dua2'                  =>  'required|numeric',
+            'dua3'                  =>  'required|numeric',
+            'dua4'                  =>  'required|numeric',
+            'roleCode'                  =>  'numeric',
+        ];
+
+        $responseValidator = adldem_UtilityValidator($request->get_json_params(), $validations);
+
+        // return [$responseValidator];
+        if ($responseValidator["validate"]) {
+            $dua1 = sanitize_text_field($request->get_json_params()['dua1']);
+            $dua2 = sanitize_text_field($request->get_json_params()['dua2']);
+            $dua3 = sanitize_text_field($request->get_json_params()['dua3']);
+            $dua4 = sanitize_text_field($request->get_json_params()['dua4']);
+            $roleCode = sanitize_text_field($request->get_json_params()['roleCode']);
+            $data = null;
+            // si el roleCode esta vacio
+            if (!empty($roleCode)) {
+                $data = AduanaWS::verificarLevante($dua1, $dua2, $dua3, $dua4, $currentCode);
+            } else {
+                $data = AduanaWS::verificarLevante($dua1, $dua2, $dua3, $dua4);
+            }
+
+            // si existe data
+            if (!empty($data)) {
+                return  aldem_rest_response($data);
+            }
+            return  aldem_rest_response(null, "No hay hay resultados con ese DUA", 204);
+        } else {
+            // parametros no validos
+            return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 400);
+        }
+    } catch (\Throwable $th) {
+        return  aldem_rest_response(null, "Ocurrio un error en el servidor: $th", 500);
+    }
+}
+function post_aldem_verificar_levante_default(WP_REST_Request $request)
+{
     require __DIR__ . "/wss/AduanaWS.php";
     try {
-        return  aldem_rest_response(AduanaWS::verificarLevanteDefault());
+        return  aldem_rest_response(AduanaWS::verificarLevante(235, 2021, 28, 461262));
     } catch (\Throwable $th) {
         return  aldem_rest_response(null, $th, 500);
     }
