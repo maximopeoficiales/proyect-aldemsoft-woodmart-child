@@ -108,7 +108,7 @@ class AduanaWS
         $newService->manifiesto = $manifesto;
         $newService->pcs = $response->TotalPackageQuantity->_;
         $newService->kilos = $kilos;
-        $newService->id_importador = $response->GoodsShipment->Consignee->ID->_;
+        $newService->id_importador = $response->GoodsShipment->Consignee->Name->_;
         $newService->protocolo = $protocolo;
         $newService->fecha_levante = $fecha_levante;
         $newService->green_channel = $green_channelValue;

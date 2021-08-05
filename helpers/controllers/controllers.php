@@ -303,7 +303,7 @@ function aldem_post_new_courier()
             'pcs'                  => 'numeric',
             'kilos'                  => 'numeric',
             // 'id_importador'                  => 'numeric',
-            'importador'                  => 'numeric',
+            'importador'                  => 'max:250',
             'id_exportador'                  => 'numeric',
             'incoterm'                  => 'numeric',
             'collection'                  => 'date:Y-m-d',
@@ -372,6 +372,7 @@ function aldem_post_new_courier()
                 "id_cliente_subtipo" => 3,
                 "waybill" => $waybill,
                 "manifiesto" => $manifiesto,
+
                 "dua" => $dua,
                 "dua2" => $dua2,
                 "dua3" => $dua3,
@@ -417,7 +418,7 @@ function aldem_post_new_courier()
                     // duas
                     '%s', '%s', '%s',
                     '%s', '%s', '%d',
-                    '%d', '%d', '%d', '%s',
+                    '%s', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
                     // se agrego tarifas
                     '%s', '%s', '%s', '%s', '%s',
@@ -441,7 +442,7 @@ function aldem_post_new_courier()
                     '%d', '%s', '%d', '%s',
                     '%s', '%s', '%s',
                     '%s', '%s', '%d',
-                    '%d', '%d', '%d', '%s',
+                    '%s', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d',
                     '%s', '%s', '%s', '%s', '%s',
                     '%d', '%d', '%d',
