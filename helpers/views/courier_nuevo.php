@@ -132,7 +132,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                     <div class="form-group">
                         <label for="importador-text">Importador</label>
-                        <input type="number" name="importador" id="importador" class="form-control" placeholder="Ingrese el Importador" value="<?= $courierCurrent->importador ?>">
+                        <input type="text" name="importador" id="importador" class="form-control" placeholder="Ingrese el Importador" value="<?= $courierCurrent->importador ?>" maxlength="250">
                     </div>
                     <!-- <div class="input-group my-2">
                         <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador" value="<?= $importadorCurrent->nombre ?>">
