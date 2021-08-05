@@ -61,22 +61,22 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="row mt-2">
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese el DUA" value="<?= $courierCurrent->dua ?>" required>
+                                    <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese el DUA" value="<?= $courierCurrent->dua ?>" >
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua2" id="dua2" class="form-control" placeholder="Ingrese el DUA2" value="<?= $courierCurrent->dua2 ?>" required>
+                                    <input type="number" name="dua2" id="dua2" class="form-control" placeholder="Ingrese el DUA2" value="<?= $courierCurrent->dua2 ?>" >
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua3" id="dua3" class="form-control" placeholder="Ingrese el DUA3" value="<?= $courierCurrent->dua3 ?>" required>
+                                    <input type="number" name="dua3" id="dua3" class="form-control" placeholder="Ingrese el DUA3" value="<?= $courierCurrent->dua3 ?>" >
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua4" id="dua4" class="form-control" placeholder="Ingrese el DUA4" value="<?= $courierCurrent->dua4 ?>" required>
+                                    <input type="number" name="dua4" id="dua4" class="form-control" placeholder="Ingrese el DUA4" value="<?= $courierCurrent->dua4 ?>" >
                                 </div>
                             </div>
                         </div>
