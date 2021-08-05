@@ -415,7 +415,7 @@ function post_aldem_verificar_levante_default(WP_REST_Request $request)
 {
     require __DIR__ . "/wss/AduanaWS.php";
     try {
-        return  aldem_rest_response(AduanaWS::verificarLevante(235, 2021, 28, 461262));
+        return  aldem_rest_response(AduanaWS::verificarLevanteDefault());
     } catch (\Throwable $th) {
         return  aldem_rest_response(null, $th, 500);
     }

@@ -34,7 +34,7 @@ class AduanaWS
                     "ID" => 78739,
                 )
             );
-            return self::getObjectByService($response);
+            return ($response);
         } catch (\Throwable $th) {
             return $th;
         }
