@@ -1061,7 +1061,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
             myHeaders.append("Content-Type", "application/json");
             let raw = JSON.stringify({
-                dua1: $getValue("#dua1"),
+                dua: $getValue("#dua"),
                 dua2: parseInt($getValue("#dua2")) + 2000,
                 dua3: $getValue("#dua3"),
                 dua4: $getValue("#dua4")

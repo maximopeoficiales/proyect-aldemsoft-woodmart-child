@@ -374,7 +374,7 @@ function post_aldem_verificar_levante(WP_REST_Request $request)
         require __DIR__ . "/wss/AduanaWS.php";
         // este sera el que usara
         $validations = [
-            'dua1'                  =>  'required|numeric',
+            'dua'                  =>  'required|numeric',
             'dua2'                  =>  'required|numeric',
             'dua3'                  =>  'required|numeric',
             'dua4'                  =>  'required|numeric',
@@ -385,7 +385,7 @@ function post_aldem_verificar_levante(WP_REST_Request $request)
 
         // return [$responseValidator];
         if ($responseValidator["validate"]) {
-            $dua1 = sanitize_text_field($request->get_json_params()['dua1']);
+            $dua1 = sanitize_text_field($request->get_json_params()['dua']);
             $dua2 = sanitize_text_field($request->get_json_params()['dua2']);
             $dua3 = sanitize_text_field($request->get_json_params()['dua3']);
             $dua4 = sanitize_text_field($request->get_json_params()['dua4']);
