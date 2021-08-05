@@ -344,7 +344,7 @@ function aldem_post_new_courier()
             $pcs = intval(sanitize_text_field($_POST['pcs']));
             $peso = doubleval(sanitize_text_field($_POST['kilos']));
             // $id_importador = intval(sanitize_text_field($_POST['id_importador']));
-            $importador = intval(sanitize_text_field($_POST['importador']));
+            $importador = sanitize_text_field($_POST['importador']);
             $id_exportador = intval(sanitize_text_field($_POST['id_exportador']));
             $id_incoterm = intval(sanitize_text_field($_POST['incoterm']));
             $schd_collection = sanitize_text_field($_POST['collection']);
