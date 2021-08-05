@@ -58,25 +58,29 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 <div id="courier_importantes" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         <label for="">DUA</label>
-                        <div class="row mt-2">
-                            <div class="col-lg-3 col-md-6">
+                        <div class="row mt-2 d-flex justify-content-center align-items-center">
+                            <div class=" col-md-3">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese el DUA" value="<?= $courierCurrent->dua ?>" >
+                                    <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese el DUA" value="<?= $courierCurrent->dua ?>">
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6">
+                            <div class="float-right">
+                                <b style="font-size:20px">-</b>
+                            </div>
+                            <div class=" col-md-4 d-flex justify-content-around align-items-center">
+                                <div class="form-group mb-2 mr-2">
+                                    <input type="number" name="dua2" id="dua2" class="form-control" placeholder="Ingrese el DUA2" value="<?= $courierCurrent->dua2 ?>">
+                                </div>
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua2" id="dua2" class="form-control" placeholder="Ingrese el DUA2" value="<?= $courierCurrent->dua2 ?>" >
+                                    <input type="number" name="dua3" id="dua3" class="form-control" placeholder="Ingrese el DUA3" value="<?= $courierCurrent->dua3 ?>">
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="form-group mb-2">
-                                    <input type="number" name="dua3" id="dua3" class="form-control" placeholder="Ingrese el DUA3" value="<?= $courierCurrent->dua3 ?>" >
-                                </div>
+                            <div class="float-left">
+                                <b style="font-size:20px">-</b>
                             </div>
-                            <div class="col-lg-3 col-md-6">
+                            <div class=" col-md-3">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua4" id="dua4" class="form-control" placeholder="Ingrese el DUA4" value="<?= $courierCurrent->dua4 ?>" >
+                                    <input type="number" name="dua4" id="dua4" class="form-control" placeholder="Ingrese el DUA4" value="<?= $courierCurrent->dua4 ?>">
                                 </div>
                             </div>
                         </div>
@@ -1072,7 +1076,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             closeSpinnerCargando();
             if (response.status == 200) {
                 // todo salio correctamente
-                console.log(response);
+                // console.log(response);
                 const {
                     data: {
                         fecha_levante,
