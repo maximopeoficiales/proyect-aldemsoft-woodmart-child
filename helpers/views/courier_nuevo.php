@@ -61,7 +61,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         <div class="row mt-2 d-flex justify-content-center align-items-center">
                             <div class=" col-md-3">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese el DUA" value="<?= $courierCurrent->dua ?>">
+                                    <input type="text" name="dua" id="dua" class="form-control" placeholder="Ingrese el DUA" value="<?= $courierCurrent->dua ?>">
                                 </div>
                             </div>
                             <div class="float-right">
@@ -69,10 +69,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                             <div class=" col-md-4 d-flex justify-content-around align-items-center">
                                 <div class="form-group mb-2 mr-2">
-                                    <input type="number" name="dua2" id="dua2" class="form-control" placeholder="Ingrese el DUA2" value="<?= $courierCurrent->dua2 ?>">
+                                    <input type="text" name="dua2" id="dua2" class="form-control" placeholder="Ingrese el DUA2" value="<?= $courierCurrent->dua2 ?>">
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua3" id="dua3" class="form-control" placeholder="Ingrese el DUA3" value="<?= $courierCurrent->dua3 ?>">
+                                    <input type="text" name="dua3" id="dua3" class="form-control" placeholder="Ingrese el DUA3" value="<?= $courierCurrent->dua3 ?>">
                                 </div>
                             </div>
                             <div class="float-left">
@@ -80,7 +80,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                             <div class=" col-md-3">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua4" id="dua4" class="form-control" placeholder="Ingrese el DUA4" value="<?= $courierCurrent->dua4 ?>">
+                                    <input type="text" name="dua4" id="dua4" class="form-control" placeholder="Ingrese el DUA4" value="<?= $courierCurrent->dua4 ?>">
                                 </div>
                             </div>
                         </div>
