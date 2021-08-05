@@ -59,22 +59,22 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     <div class="card-body">
                         <label for="">DUA</label>
                         <div class="row mt-2">
-                            <div class="col-md-3">
+                            <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="dua1" id="dua1" class="form-control" placeholder="Ingrese el DUA1" value="<?= $courierCurrent->dua1 ?>" required>
+                                    <input type="number" name="dua" id="dua" class="form-control" placeholder="Ingrese el DUA" value="<?= $courierCurrent->dua ?>" required>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
                                     <input type="number" name="dua2" id="dua2" class="form-control" placeholder="Ingrese el DUA2" value="<?= $courierCurrent->dua2 ?>" required>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
                                     <input type="number" name="dua3" id="dua3" class="form-control" placeholder="Ingrese el DUA3" value="<?= $courierCurrent->dua3 ?>" required>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 col-md-6">
                                 <div class="form-group mb-2">
                                     <input type="number" name="dua4" id="dua4" class="form-control" placeholder="Ingrese el DUA4" value="<?= $courierCurrent->dua4 ?>" required>
                                 </div>
@@ -82,41 +82,31 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         </div>
                         <button id="btnBuscarDua" type="button" class="btn btn-success w-100 my-2" style="background-color: #98ddca; color: white; border-radius: 5px;">
                             <i class="fa fa-search-plus mr-1" "></i> Buscar por DUA</button>
-
-                        <div class=" form-group">
-                                <label for="job">Job</label>
-                                <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>" <?= $update ? " disabled" : "" ?>>
-                                <?php if ($update) {
-                                ?>
-                                    <input type="hidden" name="job" value="<?= $courierCurrent->waybill ?>">
-                                <?php } ?>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="manifiesto">Manifiesto</label>
-                                <input type="number" name="manifiesto" id="manifiesto" class="form-control" placeholder="Ingrese el Manifiesto" aria-describedby="manifiesto" value="<?= $courierCurrent->manifiesto ?>" maxlength="10">
-                            </div>
-                        </div>
-                        <div class="col-md-6 ">
-                            <div class="form-group mb-2">
-                                <label for="dua">DUA</label>
-                                <input type="text" name="dua" id="dua" class="form-control" placeholder="Ingrese la DUA" aria-describedby="DUA" maxlength="50" value="<?= $courierCurrent->dua ?>">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <!-- <div class="col-md-6 ">
-                                <div class="form-group mb-2">
-                                    <label for="guia">Guia</label>
-                                    <input type="text" name="guia" id="guia" class="form-control" placeholder="Ingrese la guia" aria-describedby="guia" value="<?= $courierCurrent->guia ?>">
+                        
+                    <div class=" row mt-2">
+                                <div class="col-md-6 ">
+                                    <div class=" form-group">
+                                        <label for="job">Job</label>
+                                        <input type="text" name="job" id="job" class="form-control" required placeholder="Ingrese el Job" aria-describedby="job" maxlength="25" value="<?= $courierCurrent->waybill ?>" <?= $update ? " disabled" : "" ?>>
+                                        <?php if ($update) {
+                                        ?>
+                                            <input type="hidden" name="job" value="<?= $courierCurrent->waybill ?>">
+                                        <?php } ?>
+                                    </div>
                                 </div>
-                            </div> -->
+                                <div class="col-md-6 ">
+                                    <div class="form-group mb-2">
+                                        <label for="manifiesto">Manifiesto</label>
+                                        <input type="number" name="manifiesto" id="manifiesto" class="form-control" placeholder="Ingrese el Manifiesto" aria-describedby="manifiesto" value="<?= $courierCurrent->manifiesto ?>" maxlength="10">
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="row mt-2">
+
                         <div class="col-md-12 ">
                             <div class="form-group mb-2">
                                 <label for="master">Master</label>
                                 <input type="text" name="master" id="master" class="form-control" placeholder="Ingrese el Master" aria-describedby="master" maxlength="20" value="<?= $courierCurrent->guia_master ?>">
-                                <!-- <small id="helpId" class="text-muted">Escriba los 10 caracteres de su guia master</small> -->
                             </div>
                         </div>
                     </div>
@@ -136,8 +126,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     </div>
 
 
-                    <label for="importador-text">Importador</label>
-                    <div class="input-group my-2">
+                    <div class="form-group">
+                        <label for="importador-text">Importador</label>
+                        <input type="number" name="importador" id="importador" class="form-control" placeholder="Ingrese el Importador" value="<?= $courierCurrent->importador ?>">
+                    </div>
+                    <!-- <div class="input-group my-2">
                         <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="importador-text" placeholder="Elija un importador" value="<?= $importadorCurrent->nombre ?>">
                         <div class="input-group-append">
                             <button class="btn  bg-aldem-secondary dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Elije una opcion</button>
@@ -146,7 +139,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewImportador">Nuevo Importador</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <label for="exportador-text">Exportador</label>
                     <div class="input-group my-2">
                         <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador" value="<?= $exportadorCurrent->nombre ?>">
@@ -901,8 +894,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                     document.querySelector(`#exportador-text`).value = response.data.nombre;
                     document.querySelector(`#id_exportador`).value = response.data.id_marken_shipper;
                 } else {
-                    document.querySelector(`#importador-text`).value = response.data.nombre;
-                    document.querySelector(`#id_importador`).value = response.data.id_marken_shipper;
+                    // document.querySelector(`#importador-text`).value = response.data.nombre;
+                    // document.querySelector(`#id_importador`).value = response.data.id_marken_shipper;
                 }
                 await charginAllTables();
             } else if (response.status == 404) {
@@ -1098,6 +1091,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 $setValue("#pcs", pcs);
                 $setValue("#kilos", kilos);
                 $setValue("#protocolo", protocolo);
+                $setValue("#importador", id_importador);
                 $("#fecha_levante").flatpickr({
                     defaultDate: fecha_levante ?? "",
                     enableTime: true
@@ -1166,7 +1160,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 let idShipper = e.target.getAttribute("data-id-importador");
                 let nombreShipper = e.target.getAttribute("data-nombre-importador");
                 document.querySelector("#id_importador").value = idShipper;
-                document.querySelector("#importador-text").value = nombreShipper;
+                // document.querySelector("#importador-text").value = nombreShipper;
                 document.querySelector("#btnCloseListImportador").click();
             }
             // evento click del modal edit
