@@ -325,6 +325,8 @@ aldem_cargarStyles();
                 // console.log(costos);
                 setItemsContainerItems(costos.costos)
                 hiddenShowCardCostos(false);
+                // limpio los datos
+                setItemsContainerOtrosItems(costos.otrosCostos);
                 if (costos.otrosCostos.length > 0) {
                     setItemsContainerOtrosItems(costos.otrosCostos)
                     hiddenShowCardOtrosCostos(false);
@@ -358,7 +360,7 @@ aldem_cargarStyles();
                 await handlerResponseApiAldem(response);
                 closeSpinnerCargando();
                 Swal.fire(
-                    'Costos Actualizados!',
+                    '¡Costos Actualizados!',
                     'Los costos fueron actualizados.',
                     'success'
                 )
