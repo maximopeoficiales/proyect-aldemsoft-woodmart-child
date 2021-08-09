@@ -376,7 +376,7 @@ function query_getMeses()
 }
 
 function query_generateItemCostoByAnioMes($anio, $mes)
-{
+{ 
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
     $sql = "INSERT INTO ${prefix}marken_costo_periodo (id_costo, id_anio, id_mes, created_at) SELECT t1.id, $anio,$mes,NOW() from ${prefix}marken_costos t1 
