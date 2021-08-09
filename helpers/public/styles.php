@@ -1,4 +1,8 @@
 <style>
+    .aldem-text-size-lg {
+        font-size: 1.2rem;
+    }
+
     .aldem-text-white {
         color: white !important;
     }
@@ -179,10 +183,16 @@
         color: white;
     }
 
+    .bg-aldem-dark {
+        background-color: #343A40;
+        color: white !important;
+    }
+
     .iti.iti--allow-dropdown {
         width: 100%;
     }
-    .aldem_pointer{
+
+    .aldem_pointer {
         cursor: pointer;
     }
 </style>

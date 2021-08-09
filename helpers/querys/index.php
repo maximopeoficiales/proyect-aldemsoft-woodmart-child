@@ -347,9 +347,68 @@ function query_getMarkenTransporte($id = null)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT id AS id_transporte, descripcion FROM ${prefix}marken_transporte";
+    $sql = "SELECT id AS id_anio, descripcion as description FROM ${prefix}marken_transporte";
     $sql .= $id != null ? " WHERE id= $id" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
     return $result;
 }
+
+// costos
+function query_getAnios()
+{
+    $wpdb = query_getWPDB();
+    $prefix = $wpdb->prefix;
+    $sql = "SELECT id AS id_anio, descripcion as description FROM ${prefix}anio ORDER BY descripcion";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
+function query_getMeses()
+{
+    $wpdb = query_getWPDB();
+    $prefix = $wpdb->prefix;
+    $sql = "SELECT id AS id_mes, descripcion as description FROM ${prefix}mes ORDER BY id";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
+function query_generateItemCostoByAnioMes($anio, $mes)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "INSERT INTO ${prefix}marken_costo_periodo (id_costo, id_anio, id_mes, created_at) SELECT t1.id, $anio,$mes,NOW() from ${prefix}marken_costos t1 
+    WHERE t1.enabled = 1 AND NOT EXISTS (select * from ${prefix}marken_costo_periodo t2 
+    WHERE t1.id = t2.id_costo AND t2.id_anio = $anio AND t2.id_mes = $mes)";
+    $wpdb->query($sql);
+    $wpdb->flush();
+}
+function query_SearchCostosByAnioMes($anio, $mes)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t2.descripcion, t1.valor FROM ${prefix}marken_costo_periodo t1
+     INNER JOIN ${prefix}marken_costos t2 
+     ON t1.id_costo = t2.id 
+     WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t2.enabled = 1";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+function query_SearchOthersCostosByAnioMes($anio, $mes)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t2.descripcion, t1.valor
+    FROM wp_aldem_marken_costo_periodo t1
+    INNER JOIN wp_aldem_marken_costos t2 ON t1.id_costo = t2.id
+    WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t2.enabled = 0 AND t1.valor IS NOT NULL
+    ";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
+// fin de costos

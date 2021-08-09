@@ -28,6 +28,8 @@ function aldem_getShorcodesViewList(): array
         ["name" => "marken_courier_nuevo", "view" => "courier_nuevo"],
         ["name" => "marken_carga_nuevo", "view" => "carga_nuevo"],
         ["name" => "marken_pick_nuevo", "view" => "pickup_nuevo"],
+        ["name" => "costos", "view" => "costos"],
+        ["name" => "costos_admin", "view" => "costos_admin"],
     ];
 }
 
