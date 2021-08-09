@@ -376,7 +376,7 @@ function query_getMeses()
 }
 
 function query_generateItemCostoByAnioMes($anio, $mes)
-{ 
+{
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
     $sql = "INSERT INTO ${prefix}marken_costo_periodo (id_costo, id_anio, id_mes, created_at) SELECT t1.id, $anio,$mes,NOW() from ${prefix}marken_costos t1 
@@ -389,7 +389,7 @@ function query_SearchCostosByAnioMes($anio, $mes)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT t2.descripcion, t1.valor FROM ${prefix}marken_costo_periodo t1
+    $sql = "SELECT t2.descripcion, t1.valor,t1.id AS id FROM ${prefix}marken_costo_periodo t1
      INNER JOIN ${prefix}marken_costos t2 
      ON t1.id_costo = t2.id 
      WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t2.enabled = 1";
@@ -401,14 +401,28 @@ function query_SearchOthersCostosByAnioMes($anio, $mes)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT t2.descripcion, t1.valor
-    FROM wp_aldem_marken_costo_periodo t1
-    INNER JOIN wp_aldem_marken_costos t2 ON t1.id_costo = t2.id
+    $sql = "SELECT t2.descripcion, t1.valor,t1.id AS id
+    FROM ${prefix}marken_costo_periodo t1
+    INNER JOIN ${prefix}marken_costos t2 ON t1.id_costo = t2.id
     WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t2.enabled = 0 AND t1.valor IS NOT NULL
     ";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
     return $result;
+}
+
+function query_getTotalCostoByAnioMes($anio, $mes)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT SUM( t1.valor)  as total
+    FROM ${prefix}marken_costo_periodo t1
+    INNER JOIN ${prefix}marken_costos t2 ON t1.id_costo = t2.id
+    WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t1.VALOR IS NOT NULL
+    ";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result[0]->total;
 }
 
 // fin de costos

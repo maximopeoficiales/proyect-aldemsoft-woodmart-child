@@ -420,3 +420,39 @@ function post_aldem_verificar_levante_default(WP_REST_Request $request)
         return  aldem_rest_response(null, $th, 500);
     }
 }
+
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/getCostos/(?P<username>\w+)/', array(
+        'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
+        'callback' => 'get_aldem_costos',
+        'args' => array(),
+    ));
+});
+function get_aldem_costos(WP_REST_Request $request)
+{
+    $validations = [
+        'anio'                  =>  'required|numeric',
+        'mes'                  =>  'required|numeric',
+    ];
+    try {
+        $responseValidator = adldem_UtilityValidator($request->get_json_params(), $validations);
+        if ($responseValidator["validate"]) {
+            $anio = intval(sanitize_text_field($request->get_json_params()['anio']));
+            $mes = intval(sanitize_text_field($request->get_json_params()['mes']));
+            query_generateItemCostoByAnioMes($anio, $mes);
+            $costos = query_SearchCostosByAnioMes($anio, $mes);
+            $otrosCostos = query_SearchOthersCostosByAnioMes($anio, $mes);
+            $totalCostos = query_getTotalCostoByAnioMes($anio, $mes);
+            $object = new stdClass();
+            $object->costos = $costos;
+            $object->otrosCostos = $otrosCostos;
+            $object->totalCostos = $totalCostos;
+            return aldem_rest_response($object);
+        } else {
+            return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
+        }
+    } catch (\Throwable $th) {
+        return  aldem_rest_response($th, "Error en servidor", 500);
+    }
+}
