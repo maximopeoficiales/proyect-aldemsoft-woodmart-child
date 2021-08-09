@@ -4,6 +4,7 @@ $meses = query_getMeses();
 
 // uris
 $urlGetCostos = get_site_url() . "/wp-json/aldem/v1/getCostos/" . aldem_getUserNameCurrent();
+$urlPostCostos = get_site_url() . "/wp-json/aldem/v1/postCostos/" . aldem_getUserNameCurrent();
 // obtencion de datos
 aldem_cargarStyles();
 ?>
@@ -246,7 +247,7 @@ aldem_cargarStyles();
     // fin de utilities
 
     // api
-    const handlerResponseApiAldem = async (response, success, parametrosNoValidos, error) => {
+    const handlerResponseApiAldem = async (response, success = () => {}, parametrosNoValidos = () => {}, error = () => {}) => {
         if (response.status === 200) {
             success();
         } else if (response.status == 404) {
@@ -287,6 +288,27 @@ aldem_cargarStyles();
             console.error(error);
         }
     }
+    const postCostos = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer <?= aldem_getBearerToken() ?>");
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+            costos: getDataUpdateCosto()
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        try {
+            let data = await (await (fetch('<?= $urlPostCostos  ?>', requestOptions))).json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
     // event listeners
     const handlerSubmitFormAnioMes = async (e) => {
         e.preventDefault();
@@ -319,13 +341,30 @@ aldem_cargarStyles();
     }
 
     const handlerClickSaveCostos = async (e) => {
-        // e.target.disabled = true;
-        showSpinnerCargando();
-        console.log(getDataUpdateCosto());
-        setTimeout(() => {
+        Swal.fire({
+            title: '¿Estas seguro de actualizar los costos?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Actualizar',
+            cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // e.target.disabled = true;
+                console.log();
+                showSpinnerCargando();
+                let response = await postCostos();
+                await handlerResponseApiAldem(response);
+                closeSpinnerCargando();
+                Swal.fire(
+                    'Costos Actualizados!',
+                    'Los costos fueron actualizados.',
+                    'success'
+                )
+            }
+        })
 
-            closeSpinnerCargando();
-        }, 2000);
     }
     // fin de api
 

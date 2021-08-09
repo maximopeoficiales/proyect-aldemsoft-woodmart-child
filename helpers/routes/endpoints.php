@@ -456,3 +456,46 @@ function get_aldem_costos(WP_REST_Request $request)
         return  aldem_rest_response($th, "Error en servidor", 500);
     }
 }
+
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/postCostos/(?P<username>\w+)/', array(
+        'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
+        'callback' => 'post_aldem_costos',
+        'args' => array(),
+    ));
+});
+
+function post_aldem_costos(WP_REST_Request $request)
+{
+    $costos = $request->get_json_params()["costos"];
+    $validations = [
+        'costos'                  =>  'required|array',
+        'costos.*.id'                  =>  'required|numeric',
+        'costos.*.valor'                  =>  'required|numeric',
+    ];
+    try {
+        $responseValidator = adldem_UtilityValidator($request->get_json_params(), $validations);
+        if ($responseValidator["validate"]) {
+            $prefix = query_getAldemPrefix();
+            $wpdb = query_getWPDB();
+            $fecha_actual = date("Y-m-d H:i:s");
+            $table = "{$prefix}marken_costo_periodo";
+            foreach ($costos as $costo) {
+                $data = [
+                    'valor' => floatval($costo["valor"]),
+                    'updated_at' => $fecha_actual,
+                ];
+                $wpdb->update($table, $data, ["id" => intval($costo["id"])]);
+                $wpdb->flush();
+            }
+            return aldem_rest_response($costos);
+        } else {
+            return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
+        }
+    } catch (\Throwable $th) {
+        return  aldem_rest_response($th, "Error en servidor", 500);
+    }
+
+    return $request->get_json_params()["costos"];
+}
