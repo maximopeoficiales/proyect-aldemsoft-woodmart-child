@@ -392,7 +392,8 @@ function query_SearchCostosByAnioMes($anio, $mes)
     $sql = "SELECT t2.descripcion, t1.valor,t1.id AS id FROM ${prefix}marken_costo_periodo t1
      INNER JOIN ${prefix}marken_costos t2 
      ON t1.id_costo = t2.id 
-     WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t2.enabled = 1";
+     WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t2.enabled = 1
+     ORDER BY t1.valor DESC";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
     return $result;
@@ -405,6 +406,7 @@ function query_SearchOthersCostosByAnioMes($anio, $mes)
     FROM ${prefix}marken_costo_periodo t1
     INNER JOIN ${prefix}marken_costos t2 ON t1.id_costo = t2.id
     WHERE t1.id_anio = $anio AND t1.id_mes = $mes AND t2.enabled = 0 AND t1.valor IS NOT NULL
+    ORDER BY t1.valor DESC
     ";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();

@@ -123,6 +123,17 @@ aldem_cargarStyles();
 
 <script>
     // utilities
+    const addCommas = (nStr) => {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
     const $getValue = (id) => {
         try {
             return document.querySelector(id).value
@@ -161,7 +172,7 @@ aldem_cargarStyles();
         if (total < 0 || total == Infinity || total == NaN) {
             total = 0;
         }
-        document.querySelector("#totalCostos").innerText = total.toFixed(2);
+        document.querySelector("#totalCostos").innerText = addCommas(total.toFixed(2));
     }
     const getTextSelectedBySelect = (id) => {
         let e = document.querySelector(id);
@@ -235,7 +246,7 @@ aldem_cargarStyles();
                     ${costo.descripcion}
                 </div>
                 <div class="">
-                    <div class="form-group">
+                    <div class="form-group my-1">
                         <input type="number" class="form-control text-right aldem_costo_item" placeholder="Ingrese el Valor" value="${costo.valor ?? ""}" step='0.01' onchange="getTotalByItems()" id-costo=${costo.id}>
                     </div>
                 </div>
@@ -321,7 +332,7 @@ aldem_cargarStyles();
             await handlerResponseApiAldem(response, () => {
                 let costos = response.data;
                 // seteo de total de Costos
-                document.querySelector("#totalCostos").innerText = parseFloat(costos.totalCostos ?? 0).toFixed(2);
+                document.querySelector("#totalCostos").innerText = addCommas(parseFloat(costos.totalCostos ?? 0).toFixed(2));
                 // console.log(costos);
                 setItemsContainerItems(costos.costos)
                 hiddenShowCardCostos(false);
