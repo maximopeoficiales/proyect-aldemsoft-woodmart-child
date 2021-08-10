@@ -425,4 +425,16 @@ function query_getTotalCostoByAnioMes($anio, $mes)
     return $result[0]->total;
 }
 
+
+function query_getMarkenCostos()
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT t1.id as id_costo, t1.descripcion , t1.enabled
+    FROM ${prefix}marken_costos t1  ORDER BY t1.enabled DESC
+    ";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
 // fin de costos
