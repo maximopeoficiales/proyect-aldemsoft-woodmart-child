@@ -30,3 +30,39 @@ function aldem_cargarStyles(): void
 {
     require aldem_get_directory_helper() . "public/styles.php";
 }
+
+
+function aldem_getRoleCodes()
+{
+    return [
+        ["id" => 41, "name" => "Despachador de aduanas"],
+        ["id" => 31, "name" => "Depósito temporal, Zed"],
+        ["id" => 33, "name" => "Depósito temporal EER"],
+        ["id" => 32, "name" => "Depósito aduanero"],
+        ["id" => 34, "name" => "Depósito temporal Postal"],
+        ["id" => 50, "name" => "Empresa EER"],
+        ["id" => 61, "name" => "Terminal Portuario"],
+        ["id" => 54, "name" => "Terminal de carga aéreo"],
+        ["id" => 73, "name" => "Zofratacna"],
+    ];
+}
+
+
+function aldem_selectRoleCodes($nameInput = "roleCode", $rolCodeDefault = 31)
+{
+    $html = "
+    <div class='form-group'>
+    <label for='${nameInput}'>Role Code</label>
+    <select class='form-control' name='${nameInput}' id='${nameInput}'>
+    ";
+    foreach (aldem_getRoleCodes() as $roleCode) {
+        $selected = $roleCode["id"] === $rolCodeDefault ? " selected" : "";
+        $html .= "<option value='{$roleCode['id']}' $selected>
+        {$roleCode['name']}        
+        </option>";
+    }
+    $html .= "    
+    </select> 
+    </div>";
+    echo $html;
+}

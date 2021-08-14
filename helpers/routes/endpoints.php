@@ -393,7 +393,7 @@ function post_aldem_verificar_levante(WP_REST_Request $request)
             $data = null;
             // si el roleCode esta vacio
             if (!empty($roleCode)) {
-                $data = AduanaWS::verificarLevante($dua1, $dua2, $dua3, $dua4, $currentCode);
+                $data = AduanaWS::verificarLevante($dua1, $dua2, $dua3, $dua4, $roleCode);
             } else {
                 $data = AduanaWS::verificarLevante($dua1, $dua2, $dua3, $dua4);
             }

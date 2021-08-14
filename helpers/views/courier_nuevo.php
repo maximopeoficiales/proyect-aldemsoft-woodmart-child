@@ -57,6 +57,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                 <div id="courier_importantes" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 my-2 col-lg-3">
+                                <?=
+                                aldem_selectRoleCodes()
+                                ?>
+                            </div>
+                        </div>
+
                         <label for="">DUA</label>
                         <div class="row mt-2 d-flex justify-content-center align-items-center">
                             <div class=" col-md-3">
@@ -1064,7 +1072,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 dua: parseInt($getValue("#dua")),
                 dua2: parseInt($getValue("#dua2")) + 2000,
                 dua3: parseInt($getValue("#dua3")),
-                dua4: parseInt($getValue("#dua4"))
+                dua4: parseInt($getValue("#dua4")),
+                roleCode: parseInt($getValue("#roleCode"))
             });
             let requestOptions = {
                 method: 'POST',
