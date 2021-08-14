@@ -35,15 +35,15 @@ function aldem_cargarStyles(): void
 function aldem_getRoleCodes()
 {
     return [
-        ["id" => 41, "name" => "Despachador de aduanas"],
-        ["id" => 31, "name" => "Depósito temporal, Zed"],
-        ["id" => 33, "name" => "Depósito temporal EER"],
-        ["id" => 32, "name" => "Depósito aduanero"],
-        ["id" => 34, "name" => "Depósito temporal Postal"],
-        ["id" => 50, "name" => "Empresa EER"],
-        ["id" => 61, "name" => "Terminal Portuario"],
-        ["id" => 54, "name" => "Terminal de carga aéreo"],
-        ["id" => 73, "name" => "Zofratacna"],
+        ["id" => 41, "name" => "(41) Despachador de aduanas"],
+        ["id" => 31, "name" => "(31) Depósito temporal, Zed"],
+        ["id" => 33, "name" => "(33) Depósito temporal EER"],
+        ["id" => 32, "name" => "(32) Depósito aduanero"],
+        ["id" => 34, "name" => "(34) Depósito temporal Postal"],
+        ["id" => 50, "name" => "(50) Empresa EER"],
+        ["id" => 61, "name" => "(61) Terminal Portuario"],
+        ["id" => 54, "name" => "(54) Terminal de carga aéreo"],
+        ["id" => 73, "name" => "(73) Zofratacna"],
     ];
 }
 
