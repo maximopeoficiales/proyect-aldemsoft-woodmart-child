@@ -309,7 +309,7 @@ function aldem_post_new_courier()
             'collection'                  => 'date:Y-m-d',
             'delivery'                  => 'date:Y-m-d',
             'instructions'                  => 'max:500',
-            'protocolo'                  => 'max:50',
+            'protocolo'                  => 'max:150',
             'id_user'                  => 'required|numeric',
             'id_site'                  => 'numeric',
             'id_handling'                  => 'numeric',
@@ -470,17 +470,21 @@ function aldem_post_new_courier()
             'job'                  =>  'required|max:35',
             'manifiesto'                  => 'numeric',
             'dua'                  => 'max:50',
+            'dua2'                  => 'max:15',
+            'dua3'                  => 'max:15',
+            'dua4'                  => 'max:15',
             // 'guia'                  => 'max:12',
             'master'                  => 'max:20',
             'pcs'                  => 'numeric',
             'kilos'                  => 'numeric',
-            'id_importador'                  => 'numeric',
+            // 'id_importador'                  => 'numeric',
+            'importador'                  => 'max:250',
             'id_exportador'                  => 'numeric',
             'incoterm'                  => 'numeric',
             'collection'                  => 'date:Y-m-d',
             'delivery'                  => 'date:Y-m-d',
             'instructions'                  => 'max:500',
-            'protocolo'                  => 'max:50',
+            'protocolo'                  => 'max:150',
             'observaciones'                  => 'max:250',
             'id_user'                  => 'required|numeric',
 
@@ -509,11 +513,15 @@ function aldem_post_new_courier()
             $waybill = sanitize_text_field($_POST['job']);
             $manifiesto = intval(sanitize_text_field($_POST['manifiesto']));
             $dua = sanitize_text_field($_POST['dua']);
+            $dua2 = sanitize_text_field($_POST['dua2']);
+            $dua3 = sanitize_text_field($_POST['dua3']);
+            $dua4 = sanitize_text_field($_POST['dua4']);
             // $guia = sanitize_text_field($_POST['guia']);
             $guia_master = sanitize_text_field($_POST['master']);
             $pcs = intval(sanitize_text_field($_POST['pcs']));
             $peso = doubleval(sanitize_text_field($_POST['kilos']));
-            $id_importador = intval(sanitize_text_field($_POST['id_importador']));
+            // $id_importador = intval(sanitize_text_field($_POST['id_importador']));
+            $importador = sanitize_text_field($_POST['importador']);
             $id_exportador = intval(sanitize_text_field($_POST['id_exportador']));
             $id_incoterm = intval(sanitize_text_field($_POST['incoterm']));
             $schd_collection = sanitize_text_field($_POST['collection']);
@@ -546,14 +554,19 @@ function aldem_post_new_courier()
                 "id_cliente_subtipo" => 2,
                 "waybill" => $waybill,
                 "manifiesto" => $manifiesto,
+                
                 "dua" => $dua,
+                "dua2" => $dua2,
+                "dua3" => $dua3,
+                "dua4" => $dua4,
 
                 // "guia" => $guia,
                 "guia_master" => $guia_master,
                 "peso" => $peso,
                 "pcs" => $pcs,
 
-                "id_importador" => $id_importador,
+                // "id_importador" => $id_importador,
+                "importador" => $importador,
                 "id_exportador" => $id_exportador,
                 "id_incoterm" => $id_incoterm,
                 "instrucciones" => $instrucciones,
@@ -586,8 +599,10 @@ function aldem_post_new_courier()
             if ($action_name == "new-cargo") {
                 $format = array(
                     '%d', '%s', '%d', '%s',
+                    // duas
+                    '%s','%s','%s',
                     '%s', '%s', '%d',
-                    '%d', '%d', '%d', '%s',
+                    '%s', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d', '%s',
 
                     '%d', '%d',
@@ -609,8 +624,9 @@ function aldem_post_new_courier()
                 unset($data["created_at"]);
                 $format2 = array(
                     '%d', '%s', '%d', '%s',
+                    '%s','%s','%s',
                     '%s', '%s', '%d',
-                    '%d', '%d', '%d', '%s',
+                    '%s', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d', '%s',
 
                     '%d', '%d',
