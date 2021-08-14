@@ -57,13 +57,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
                 <div id="courier_importantes" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4 my-2 col-lg-3">
-                                <?=
-                                aldem_selectRoleCodes()
-                                ?>
-                            </div>
-                        </div>
+                        
 
                         <label for="">DUA</label>
                         <div class="row mt-2 d-flex justify-content-center align-items-center">
@@ -92,8 +86,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 </div>
                             </div>
                         </div>
-                        <button id="btnBuscarDua" type="button" class="btn btn-success w-100 my-2" style="background-color: #98ddca; color: white; border-radius: 5px;">
-                            <i class="fa fa-search-plus mr-1" "></i> Buscar por DUA</button>
+                        <div class="row justify-content-center my-3">
+                            <div class="col-md-8">
+                                <?=
+                                aldem_selectRoleCodes()
+                                ?>
+                            </div>
+                        </div>
+
                         
                     <div class=" row mt-2">
                                 <div class="col-md-6 ">

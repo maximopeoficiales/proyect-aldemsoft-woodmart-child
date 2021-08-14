@@ -51,9 +51,11 @@ function aldem_getRoleCodes()
 function aldem_selectRoleCodes($nameInput = "roleCode", $rolCodeDefault = 31)
 {
     $html = "
-    <div class='form-group'>
-    <label for='${nameInput}'>Role Code</label>
-    <select class='form-control' name='${nameInput}' id='${nameInput}'>
+    
+
+    <div class='input-group' style='
+    flex-wrap: nowrap;'>
+    <select class='custom-select' name='${nameInput}' id='${nameInput}'>
     ";
     foreach (aldem_getRoleCodes() as $roleCode) {
         $selected = $roleCode["id"] === $rolCodeDefault ? " selected" : "";
@@ -63,6 +65,11 @@ function aldem_selectRoleCodes($nameInput = "roleCode", $rolCodeDefault = 31)
     }
     $html .= "    
     </select> 
-    </div>";
+    <div class='input-group-append'>
+        <button id='btnBuscarDua' type='button' class='btn ' style='background-color: #344176; color: white; '>
+        <i class='fa fa-search-plus mr-1'></i> Buscar por DUA</button>
+    </div>
+    </div>
+    ";
     echo $html;
 }
