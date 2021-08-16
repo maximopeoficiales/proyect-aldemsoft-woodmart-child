@@ -1,4 +1,10 @@
 <?php
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 date_default_timezone_set('America/Lima');
 // Hooks admin-post
 
@@ -8,6 +14,12 @@ add_action('admin_post_process_form', 'aldem_post_new_export_job_hielo');
 add_action('admin_post_process_form', 'aldem_post_new_export');
 add_action('admin_post_process_form', 'aldem_post_new_courier');
 add_action('admin_post_process_form', 'aldem_post_new_pickup');
+
+// ajax excel
+// http://localhost/wp-admin/admin-ajax.php?action=aldem_excel
+add_action('wp_ajax_aldem_excel', 'aldem_export_excel');
+// fin de ajax excel
+
 // Funcion callback
 function aldem_post_new_shipper_data()
 {
@@ -554,7 +566,7 @@ function aldem_post_new_courier()
                 "id_cliente_subtipo" => 2,
                 "waybill" => $waybill,
                 "manifiesto" => $manifiesto,
-                
+
                 "dua" => $dua,
                 "dua2" => $dua2,
                 "dua3" => $dua3,
@@ -600,7 +612,7 @@ function aldem_post_new_courier()
                 $format = array(
                     '%d', '%s', '%d', '%s',
                     // duas
-                    '%s','%s','%s',
+                    '%s', '%s', '%s',
                     '%s', '%s', '%d',
                     '%s', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d', '%s',
@@ -624,7 +636,7 @@ function aldem_post_new_courier()
                 unset($data["created_at"]);
                 $format2 = array(
                     '%d', '%s', '%d', '%s',
-                    '%s','%s','%s',
+                    '%s', '%s', '%s',
                     '%s', '%s', '%d',
                     '%s', '%d', '%d', '%s',
                     '%s', '%s', '%s', '%d', '%s',
@@ -758,5 +770,188 @@ function aldem_post_new_pickup()
         } else {
             wp_redirect(home_url($pagina) . "?errors=" . $responseValidator["message"]);
         }
+    }
+}
+
+function aldem_export_excel()
+{
+    $tipoCambio = "4.1";
+    $gray = "#ACB9CA";
+    $blue = "#333F4F";
+    $grayWhite = "##D6DCE4";
+    $yellow = "#FFFF00";
+    $blueWhite = "#2F75B5";
+    $blackWhite = "#808080";
+    function setColor(string $color): string
+    {
+        return str_replace("#", "", $color);
+    }
+    function getFirstCoord($coord): string
+    {
+        return explode(":", $coord)[0];
+    }
+
+
+    try {
+        $fileName = "hello.xlsx";
+        $spreadsheet = new Spreadsheet();
+
+        // titulos
+        // TARIFA PICK UP (RECOJO DE MUESTRAS
+        $rangeRecojoMuestras = "B8:T8";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeRecojoMuestras);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeRecojoMuestras), "TARIFA PICK UP (RECOJO DE MUESTRAS)")->getStyle($rangeRecojoMuestras);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(18)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(Color::COLOR_BLACK);
+
+        // TARIFA HIELO SECO
+        $rangeTarifaHieloSeco = "U8:AK8";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeTarifaHieloSeco);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeTarifaHieloSeco), "TARIFA HIELO SECO")->getStyle($rangeTarifaHieloSeco);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(18)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(Color::COLOR_BLACK);
+
+        // CANTIDAD DE PICK UP (RECOJOS
+        $rangeCantidadPickUp = "B9:J9";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeCantidadPickUp);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeCantidadPickUp), "CANTIDAD DE PICK UP (RECOJOS)")->getStyle($rangeCantidadPickUp);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(14)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blue));
+
+        // FECHA 1
+        $rangeFecha1 = "B11:B12";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeFecha1);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeFecha1), "FECHA")->getStyle($rangeFecha1);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_BLACK);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // GUIAS DE LIMA
+        $rangeGuiasLima = "C10:F10";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeGuiasLima);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeGuiasLima), "GUIAS DE LIMA")->getStyle($rangeGuiasLima);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_BLACK);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // GUIAS DE PROVINCIA
+        $rangeGuiasProvincia = "G10:J10";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeGuiasProvincia);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeGuiasProvincia), "GUIAS DE PROVINCIA")->getStyle($rangeGuiasProvincia);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_BLACK);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // FROZEN
+        $rangeFrozen = "C11:F11";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeFrozen);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeFrozen), "FROZEN")->getStyle($rangeFrozen);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_BLACK);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // FROZEN2
+        $rangeFrozen = "G11:J11";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeFrozen);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeFrozen), "FROZEN")->getStyle($rangeFrozen);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_BLACK);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+
+
+
+        // total guias marken
+        $rangeTotalGuiasMarken = "K9:K12";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells("K9:K12");
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeTotalGuiasMarken), "TOTAL GUIAS MARKEN")->getStyle($rangeTotalGuiasMarken);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(9)->getColor()->setARGB(Color::COLOR_BLACK);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($yellow));
+
+        // COBRO A MARKEN PICK UP  DOLARES USD
+        $rangeCobroMarkenPickUP = "L9:S9";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeCobroMarkenPickUP);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeCobroMarkenPickUP), "COBRO A MARKEN PICK UP  DOLARES USD")->getStyle($rangeCobroMarkenPickUP);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getFont()->setBold(true)->setSize(14)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blue));
+
+        // TOTAL PICK UP DOLARES USD
+        $rangeTotalPickUp = "T9:T12";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeTotalPickUp);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeTotalPickUp), "TOTAL PICK UP DOLARES USD")->getStyle($rangeTotalPickUp);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(9)->getColor()->setARGB(Color::COLOR_BLACK);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($yellow));
+
+        // TOTAL CANTIDAD DE HIELO SECO KG
+        $rangeTotalHieloSeco = "U9:U12";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeTotalHieloSeco);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeTotalHieloSeco), "TOTAL CANTIDAD DE HIELO SECO KG")->getStyle($rangeTotalHieloSeco);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(9)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // OBSERVACIONES
+        $rangeObservaciones = "V9:X9";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeObservaciones);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeObservaciones), "OBSERVACIONES")->getStyle($rangeObservaciones);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(12)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA SOLES (SIN IGV)
+        $rangeCostoHieloSeco = "Y9:Y12";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeCostoHieloSeco);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeCostoHieloSeco), "COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA SOLES (SIN IGV)")->getStyle($rangeCostoHieloSeco);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(9)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA SOLES (SIN IGV)
+        $rangeCostoHieloSecoDolares = "Z9:Z11";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeCostoHieloSecoDolares);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeCostoHieloSecoDolares), "COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA DOLARES")->getStyle($rangeCostoHieloSecoDolares);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(9)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // TIPO DE CAMBIO
+        $rangeTipoCambio = "Z12";
+        $excel = $spreadsheet->getActiveSheet();
+        $styleExcel = $excel->setCellValue($rangeTipoCambio, "Tipo de CAMBIO: $tipoCambio")->getStyle($rangeTipoCambio);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // TARIFA DE HIELO SECO
+        $rangeTarifaHieloSeco = "AA9:AF10";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeTarifaHieloSeco);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeTarifaHieloSeco), "TARIFA DE HIELO SECO")->getStyle($rangeTarifaHieloSeco);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+        // texto DOLARES
+        $rangeTextDolares = "AA11:AF11";
+        $excel = $spreadsheet->getActiveSheet()->mergeCells($rangeTextDolares);
+        $styleExcel = $excel->setCellValue(getFirstCoord($rangeTextDolares), "DOLARES")->getStyle($rangeTextDolares);
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
+        $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_WHITE);
+        $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
+
+
+
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        $writer->save('php://output');
+        // $writer->save('hello world.xlsx');
+    } catch (\Throwable $th) {
+        echo $th;
     }
 }
