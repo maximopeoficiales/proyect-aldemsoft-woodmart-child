@@ -798,7 +798,7 @@ function aldem_export_excel()
             $excel = $excel->mergeCells($range);
         }
         $styleExcel = $excel->setCellValue(getFirstCoord($range), $text)->getStyle($range);
-        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center');
+        $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
         $styleExcel->getFont()->setBold($bold)->setSize($fontSize)->getColor()->setARGB($color);
         $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($bgColor));
         return $spreadsheet;
@@ -842,6 +842,23 @@ function aldem_export_excel()
         $rangeFrozen2 = "G11:J11";
         $spreadsheet = cCell($spreadsheet, $rangeFrozen2, "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
 
+        // AMBIENTE1
+        $spreadsheet = cCell($spreadsheet, "C12", "Ambiente", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // BIO I II III
+        $spreadsheet = cCell($spreadsheet, "D12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "E12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "F12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // AMBIENTE2
+        $spreadsheet = cCell($spreadsheet, "G12", "AMBIENTE", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // BIO I II III
+        $spreadsheet = cCell($spreadsheet, "H12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "I12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "J12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+
         // total guias marken
         $rangeTotalGuiasMarken = "K9:K12";
         $spreadsheet = cCell($spreadsheet, $rangeTotalGuiasMarken, "TOTAL GUIAS MARKEN", true, 9, Color::COLOR_BLACK, $yellow);
@@ -873,10 +890,6 @@ function aldem_export_excel()
         // TIPO DE CAMBIO
         $rangeTipoCambio = "Z12";
         $spreadsheet = cCell($spreadsheet, $rangeTipoCambio, "Tipo de CAMBIO: $tipoCambio", true, 11, Color::COLOR_WHITE, $blackWhite);
-        // $styleExcel = $excel->setCellValue($rangeTipoCambio, "")->getStyle($rangeTipoCambio);
-        // $styleExcel->getAlignment()->setHorizontal('center')->setVertical('center')->setWrapText(true);
-        // $styleExcel->getFont()->setBold(true)->setSize(11)->getColor()->setARGB(Color::COLOR_WHITE);
-        // $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(setColor($blackWhite));
 
         // TARIFA DE HIELO SECO
         $rangeTarifaHieloSeco = "AA9:AF10";
