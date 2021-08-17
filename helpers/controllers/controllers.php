@@ -827,20 +827,16 @@ function aldem_export_excel()
         $spreadsheet = cCell($spreadsheet, $rangeFecha1, "FECHA", true, 11, Color::COLOR_BLACK, $blackWhite);
 
         // GUIAS DE LIMA
-        $rangeGuiasLima = "C10:F10";
-        $spreadsheet = cCell($spreadsheet, $rangeGuiasLima, "GUIAS DE LIMA", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "C10:F10", "GUIAS DE LIMA", true, 11, Color::COLOR_BLACK, $blackWhite);
 
         // GUIAS DE PROVINCIA
-        $rangeGuiasProvincia = "G10:J10";
-        $spreadsheet = cCell($spreadsheet, $rangeGuiasProvincia, "GUIAS DE PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "G10:J10", "GUIAS DE PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
 
         // FROZEN
-        $rangeFrozen = "C11:F11";
-        $spreadsheet = cCell($spreadsheet, $rangeFrozen, "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "C11:F11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
 
         // FROZEN2
-        $rangeFrozen2 = "G11:J11";
-        $spreadsheet = cCell($spreadsheet, $rangeFrozen2, "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "G11:J11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
 
         // AMBIENTE1
         $spreadsheet = cCell($spreadsheet, "C12", "Ambiente", true, 11, Color::COLOR_BLACK, $blackWhite);
@@ -862,6 +858,36 @@ function aldem_export_excel()
         // total guias marken
         $rangeTotalGuiasMarken = "K9:K12";
         $spreadsheet = cCell($spreadsheet, $rangeTotalGuiasMarken, "TOTAL GUIAS MARKEN", true, 9, Color::COLOR_BLACK, $yellow);
+
+        // SEGUNDA PARTE COBRO A MARKEN PICK UP DOLARES USD
+        // GUIAS DE LIMA
+        $spreadsheet = cCell($spreadsheet, "L10:O10", "GUIAS DE LIMA", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // GUIAS DE PROVINCIA
+        $spreadsheet = cCell($spreadsheet, "P10:S10", "GUIAS DE PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // FROZEN
+        $spreadsheet = cCell($spreadsheet, "L11:O11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // FROZEN2
+        $spreadsheet = cCell($spreadsheet, "P11:S11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // AMBIENTE1
+        $spreadsheet = cCell($spreadsheet, "L12", "Ambiente", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // BIO I II III
+        $spreadsheet = cCell($spreadsheet, "M12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "N12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "O12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // AMBIENTE2
+        $spreadsheet = cCell($spreadsheet, "P12", "AMBIENTE", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+        // BIO I II III
+        $spreadsheet = cCell($spreadsheet, "Q12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "R12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
+        $spreadsheet = cCell($spreadsheet, "S12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
+
 
         // COBRO A MARKEN PICK UP  DOLARES USD
         $rangeCobroMarkenPickUP = "L9:S9";
