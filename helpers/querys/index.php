@@ -440,3 +440,54 @@ function query_getMarkenCostos()
     return $result;
 }
 // fin de costos
+
+
+// reportes en marken export reporte general
+function query_getMarkenReporteGeneral1()
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT date(t1.fecha_hora) AS `Recoleccion`,
+    sum((case when ((`t3`.`id` = 1) and (`t4`.`id` = 1)) then 1 else 0 end)) AS `Lima_Amb`,
+    sum((case when ((`t3`.`id` = 1) and (`t4`.`id` = 2)) then 1 else 0 end)) AS `Lima_Bio1`,
+    sum((case when ((`t3`.`id` = 1) and (`t4`.`id` = 3)) then 1 else 0 end)) AS `Lima_Bio2`,
+    sum((case when ((`t3`.`id` = 1) and (`t4`.`id` = 4)) then 1 else 0 end)) AS `Lima_Bio3`,
+    sum((case when ((`t3`.`id` = 2) and (`t4`.`id` = 1)) then 1 else 0 end)) AS `Prov_Amb`,
+    sum((case when ((`t3`.`id` = 2) and (`t4`.`id` = 2)) then 1 else 0 end)) AS `Prov_Bio1`,
+    sum((case when ((`t3`.`id` = 2) and (`t4`.`id` = 3)) then 1 else 0 end)) AS `Prov_Bio2`,
+    sum((case when ((`t3`.`id` = 2) and (`t4`.`id` = 4)) then 1 else 0 end)) AS `Prov_Bio3`,
+    count(0) AS `Total Guías`,((100 * year(`t1`.`fecha_hora`)) + month(`t1`.`fecha_hora`)) AS `periodo` 
+    from (((`${prefix}marken_job` `t1` 
+    join `${prefix}marken_shipper` `t2` on((`t1`.`id_shipper` = `t2`.`id`))) 
+    join `${prefix}marken_site` `t3` on((`t3`.`id` = `t2`.`id_marken_site`))) 
+    join `${prefix}marken_type` `t4` on((`t4`.`id` = `t1`.`id_marken_type`))) 
+    where t1.ind_activo <> 3
+    group by 1,11";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
+
+function query_getMarkenReporteGeneral2()
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT date(t1.Recoleccion) as Recoleccion, 
+    sum(t1.Lima_Amb * t2.precio) as Lima_Amb, sum(t1.Lima_Bio1*t3.precio) as Lima_Bio1, sum(t1.Lima_Bio2*t4.precio) as Lima_Bio2, sum(t1.Lima_Bio3*t5.precio) as Lima_Bio3,
+    sum(t1.Prov_Amb * t6.precio) as Prov_Amb, sum(t1.Prov_Bio1*t7.precio) as Prov_Bio1, sum(t1.Prov_Bio2*t8.precio) as Prov_Bio2, sum(t1.Prov_Bio3*t9.precio) as Prov_Bio3,
+    100 * year(t1.recoleccion) + month(t1.recoleccion) AS Periodo
+    from ${prefix}marken_export_reporte_general1 t1
+    inner join ${prefix}marken_export_tarifa_pickup t2 on t2.id = 3
+    inner join ${prefix}marken_export_tarifa_pickup t3 on t3.id = 4
+    inner join ${prefix}marken_export_tarifa_pickup t4 on t4.id = 5
+    inner join ${prefix}marken_export_tarifa_pickup t5 on t5.id = 6
+    inner join ${prefix}marken_export_tarifa_pickup t6 on t6.id = 8
+    inner join ${prefix}marken_export_tarifa_pickup t7 on t7.id = 9
+    inner join ${prefix}marken_export_tarifa_pickup t8 on t8.id = 10
+    inner join ${prefix}marken_export_tarifa_pickup t9 on t9.id = 11
+    group by 1,10";
+
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
