@@ -491,3 +491,22 @@ function query_getMarkenReporteGeneral2()
     $wpdb->flush();
     return $result;
 }
+function query_getMarkenExportReporte($periodo)
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT
+    t1.Recoleccion as Fecha, t1.Lima_Amb, t1.Lima_Bio1, t1.Lima_Bio2, t1.Lima_Bio3,
+    t1.Prov_Amb, t1.Prov_Bio1, t1.Prov_Bio2, t1.Prov_Bio3, t1.`Total Guías`,
+    t2.Lima_Amb, t2.Lima_Bio1, t2.Lima_Bio2, t2.Lima_Bio3,
+    t2.Prov_Amb, t2.Prov_Bio1, t2.Prov_Bio2, t2.Prov_Bio3,
+    t2.Lima_Amb+ t2.Lima_Bio1+ t2.Lima_Bio2+t2.Lima_Bio3+
+    t2.Prov_Amb+t2.Prov_Bio1+ t2.Prov_Bio2+t2.Prov_Bio3 as `Total Pickup dolares`
+    from ${prefix}marken_export_reporte_general1 as t1
+    inner join ${prefix}marken_export_reporte_general2 as t2 on t1.Recoleccion = t2.Recoleccion
+    where t1.periodo = $periodo";
+
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return $result;
+}
