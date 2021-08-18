@@ -47,6 +47,34 @@
         color: #121212;
     }
 </style>
+
+<div class="row my-2">
+    <?= do_shortcode("[woocs_show_current_currency currency='USD' ] ") ?>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="tipoCambio">Tipo de Cambio:</label>
+            <input type="text" class="form-control" placeholder="" disabled>
+        </div>
+        <form action="" method="get">
+            <div class="form-group">
+                <label for="tcCustom">Ingresar Tipo de Cambio personalizado:</label>
+                <input type="number" name="tcCustom" id="tcCustom" class="form-control" step="0.01" min="0.00">
+            </div>
+            <button type="submit" class="btn btn-success w-100 my-2" style="background-color: #98ddca; color: white; border-radius: 5px;"><i class="fas fa-sync-alt mx-1 fa-spin"></i>Actualizar el reporte</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="row justify-content-end my-2 ">
+    <form action="" method="get" class="p-2">
+        <input type="hidden" name="">
+        <input type="hidden" name="">
+        <button type="submit" class="btn btn-success" style="background-color: #98ddca; color: white; border-radius: 5px;"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</button>
+    </form>
+</div>
 <div class="row" style="overflow-x: scroll;">
     <!-- 36 -->
     <div class="col-12">
