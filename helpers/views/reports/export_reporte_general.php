@@ -42,7 +42,7 @@
 <div class="row" style="overflow-x: scroll;">
     <!-- 36 -->
     <div class="col-12">
-        <table class="table table-bordered table-striped text-center table-report-aldem">
+        <table class="table text-center table-report-aldem">
             <thead>
                 <tr>
                     <th colspan="36" class="aldem-bg-gray">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
@@ -82,14 +82,18 @@
                     <th colspan="8" class="aldem-bg-gray">GUIAS DE LIMA</th>
                     <th colspan="8" class="aldem-bg-gray">GUIAS DE PROVINCIA</th>
                     <th colspan="8" class="aldem-bg-gray">GUIAS DE LIMA</th>
-                    <th colspan="8" class="aldem-bg-gray">GUIAS DE PROVINCIA</th>
-                    <!-- hay uno  -->
+                    <th colspan="9" class="aldem-bg-gray">GUIAS DE PROVINCIA</th>
                 </tr>
                 <tr>
                     <th colspan="8" class="aldem-bg-gray">FROZEN</th>
                     <th colspan="8" class="aldem-bg-gray">FROZEN</th>
                     <th colspan="8" class="aldem-bg-gray">FROZEN</th>
-                    <th colspan="8" class="aldem-bg-gray">FROZEN</th>
+                    <th colspan="9" class="aldem-bg-gray">FROZEN</th>
+                    <th colspan="3" class="aldem-bg-gray-white">LIMA</th>
+                    <th colspan="3" class="aldem-bg-black-white">Provincia</th>
+                    <th colspan="2" class="" rowspan="2">LIMA</th>
+                    <th rowspan="2" class="aldem-bg-yellow">TARIFA DOLARES</th>
+                    <th rowspan="2" class="aldem-bg-black-white">GASTO DOLARES</th>
 
                 </tr>
                 <tr>
@@ -111,13 +115,23 @@
                     <th colspan="2" class="aldem-bg-gray">Ambiente</th>
                     <th colspan="2" class="aldem-bg-gray">BIO I</th>
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
-                    <th colspan="2" class="aldem-bg-gray">BIO II</th>
+                    <th colspan="3" class="aldem-bg-gray">BIO II</th>
 
-
+                    <!-- 6 espacios para LIMA - PROVINCIA -->
+                    <th class="aldem-bg-gray">BIO I</th>
+                    <th class="aldem-bg-gray">BIO II</th>
+                    <th class="aldem-bg-gray">BIO II</th>
+                    <th class="aldem-bg-black-white">BIO I</th>
+                    <th class="aldem-bg-black-white">BIO II</th>
+                    <th class="aldem-bg-black-white">BIO II</th>
                 </tr>
             </thead>
             <tbody>
-
+                <tr>
+                    <td scope="row"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </div>
