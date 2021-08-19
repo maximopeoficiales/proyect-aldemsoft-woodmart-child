@@ -347,7 +347,7 @@ function query_getMarkenTransporte($id = null)
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT id AS id_anio, descripcion as description FROM ${prefix}marken_transporte";
+    $sql = "SELECT id , descripcion FROM ${prefix}marken_transporte";
     $sql .= $id != null ? " WHERE id= $id" : "";
     $result = $wpdb->get_results($sql);
     $wpdb->flush();
