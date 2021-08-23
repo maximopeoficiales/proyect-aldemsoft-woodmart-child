@@ -1,4 +1,13 @@
 <?php
+// como cumple con el formato standar puedo usar esta tecnica de exportacion a excel
+// wp_enqueue_script("DT_BUTTONS", "https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js", '', '1.0.0');
+// wp_enqueue_script("DT_JSZIP", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js", '', '1.0.0');
+// wp_enqueue_script("DT_PDFMAKE", "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js", '', '1.0.0');
+// wp_enqueue_script("DT_VFSFONTS", "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js", '', '1.0.0');
+// wp_enqueue_script("DT_BUTTON_HTML5", "https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js", '', '1.0.0');
+// wp_enqueue_script("DT_PRINT", "https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js", '', '1.0.0');
+
+
 $fecha = $_GET["fecha"];
 if (empty($fecha)) return;
 try {
@@ -10,18 +19,45 @@ try {
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();
     $costoHandlingMaster = query_getCostoHandlingPorMaster();
-
+    $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral($periodo);
 } catch (\Throwable $th) {
     echo $th;
 }
+aldem_cargarStyles();
 ?>
+
 <style>
+    .aldem-table th {
+        text-align: center;
+        font-size: .8rem;
+    }
+
     .aldem-border-black {
         border-color: black !important;
     }
 
     .aldem-border-none {
         border: none !important;
+    }
+
+    .aldem-bg-yellow {
+        background-color: #D8D8D8;
+        color: #002060;
+    }
+
+    .aldem-bg-gray {
+        background-color: #D8D8D8;
+        color: #002060;
+    }
+
+    .aldem-bg-skyblue {
+        background-color: #8DB3E2;
+        color: #fff;
+    }
+
+    .aldem-bg-black {
+        background-color: black;
+        color: #fff;
     }
 
     .aldem-bg-blue {
@@ -122,134 +158,81 @@ try {
 
 
 
-<div class="row" style="overflow-x: scroll;">
+<div class="row my-4" style="overflow-x: scroll;">
     <!-- 36 -->
     <div class="col-12">
-        <table class="table text-center table-report-aldem">
+
+        <table class="table   aldem-table " id="table_courier_reporte_general">
             <thead>
                 <tr>
-                    <th colspan="36" class="aldem-bg-gray aldem-text-white">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
-                    <th colspan="39" class="aldem-bg-gray aldem-text-white">TARIFA HIELO SECO</th>
-                </tr>
-                <tr>
-                    <th colspan="17" class="aldem-bg-blue">CANTIDAD DE PICK UP (RECOJOS)
-                    </th>
-                    <th rowspan="4" colspan="1" class="aldem-bg-yellow">TOTAL GUIAS MARKEN</th>
-                    <th colspan="17" class="aldem-bg-blue">COBRO A MARKEN PICK UP DOLARES USD</th>
-                    <th rowspan="4" colspan="1" class="aldem-bg-yellow">TOTAL PICK UP DOLARES USD</th>
-
-                    <!-- 36 -->
-                    <th rowspan="4" colspan="3" class="aldem-bg-black-white">CANTIDAD DE HIELO SECO KG PARA MUESTRAS EXPORTACION X MAWB</th>
-                    <!-- 33 -->
-                    <th rowspan="4" colspan="10" class="aldem-bg-black-white">Observaciones</th>
-                    <!-- 23 -->
-                    <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO SECO EN LIMA SOLES(SIN IGV)</th>
-                    <!-- 20 -->
-                    <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO EN LIMA DOLARES TIPO DE CAMBIO: @TC</th>
-                    <!-- 17 -->
-                    <th rowspan="2" colspan="6" class="aldem-bg-gray">TARIFA DE HIELO SECO DOLARES</th>
-                    <!-- 11 -->
-                    <th rowspan="2" colspan="2" class="aldem-bg-gray-white">UTILIDAD HIELO SECO DOLARES</th>
-                    <!-- 9 -->
-                    <th rowspan="2" colspan="2" class="aldem-bg-gray-white">HANDLING</th>
-                    <!-- 7 -->
-                    <th rowspan="4" colspan="1" class="aldem-bg-gray-white">UTILIDAD HANDLING DOLARES</th>
-                    <!-- 6 -->
-                    <th rowspan="4" colspan="2" class="aldem-bg-blue">TARIFA DE TRAMITE OPERATIVO DOLARES</th>
-                    <th rowspan="4" colspan="2" class="aldem-bg-blue">TARIFA DE CAJA DE EMBALAJE MUESTRAS DE AMBIENTE DOLARES</th>
-                    <th rowspan="4" colspan="5" class="aldem-bg-gray-white">COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas) DOLARES</th>
-                </tr>
-
-                <tr>
-                    <th colspan="1" rowspan="3" class="aldem-bg-gray">Fecha</th>
-                    <th colspan="8" class="aldem-bg-gray">GUIAS DE LIMA</th>
-                    <th colspan="8" class="aldem-bg-black-white">GUIAS DE PROVINCIA</th>
-                    <th colspan="8" class="aldem-bg-gray">GUIAS DE LIMA</th>
-                    <th colspan="9" class="aldem-bg-black-white">GUIAS DE PROVINCIA</th>
-                </tr>
-                <tr>
-                    <th colspan="8" class="aldem-bg-gray">FROZEN</th>
-                    <th colspan="8" class="aldem-bg-black-white">FROZEN</th>
-                    <th colspan="8" class="aldem-bg-gray">FROZEN</th>
-                    <th colspan="9" class="aldem-bg-black-white">FROZEN</th>
-                    <th colspan="3" class="aldem-bg-gray-white">LIMA</th>
-                    <th colspan="3" class="aldem-bg-black-white">Provincia</th>
-                    <th colspan="2" class="aldem-text-black" rowspan="2">LIMA</th>
-                    <th rowspan="2" class="aldem-bg-yellow">TARIFA DOLARES</th>
-                    <th rowspan="2" class="aldem-bg-black-white">GASTO DOLARES</th>
-
-                </tr>
-                <tr>
-                    <th colspan="2" class="aldem-bg-gray">Ambiente</th>
-                    <th colspan="2" class="aldem-bg-gray">BIO I</th>
-                    <th colspan="2" class="aldem-bg-gray">BIO II</th>
-                    <th colspan="2" class="aldem-bg-gray">BIO II</th>
-
-                    <th colspan="2" class="aldem-bg-black-white">Ambiente</th>
-                    <th colspan="2" class="aldem-bg-black-white">BIO I</th>
-                    <th colspan="2" class="aldem-bg-black-white">BIO II</th>
-                    <th colspan="2" class="aldem-bg-black-white">BIO II</th>
-
-                    <th colspan="2" class="aldem-bg-gray">Ambiente</th>
-                    <th colspan="2" class="aldem-bg-gray">BIO I</th>
-                    <th colspan="2" class="aldem-bg-gray">BIO II</th>
-                    <th colspan="2" class="aldem-bg-gray">BIO II</th>
-
-                    <th colspan="2" class="aldem-bg-black-white">Ambiente</th>
-                    <th colspan="2" class="aldem-bg-black-white">BIO I</th>
-                    <th colspan="2" class="aldem-bg-black-white">BIO II</th>
-                    <th colspan="3" class="aldem-bg-black-white">BIO II</th>
-
-                    <!-- 6 espacios para LIMA - PROVINCIA -->
-                    <th class="aldem-bg-gray">BIO I</th>
-                    <th class="aldem-bg-gray">BIO II</th>
-                    <th class="aldem-bg-gray">BIO II</th>
-                    <th class="aldem-bg-black-white">BIO I</th>
-                    <th class="aldem-bg-black-white">BIO II</th>
-                    <th class="aldem-bg-black-white">BIO II</th>
+                    <th class="aldem-bg-blue">MANIFIESTO EER</th>
+                    <th class="aldem-bg-blue">DUA</th>
+                    <th class="aldem-bg-blue">GUIA HIJA</th>
+                    <th class="aldem-bg-blue">FECHA DE ENTREGA</th>
+                    <th class="aldem-bg-blue">GUIA MASTER</th>
+                    <th class="aldem-bg-blue">PROTOCOLO</th>
+                    <th class="aldem-bg-blue">EXPORTADOR (MIAMI)</th>
+                    <th class="aldem-bg-blue">IMPORTADOR (LIMA)</th>
+                    <th class="aldem-bg-blue">CANTIDAD DE BULTOS</th>
+                    <th class="aldem-bg-blue">PESO</th>
+                    <th class="aldem-bg-skyblue">DELIVERY (ENTREGA LOCAL) X GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-gray">COSTO SERVICIO TRANSPORTE POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-skyblue">TARIFA SERVICIO ADUANA POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-gray">COSTO SERV. ADUANA POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-blue">TARIFA HANDLING POR GUIA HIJA - USD</th>
+                    <th class="aldem-bg-gray">COSTO HANDLING POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-blue">TARIFA ALMACENAJE POR GUIA HIJA - USD</th>
+                    <th class="aldem-bg-gray">COSTO ALMACENAJE POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-blue">IMPUESTOS POR GUIA HIJA - USD</th>
+                    <th class="aldem-bg-blue">TARIFA TRAMITE OPEATIVO / GUIA HIJA - USD</th>
+                    <th class="aldem-bg-yellow">COBRO A MARKEN POR GUIA HIJA</th>
+                    <th class="aldem-bg-blue">COSTO VARIABLE</th>
+                    <th class="aldem-bg-black">TOTAL INGRESOS DOLARES</th>
+                    <th class="aldem-bg-gray">TOTAL GASTOS DOLARES</th>
+                    <th class="aldem-bg-yellow">TOTAL UTILIDAD DOLARES</th>
                 </tr>
             </thead>
-            <tbody style="color:black; text-align: center;">
-                <tr>
-                    <td>dato 1</td>
-                    <td colspan="2">dato 2</td>
-                    <td colspan="2">dato 4</td>
-                    <td colspan="2">dato 6</td>
-                    <td colspan="2">dato 8</td>
-                    <td colspan="2">dato 10</td>
-                    <td colspan="2">dato 12</td>
-                    <td colspan="2">dato 15</td>
-                    <td colspan="2">dato 16</td>
-                    <td class="aldem-bg-blue-white">dato 17</td>
-                    <td colspan="2">dato 18</td>
-                    <td colspan="2">dato 20</td>
-                    <td colspan="2">dato 22</td>
-                    <td colspan="2">dato 24</td>
-                    <td colspan="2">dato 26</td>
-                    <td colspan="2">dato 28</td>
-                    <td colspan="2">dato 30</td>
-                    <td colspan="3">dato 31</td>
-                    <td>dato 34</td>
-                    <td colspan="3">dato 35</td>
-                    <td colspan="10">dato 38</td>
-                    <td colspan="3">dato 48</td>
-                    <td colspan="3">dato 51</td>
-                    <td>dato 54</td>
-                    <td>dato 55</td>
-                    <td>dato 56</td>
-                    <td>dato 57</td>
-                    <td>dato 58</td>
-                    <td>dato 59</td>
-                    <td colspan="2">dato 60</td>
-                    <td>dato 62</td>
-                    <td>dato 63</td>
-                    <td>dato 64</td>
-                    <td colspan="2">dato 65</td>
-                    <td colspan="2">dato 67</td>
-                    <td colspan="5">dato 69jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</td>
-                </tr>
+            <tbody>
+                <?php foreach ($markenCourierReporteGeneral as $marken) { ?>
+                    <tr>
+                        <td><?= $marken->manifiesto ?></td>
+                        <td><?= $marken->dua ?></td>
+                        <td><?= $marken->guia ?></td>
+                        <td><?= $marken->fecha_entrega ?></td>
+                        <td><?= $marken->guia_master ?></td>
+                        <td><?= $marken->protocolo ?></td>
+                        <td><?= $marken->exportador ?></td>
+                        <td><?= $marken->importador ?></td>
+                        <td><?= $marken->cantidad ?></td>
+                        <td><?= $marken->peso ?></td>
+                        <td><?= $marken->periodo ?></td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                    </tr>
+                <?php } ?>
 
             </tbody>
         </table>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        <?php aldem_datatables_in_spanish(); ?>
+        $('#table_courier_reporte_general').DataTable();
+
+    });
+</script>

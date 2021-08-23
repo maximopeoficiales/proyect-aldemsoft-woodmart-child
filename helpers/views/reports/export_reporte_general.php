@@ -78,7 +78,7 @@
 <div class="row" style="overflow-x: scroll;">
     <!-- 36 -->
     <div class="col-12">
-        <table class="table text-center table-report-aldem">
+        <table class="table text-center table-report-aldem" id="table_export_reporte_general">
             <thead>
                 <tr>
                     <th colspan="36" class="aldem-bg-gray aldem-text-white">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
@@ -206,3 +206,11 @@
         </table>
     </div>
 </div>
+
+<!-- <script>
+    $(document).ready(function() {
+        <?php aldem_datatables_in_spanish(); ?>
+        $('#table_export_reporte_general').DataTable();
+
+    });
+</script> -->
