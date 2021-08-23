@@ -32,6 +32,7 @@ function aldem_getShorcodesViewList(): array
         ["name" => "costos_admin", "view" => "costos_admin"],
         // reportes
         ["name" => "marken_export_reporte_general", "view" => "reports/export_reporte_general"],
+        ["name" => "marken_courier_reporte_general", "view" => "reports/courier_reporte_general"],
     ];
 }
 
