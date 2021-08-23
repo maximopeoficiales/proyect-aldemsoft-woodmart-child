@@ -28,6 +28,17 @@ function adldem_UtilityValidator($data, $validations)
         return ["validate" => true];
     }
 }
+function query_getAldemPrefix()
+{
+    global $wpdb;
+    $table_prefix = $wpdb->prefix . "aldem_";
+    return $table_prefix;
+}
+function query_getWPDB(): wpdb
+{
+    global $wpdb;
+    return $wpdb;
+}
 
 function aldem_cargarStyles(): void
 {

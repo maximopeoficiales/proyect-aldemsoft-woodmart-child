@@ -1,6 +1,19 @@
 <?php
 $fecha = $_GET["fecha"];
+if (empty($fecha)) return;
+try {
 
+    $totalCostoMarken = query_getCostoMarken($fecha)->total_costo_marken;
+    $totalGuias = query_getTotalGuias($fecha)->total_guias;
+    $totalGuiasCourier = query_getTotalGuiasExport($fecha)->total_guias_courier;
+
+    $transporteGuiaHija = query_servicioTransportePorGuiaHija();
+    $courierReportC = query_courierReportQueryC();
+    $costoHandlingMaster = query_getCostoHandlingPorMaster();
+
+} catch (\Throwable $th) {
+    echo $th;
+}
 ?>
 <style>
     .aldem-border-black {
@@ -27,15 +40,15 @@ $fecha = $_GET["fecha"];
             <tbody>
                 <tr>
                     <td class="aldem-bg-blue font-weight-bold aldem-border-black">Total costo marken</td>
-                    <td class=" text-center">asdf</td>
+                    <td class=" text-center"><?= $totalCostoMarken ?></td>
                 </tr>
                 <tr>
                     <td class="aldem-bg-blue font-weight-bold aldem-border-black">Total guias marken</td>
-                    <td class="text-center">asdf</td>
+                    <td class="text-center"><?= $totalGuias ?></td>
                 </tr>
                 <tr>
                     <td class="aldem-bg-blue font-weight-bold aldem-border-black">Total Guías Marken Courier</td>
-                    <td class=" text-center">asdf</td>
+                    <td class=" text-center"><?= $totalGuiasCourier ?></td>
                 </tr>
             </tbody>
         </table>
@@ -54,16 +67,15 @@ $fecha = $_GET["fecha"];
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="aldem-bg-blue aldem-border-black">LIMA</td>
-                    <td class="text-center">hasta 60 kg</td>
-                    <td class="text-center">21.38</td>
-                </tr>
-                <tr>
-                    <td class="aldem-bg-blue aldem-border-black">PROVINCIA</td>
-                    <td class="text-center">hasta 30 kg</td>
-                    <td class="text-center">95.00</td>
-                </tr>
+                <?php foreach ($transporteGuiaHija as $guia) {
+                ?>
+                    <tr>
+                        <td class="aldem-bg-blue aldem-border-black text-uppercase"><?= $guia->site  ?></td>
+                        <td class="text-center"><?= $guia->peso ?></td>
+                        <td class="text-center"><?= $guia->tarifa ?></td>
+                    </tr>
+                <?php } ?>
+
             </tbody>
         </table>
     </div>
@@ -81,9 +93,10 @@ $fecha = $_GET["fecha"];
             </thead>
             <tbody>
                 <tr>
-                    <td class="text-center">10.00</td>
-                    <td class="text-center">21.38</td>
-                    <td class="text-center">18.00</td>
+                    <?php foreach ($courierReportC as $tarifa) {
+                    ?>
+                        <td class="text-center"><?= $tarifa->tarifa ?></td>
+                    <?php } ?>
                 </tr>
             </tbody>
         </table>
@@ -96,15 +109,11 @@ $fecha = $_GET["fecha"];
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center">AA: $116.96</td>
-                </tr>
-                <tr>
-                    <td class="text-center">LAN: $111.40</td>
-                </tr>
-                <tr>
-                    <td class="text-center">TAMPA: $111.40</td>
-                </tr>
+                <?php foreach ($costoHandlingMaster as $tarifa) { ?>
+                    <tr>
+                        <td class="text-center"><?= $tarifa->tarifa ?></td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>
