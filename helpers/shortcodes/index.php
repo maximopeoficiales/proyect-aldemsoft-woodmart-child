@@ -112,16 +112,16 @@ function aldem_init_shorcode_getParam()
         
         ";
     });
-    add_shortcode(aldem_shortcode_prefix() . "trycacth", function ($atts) {
-        try {
-            $shortcode = $atts["shortcode"];
-            if (!empty($shortcode)) {
-                echo do_shortcode($shortcode);
-            }
-        } catch (\Throwable $th) {
-            echo $th;
-        }
-    });
+    // add_shortcode(aldem_shortcode_prefix() . "trycacth", function ($atts) {
+    //     try {
+    //         $shortcode = $atts["shortcode"];
+    //         if (!empty($shortcode)) {
+    //             echo do_shortcode($shortcode);
+    //         }
+    //     } catch (\Throwable $th) {
+    //         echo $th;
+    //     }
+    // });
 }
 
 /**
