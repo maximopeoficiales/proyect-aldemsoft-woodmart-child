@@ -775,7 +775,11 @@ function aldem_post_new_pickup()
 
 function aldem_export_excel()
 {
-
+    if ($_GET["type_report"] == "courier") {
+        // creacion de excel para  courier
+        echo "gola";
+        return;
+    }
     try {
         $fileName = "hello.xlsx";
         $spreadsheet = aldem_getSpreadsheet1();

@@ -19,7 +19,7 @@ try {
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();
     $costoHandlingMaster = query_getCostoHandlingPorMaster();
-    $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral($periodo);
+    $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral($fecha);
 } catch (\Throwable $th) {
     echo $th;
 }
@@ -41,7 +41,7 @@ aldem_cargarStyles();
     }
 
     .aldem-bg-yellow {
-        background-color: #D8D8D8;
+        background-color: #FFFF00;
         color: #002060;
     }
 
@@ -154,8 +154,6 @@ aldem_cargarStyles();
         </table>
     </div>
 </div>
-
-
 
 
 <div class="row my-4" style="overflow-x: scroll;">
