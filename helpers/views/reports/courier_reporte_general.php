@@ -26,50 +26,6 @@ try {
 aldem_cargarStyles();
 ?>
 
-<style>
-    .aldem-table th {
-        text-align: center;
-        font-size: .8rem;
-    }
-
-    .aldem-border-black {
-        border-color: black !important;
-    }
-
-    .aldem-border-none {
-        border: none !important;
-    }
-
-    .aldem-bg-yellow {
-        background-color: #FFFF00;
-        color: #002060;
-    }
-
-    .aldem-bg-gray {
-        background-color: #D8D8D8;
-        color: #002060;
-    }
-
-    .aldem-bg-skyblue {
-        background-color: #8DB3E2;
-        color: #fff;
-    }
-
-    .aldem-bg-black {
-        background-color: black;
-        color: #fff;
-    }
-
-    .aldem-bg-blue {
-        background-color: #002060;
-        color: #fff;
-    }
-
-    .aldem-bg-green {
-        background-color: #76923C;
-        color: #fff;
-    }
-</style>
 <div class="row my-2 align-items-center">
     <div class="col-md-6 my-2">
         <table class="table table-bordered">

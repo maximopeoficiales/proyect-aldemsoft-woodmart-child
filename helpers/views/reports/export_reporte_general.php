@@ -98,7 +98,7 @@ aldem_cargarStyles();
 <div class="row" style="overflow-x: scroll;">
     <!-- 36 -->
     <div class="col-12">
-        <table class="table text-center table-report-aldem" id="table_export_reporte_general">
+        <table class="table text-center aldem-table " id="table_export_reporte_general">
             <thead>
                 <tr>
                     <th colspan="36" class="aldem-bg-gray aldem-text-white">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
