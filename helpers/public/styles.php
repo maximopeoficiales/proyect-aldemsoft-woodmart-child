@@ -178,6 +178,18 @@
         border-radius: 5px;
     }
 
+    .btn-aldem-warning {
+        background-color: #FFC107;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-aldem-danger {
+        background-color: #E54C52;
+        color: white;
+        border-radius: 5px;
+    }
+
     .bg-aldem-secondary {
         background-color: #02475e;
         color: white;

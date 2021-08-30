@@ -1,3 +1,18 @@
+<?php
+$fechaReporte = $_GET["fechareporte"];
+if (empty($fechaReporte)) return;
+$currencyWoo = aldem_get_currency("PEN");
+$moneda = null;
+if (empty($_GET["tcCustom"])) {
+    $moneda = $currencyWoo;
+}
+if (doubleval($_GET["tcCustom"]) > 0) {
+    $moneda =  $_GET["tcCustom"];
+}
+
+aldem_cargarStyles();
+?>
+
 <style>
     .table-report-aldem {
         color: #fff;
@@ -48,21 +63,26 @@
     }
 </style>
 
-<div class="row my-2">
-    <?= do_shortcode("[woocs_show_current_currency currency='USD' ] ") ?>
-</div>
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="form-group">
             <label for="tipoCambio">Tipo de Cambio:</label>
-            <input type="text" class="form-control" placeholder="" disabled>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="" disabled value="<?= number_format($moneda, 2) ?>">
+                <div class="input-group-append">
+                    <button class="btn btn-aldem-danger" type="button" id="btnResetCurrency">Reset</button>
+                </div>
+            </div>
         </div>
+
+
         <form action="" method="get">
+            <input type="hidden" name="fechareporte" value="<?= $fechaReporte ?>">
             <div class="form-group">
                 <label for="tcCustom">Ingresar Tipo de Cambio personalizado:</label>
-                <input type="number" name="tcCustom" id="tcCustom" class="form-control" step="0.01" min="0.00">
+                <input type="number" name="tcCustom" id="tcCustom" class="form-control" step="0.01" min="0.01">
             </div>
-            <button type="submit" class="btn btn-success w-100 my-2" style="background-color: #98ddca; color: white; border-radius: 5px;"><i class="fas fa-sync-alt mx-1 fa-spin"></i>Actualizar el reporte</button>
+            <button type="submit" class="btn btn-success w-100 my-2 btn-aldem-verde"><i class="fas fa-sync-alt mx-1 fa-spin"></i>Actualizar el reporte</button>
         </form>
     </div>
 </div>
@@ -72,7 +92,7 @@
     <form action="" method="get" class="p-2">
         <input type="hidden" name="">
         <input type="hidden" name="">
-        <button type="submit" class="btn btn-success" style="background-color: #98ddca; color: white; border-radius: 5px;"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</button>
+        <button type="submit" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</button>
     </form>
 </div>
 <div class="row" style="overflow-x: scroll;">
@@ -214,3 +234,11 @@
 
     });
 </script> -->
+
+<script>
+    document.querySelector("#btnResetCurrency").addEventListener("click", () => {
+        const fechareporte = '<?= $fechaReporte ?>';
+        const url = `${location.origin}${location.pathname}?fechareporte=${fechareporte}`;
+        location.href = url;
+    })
+</script>

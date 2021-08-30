@@ -61,6 +61,11 @@ function aldem_getRoleCodes()
     ];
 }
 
+function aldem_get_currency(string $currency)
+{
+    global $WOOCS;
+    return $WOOCS->get_currencies()[$currency]['rate'];
+}
 
 function aldem_selectRoleCodes($nameInput = "roleCode", $rolCodeDefault = 31)
 {
