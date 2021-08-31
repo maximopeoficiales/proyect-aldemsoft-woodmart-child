@@ -4,6 +4,8 @@ $totalGuias = query_getTotalGuias($fecha)->total_guias;
 $totalGuiasCourier = query_getTotalGuiasExport($fecha)->total_guias_courier;
 
 $transporteGuiaHija = query_servicioTransportePorGuiaHija();
+
+$markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral($fecha);
 aldem_cargarStyles();
 ?>
 
@@ -70,6 +72,75 @@ aldem_cargarStyles();
     </div>
 </div>
 
+<div class="row my-4" style="overflow-x: scroll;">
+    <!-- 36 -->
+    <div class="col-12">
+
+        <table class="table   aldem-table " id="table_courier_reporte_general">
+            <thead>
+                <tr>
+                    <th class="aldem-bg-blue">DUA</th>
+                    <th class="aldem-bg-blue">GUIA</th>
+                    <th class="aldem-bg-blue">FECHA</th>
+                    <th class="aldem-bg-blue">GUIA MASTER</th>
+                    <th class="aldem-bg-blue">REFERENCIA</th>
+                    <th class="aldem-bg-blue">EXPORTADOR (MIAMI)</th>
+                    <th class="aldem-bg-blue">IMPORTADOR (LIMA)</th>
+                    <th class="aldem-bg-blue">CANTIDAD</th>
+                    <th class="aldem-bg-blue">PESO</th>
+                    <th class="aldem-bg-skyblue">OBSERVACION</th>
+                    <th class="aldem-bg-blue">TARIFA DELIVERY (ENTREGA AL IMPORTADOR) POR GUIA HIJA DOLARES</th>
+                    <th class="aldem-bg-gray">COSTO DELIVERY (ENTREGA AL IMPORTADOR) POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-blue">TARIFA SERVICIO ADUANA POR GUIA HIJA DOLARES</th>
+                    <th class="aldem-bg-gray">COSTO SERV. ADUANA DOLARES</th>
+                    <th class="aldem-bg-blue">HANDLING POR GUIA HIJA DOLARES</th>
+                    <th class="aldem-bg-gray">COSTO ALMACENAJE POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-blue">TARIFA ALMACENAJE POR GUIA HIJA DOLARES</th>
+                    <th class="aldem-bg-gray">COSTO ALMACENAJE POR GUIA HIJA - DOLARES</th>
+                    <th class="aldem-bg-blue">IMPUESTOS POR GUIA HIJA DOLARES</th>
+                    <th class="aldem-bg-blue">TARIFA TRAMITE OPERATIVO POR GUIA HIJA DOLARES</th>
+                    <th class="aldem-bg-yellow">COBRO MARKEN DOLARES</th>
+                    <th class="aldem-bg-blue">COSTO VARIABLE</th>
+                    <th class="aldem-bg-black">TOTAL INGRESOS DOLARES</th>
+                    <th class="aldem-bg-gray">TOTAL GASTOS DOLARES</th>
+                    <th class="aldem-bg-yellow">TOTAL UTILIDAD DOLARES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($markenCourierReporteGeneral as $marken) { ?>
+                    <tr>
+                        <td><?= $marken->manifiesto ?></td>
+                        <td><?= $marken->dua ?></td>
+                        <td><?= $marken->guia ?></td>
+                        <td><?= $marken->fecha_entrega ?></td>
+                        <td><?= $marken->guia_master ?></td>
+                        <td><?= $marken->protocolo ?></td>
+                        <td><?= $marken->exportador ?></td>
+                        <td><?= $marken->importador ?></td>
+                        <td><?= $marken->cantidad ?></td>
+                        <td><?= $marken->peso ?></td>
+                        <td><?= $marken->periodo ?></td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                    </tr>
+                <?php } ?>
+
+            </tbody>
+        </table>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         <?php aldem_datatables_in_spanish(); ?>
