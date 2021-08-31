@@ -208,6 +208,12 @@
         cursor: pointer;
     }
 
+    .aldem-selectionable-datatable .toggle-vis {
+        color: #002060 !important;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
     /* para la tablas */
     .aldem-table th {
         text-align: center;
