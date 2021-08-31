@@ -34,11 +34,12 @@ aldem_cargarStyles();
                         <td class="text-center"><?= $guia->tarifa ?></td>
                         <td class="text-center"><?= $guia->tarifa ?></td>
                         <td class="text-center"><?= $guia->tarifa ?></td>
+                        <td class="text-center" colspan="3">asdf</td>
                         <td class="text-center"><?= $guia->tarifa ?></td>
                         <td class="text-center"><?= $guia->tarifa ?></td>
-                        <td class="text-center"><?= $guia->tarifa ?></td>
-                        <td class="text-center"><?= $guia->tarifa ?></td>
-                        <td class="text-center"><?= $guia->tarifa ?></td>
+                        <!--  -->
+                        <td class="text-center d-none"></td>
+                        <td class="text-center d-none"></td>
                     </tr>
                 <?php } ?>
 
@@ -50,7 +51,8 @@ aldem_cargarStyles();
 <script>
     $(document).ready(function() {
         <?php aldem_datatables_in_spanish(); ?>
-        let table = $('#table1TICarga').DataTable();
+        let table = $('#table1TICarga').DataTable({
+        });
         $('a.toggle-vis').on('click', function(e) {
             e.preventDefault();
 
