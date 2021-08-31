@@ -1,9 +1,31 @@
 <?php
+$totalCostoMarken = query_getCostoMarken($fecha)->total_costo_marken;
+$totalGuias = query_getTotalGuias($fecha)->total_guias;
+$totalGuiasCourier = query_getTotalGuiasExport($fecha)->total_guias_courier;
+
 $transporteGuiaHija = query_servicioTransportePorGuiaHija();
 aldem_cargarStyles();
 ?>
 
-<div class="row">
+<div class="row justify-content-center">
+    <div class="col-md-6 my-4">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td class="aldem-bg-blue font-weight-bold aldem-border-black">Total costo marken</td>
+                    <td class=" text-center"><?= $totalCostoMarken ?></td>
+                </tr>
+                <tr>
+                    <td class="aldem-bg-blue font-weight-bold aldem-border-black">Total guias marken</td>
+                    <td class="text-center"><?= $totalGuias ?></td>
+                </tr>
+                <tr>
+                    <td class="aldem-bg-blue font-weight-bold aldem-border-black">Total Guías Marken Courier</td>
+                    <td class=" text-center"><?= $totalGuiasCourier ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="col-md-12 my-2">
         <div class="aldem-selectionable-datatable">
             Ocultar Columna: <a class="toggle-vis" data-column="0">Nombre</a> - <a class="toggle-vis" data-column="1">SERV. TRANSPORTE POR GUIA HIJA</a> - <a class="toggle-vis" data-column="2">TARIFA ALMACENAJE POR GUIA HIJA (USD)</a> - <a class="toggle-vis" data-column="3">COSTO HANDLING POR MASTER (USD)</a> - <a class="toggle-vis" data-column="4">TRAMITE OPERATIVO...</a> - <a class="toggle-vis" data-column="5">TARIFA SERVICIO ADUANA POR GUIA HIJA (USD)</a> - <a class="toggle-vis" data-column="6">HIELO SECO POR GUIA HIJA/KG</a>
@@ -51,8 +73,7 @@ aldem_cargarStyles();
 <script>
     $(document).ready(function() {
         <?php aldem_datatables_in_spanish(); ?>
-        let table = $('#table1TICarga').DataTable({
-        });
+        let table = $('#table1TICarga').DataTable({});
         $('a.toggle-vis').on('click', function(e) {
             e.preventDefault();
 
