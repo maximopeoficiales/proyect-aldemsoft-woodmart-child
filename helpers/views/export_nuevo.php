@@ -221,6 +221,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                         aldem_set_action_name("new-job");
                     } ?>
                     <button type="submit" class="btn  w-100 btn-aldem-verde" id="btnSubmit"> <i class="fa fa-save mr-1"></i>Guardar</button>
+                    <?= do_shortcode("[aldem_btn_eliminar_job param='editjob']") ?>
                 </form>
             </div>
         </div>

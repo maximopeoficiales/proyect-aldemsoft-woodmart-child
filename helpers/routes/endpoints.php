@@ -578,3 +578,34 @@ function post_aldem_costos_create(WP_REST_Request $request)
         return  aldem_rest_response($th, "Error en servidor", 500);
     }
 }
+
+add_action('rest_api_init', function () {
+    register_rest_route('aldem/v1', '/deleteJob/(?P<username>\w+)/', array(
+        'methods' => 'POST',
+        'permission_callback' => 'aldem_verify_token',
+        'callback' => 'post_aldem_delete_job',
+        'args' => array(),
+    ));
+});
+function post_aldem_delete_job(WP_REST_Request $request)
+{
+    $validations = [
+        'id_job'  =>  'required|numeric',
+    ];
+    try {
+        $responseValidator = adldem_UtilityValidator($request->get_json_params(), $validations);
+        if ($responseValidator["validate"]) {
+            $prefix = query_getAldemPrefix();
+            $wpdb = query_getWPDB();
+            $id_job = intval($request->get_json_params()["id_job"]);
+            $table = "{$prefix}marken_job";
+            $wpdb->delete($table, ["id" => $id_job]);
+            $wpdb->flush();
+            return aldem_rest_response(null);
+        } else {
+            return  aldem_rest_response(aldem_transform_text_p($responseValidator["message"]), "Parametros no Validos", 404);
+        }
+    } catch (\Throwable $th) {
+        return  aldem_rest_response($th, "Error en servidor", 500);
+    }
+}
