@@ -101,14 +101,14 @@ aldem_cargarStyles();
         <table class="table text-center aldem-table " id="table_export_reporte_general">
             <thead>
                 <tr>
-                    <th colspan="36" class="aldem-bg-gray aldem-text-white">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
-                    <th colspan="39" class="aldem-bg-gray aldem-text-white">TARIFA HIELO SECO</th>
+                    <th colspan="39" class="aldem-bg-gray aldem-text-white">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
+                    <th colspan="41" class="aldem-bg-gray aldem-text-white">TARIFA HIELO SECO</th>
                 </tr>
                 <tr>
-                    <th colspan="17" class="aldem-bg-blue">CANTIDAD DE PICK UP (RECOJOS)
+                    <th colspan="20" class="aldem-bg-blue">CANTIDAD DE PICK UP (RECOJOS)
                     </th>
-                    <th rowspan="4" colspan="1" class="aldem-bg-yellow">TOTAL GUIAS MARKEN</th>
-                    <th colspan="17" class="aldem-bg-blue">COBRO A MARKEN PICK UP DOLARES USD</th>
+                    <th rowspan="4" colspan="1" class="aldem-bg-yellow">ESTADO</th>
+                    <th colspan="19" class="aldem-bg-blue">COBRO A MARKEN PICK UP DOLARES USD</th>
                     <th rowspan="4" colspan="1" class="aldem-bg-yellow">TOTAL PICK UP DOLARES USD</th>
 
                     <!-- 36 -->
@@ -135,16 +135,17 @@ aldem_cargarStyles();
 
                 <tr>
                     <th colspan="1" rowspan="3" class="aldem-bg-gray">Fecha</th>
-                    <th colspan="8" class="aldem-bg-gray">GUIAS DE LIMA</th>
-                    <th colspan="8" class="aldem-bg-black-white">GUIAS DE PROVINCIA</th>
-                    <th colspan="8" class="aldem-bg-gray">GUIAS DE LIMA</th>
+                    <th colspan="1" rowspan="3" class="aldem-bg-gray">JOB</th>
+                    <th colspan="9" class="aldem-bg-gray">GUIAS DE LIMA</th>
                     <th colspan="9" class="aldem-bg-black-white">GUIAS DE PROVINCIA</th>
+                    <th colspan="9" class="aldem-bg-gray">GUIAS DE LIMA</th>
+                    <th colspan="10" class="aldem-bg-black-white">GUIAS DE PROVINCIA</th>
                 </tr>
                 <tr>
-                    <th colspan="8" class="aldem-bg-gray">FROZEN</th>
-                    <th colspan="8" class="aldem-bg-black-white">FROZEN</th>
-                    <th colspan="8" class="aldem-bg-gray">FROZEN</th>
+                    <th colspan="9" class="aldem-bg-gray">FROZEN</th>
                     <th colspan="9" class="aldem-bg-black-white">FROZEN</th>
+                    <th colspan="9" class="aldem-bg-gray">FROZEN</th>
+                    <th colspan="10" class="aldem-bg-black-white">FROZEN</th>
                     <th colspan="3" class="aldem-bg-gray-white">LIMA</th>
                     <th colspan="3" class="aldem-bg-black-white">Provincia</th>
                     <th colspan="2" class="aldem-text-black" rowspan="2">LIMA</th>
@@ -157,21 +158,25 @@ aldem_cargarStyles();
                     <th colspan="2" class="aldem-bg-gray">BIO I</th>
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
+                    <th colspan="1" class="aldem-bg-gray">Refrigerado</th>
 
                     <th colspan="2" class="aldem-bg-black-white">Ambiente</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO I</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO II</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO II</th>
+                    <th colspan="1" class="aldem-bg-black-white">Refrigerado</th>
 
                     <th colspan="2" class="aldem-bg-gray">Ambiente</th>
                     <th colspan="2" class="aldem-bg-gray">BIO I</th>
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
+                    <th colspan="1" class="aldem-bg-gray">Refrigerado</th>
 
                     <th colspan="2" class="aldem-bg-black-white">Ambiente</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO I</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO II</th>
                     <th colspan="3" class="aldem-bg-black-white">BIO II</th>
+                    <th colspan="1" class="aldem-bg-black-white">Refrigerado</th>
 
                     <!-- 6 espacios para LIMA - PROVINCIA -->
                     <th class="aldem-bg-gray">BIO I</th>
