@@ -10,6 +10,8 @@ if (doubleval($_GET["tcCustom"]) > 0) {
     $moneda =  $_GET["tcCustom"];
 }
 
+$dataReport = query_getMarkenExportReporteGeneral1(intval($fechaReporte));
+
 aldem_cargarStyles();
 ?>
 
@@ -95,7 +97,7 @@ aldem_cargarStyles();
         <button type="submit" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</button>
     </form>
 </div>
-<div class="row" style="overflow-x: scroll;">
+<div class="row" style="overflow-x: scroll; height: 500px;">
     <!-- 36 -->
     <div class="col-12">
         <table class="table text-center aldem-table " id="table_export_reporte_general">
@@ -191,52 +193,56 @@ aldem_cargarStyles();
                 </tr>
             </thead>
             <tbody style="color:black; text-align: center;">
-                <tr>
-                    <td>dato 1</td>
-                    <td>waybill</td>
-                    <td colspan="2">dato 2</td>
-                    <td colspan="2">dato 4</td>
-                    <td colspan="2">dato 6</td>
-                    <td colspan="2">dato 8</td>
-                    <td colspan="1">refrigerado</td>
-                    <td colspan="2">dato 10</td>
-                    <td colspan="2">dato 12</td>
-                    <td colspan="2">dato 15</td>
-                    <td colspan="2">dato 16</td>
-                    <td colspan="1">refrigerado</td>
-                    <td class="aldem-bg-blue-white">dato 17</td>
-                    <td colspan="2">dato 18</td>
-                    <td colspan="2">dato 20</td>
-                    <td colspan="2">dato 22</td>
-                    <td colspan="2">dato 24</td>
-                    <td colspan="1">refrigerado</td>
-                    <td colspan="2">dato 26</td>
-                    <td colspan="2">dato 28</td>
-                    <td colspan="2">dato 30</td>
-                    <td colspan="1">refrigerado</td>
-                    <td colspan="3">dato 31</td>
-                    <td>dato 34</td>
-                    <td colspan="3">dato 35</td>
-                    <td colspan="10">dato 38</td>
-                    <td colspan="3">dato 48</td>
-                    <td colspan="3">dato 51</td>
-                    <td>dato 54</td>
-                    <td>dato 55</td>
-                    <td>dato 56</td>
-                    <td>dato 57</td>
-                    <td>dato 58</td>
-                    <td>dato 59</td>
-                    <td colspan="">dato 60</td>
-                    <td>refrigerado</td>
-                    <td>dato 62</td>
-                    <td>dato 63</td>
-                    <td>dato 64</td>
-                    <td colspan="1">dato 65</td>
-                    <td colspan="1">ttt</td>
-                    <td colspan="2">dato 67</td>
-                    <td colspan="4">dato 69jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</td>
-                    <td>utlimo dattoo</td>
-                </tr>
+                <?php foreach ($dataReport as $dr) {
+                ?>
+                    <tr>
+                        <td><?= $dr->Recoleccion ?></td>
+                        <td><?= $dr->waybill ?></td>
+                        <td colspan="2"><?= $dr->Lima_Amb ?></td>
+                        <td colspan="2"><?= $dr->Lima_Bio1 ?></td>
+                        <td colspan="2"><?= $dr->Lima_Bio2 ?></td>
+                        <td colspan="2"><?= $dr->Lima_Bio3 ?></td>
+                        <td colspan="1"><?= $dr->Lima_refrigerado ?></td>
+                        <td colspan="2"><?= $dr->Prov_Amb?></td>
+                        <td colspan="2"><?= $dr->Prov_Bio1?></td>
+                        <td colspan="2"><?=  $dr->Prov_Bio2?></td>
+                        <td colspan="2"><?=  $dr->Prov_Bio3?></td>
+                        <td colspan="1"><?=  $dr->Prov_Refrigerado?></td>
+                        <td class="aldem-bg-blue-white"><?=  $dr->Estado?></td>
+                        <td colspan="2"><?=  $dr->Lima_Amb_precio?></td>
+                        <td colspan="2"><?=  $dr->Lima_Bio1_precio?></td>
+                        <td colspan="2"><?=  $dr->Lima_Bio2_precio?></td>
+                        <td colspan="2"><?=  $dr->Lima_Bio3_precio?></td>
+                        <td colspan="1"><?=  $dr->Lima_Refrigerado_precio?></td>
+                        <td colspan="2"><?=  $dr->Prov_Amb_precio?></td>
+                        <td colspan="2"><?=  $dr->Prov_Bio1_precio?></td>
+                        <td colspan="2"><?=  $dr->Prov_Bio2_precio?></td>
+                        <td colspan="1"><?=  $dr->Prov_Bio3_precio?></td>
+                        <td colspan="3"><?=  $dr->Prov_Refrigerado_precio?></td>
+                        <td>dato 34</td>
+                        <td colspan="3">dato 35</td>
+                        <td colspan="10">dato 38</td>
+                        <td colspan="3">dato 48</td>
+                        <td colspan="3">dato 51</td>
+                        <td>dato 54</td>
+                        <td>dato 55</td>
+                        <td>dato 56</td>
+                        <td>dato 57</td>
+                        <td>dato 58</td>
+                        <td>dato 59</td>
+                        <td colspan="">dato 60</td>
+                        <td>refrigerado</td>
+                        <td>dato 62</td>
+                        <td>dato 63</td>
+                        <td>dato 64</td>
+                        <td colspan="1">dato 65</td>
+                        <td colspan="1">ttt</td>
+                        <td colspan="2">dato 67</td>
+                        <td colspan="4">dato 69jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</td>
+                        <td>utlimo dattoo</td>
+                    </tr>
+
+                <?php }  ?>
 
             </tbody>
         </table>

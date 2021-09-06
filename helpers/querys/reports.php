@@ -1,4 +1,12 @@
 <?php
+function query_getMarkenExportReporteGeneral1($periodo)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT * FROM `marken_export_reporte_general1` WHERE periodo = $periodo";
+    $result = $wpdb->get_results($wpdb->prepare($sql));
+    $wpdb->flush();
+    return $result;
+}
 function query_getCostoMarken($periodo)
 {
     $wpdb = query_getWPDB();
