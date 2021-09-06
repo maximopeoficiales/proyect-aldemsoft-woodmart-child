@@ -10,7 +10,7 @@ if (doubleval($_GET["tcCustom"]) > 0) {
     $moneda =  $_GET["tcCustom"];
 }
 
-$dataReport = query_getMarkenExportReporteGeneral1(intval($fechaReporte));
+$dataReport = query_getMarkenExportReporteGeneral5(intval($fechaReporte));
 
 aldem_cargarStyles();
 ?>
@@ -196,8 +196,8 @@ aldem_cargarStyles();
                 <?php foreach ($dataReport as $dr) {
                 ?>
                     <tr>
-                        <td><?= $dr->Recoleccion ?></td>
-                        <td><?= $dr->waybill ?></td>
+                        <td><?= $dr->Fecha ?></td>
+                        <td><?= $dr->Job ?></td>
                         <td colspan="2"><?= $dr->Lima_Amb ?></td>
                         <td colspan="2"><?= $dr->Lima_Bio1 ?></td>
                         <td colspan="2"><?= $dr->Lima_Bio2 ?></td>
@@ -208,38 +208,39 @@ aldem_cargarStyles();
                         <td colspan="2"><?=  $dr->Prov_Bio2?></td>
                         <td colspan="2"><?=  $dr->Prov_Bio3?></td>
                         <td colspan="1"><?=  $dr->Prov_Refrigerado?></td>
-                        <td class="aldem-bg-blue-white"><?=  $dr->Estado?></td>
+                        <td class="aldem-bg-blue-white"><?=  $dr->estado?></td>
                         <td colspan="2"><?=  $dr->Lima_Amb_precio?></td>
                         <td colspan="2"><?=  $dr->Lima_Bio1_precio?></td>
                         <td colspan="2"><?=  $dr->Lima_Bio2_precio?></td>
                         <td colspan="2"><?=  $dr->Lima_Bio3_precio?></td>
-                        <td colspan="1"><?=  $dr->Lima_Refrigerado_precio?></td>
+                        <td colspan="1"><?=  $dr->Lima_refrigerado_precio?></td>
                         <td colspan="2"><?=  $dr->Prov_Amb_precio?></td>
                         <td colspan="2"><?=  $dr->Prov_Bio1_precio?></td>
                         <td colspan="2"><?=  $dr->Prov_Bio2_precio?></td>
                         <td colspan="1"><?=  $dr->Prov_Bio3_precio?></td>
                         <td colspan="3"><?=  $dr->Prov_Refrigerado_precio?></td>
-                        <td>dato 34</td>
-                        <td colspan="3">dato 35</td>
-                        <td colspan="10">dato 38</td>
-                        <td colspan="3">dato 48</td>
-                        <td colspan="3">dato 51</td>
-                        <td>dato 54</td>
-                        <td>dato 55</td>
-                        <td>dato 56</td>
-                        <td>dato 57</td>
-                        <td>dato 58</td>
-                        <td>dato 59</td>
-                        <td colspan="">dato 60</td>
-                        <td>refrigerado</td>
-                        <td>dato 62</td>
-                        <td>dato 63</td>
-                        <td>dato 64</td>
-                        <td colspan="1">dato 65</td>
-                        <td colspan="1">ttt</td>
-                        <td colspan="2">dato 67</td>
-                        <td colspan="4">dato 69jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</td>
-                        <td>utlimo dattoo</td>
+                        <td><?=  $dr->Total?></td>
+                        <td colspan="3"><?=  $dr->cantidad?></td>
+                        <td colspan="10"><?=  $dr->observaciones?></td>
+                        <td colspan="3"><?=  $dr->costo?></td>
+                        <td colspan="3"><?=  $dr->costo_dolares?></td>
+                        <td><?=  $dr->Lima_bio1hielo?></td>
+                        <td><?=  $dr->Lima_bio2hielo?></td>
+                        <td><?=  $dr->Lima_bio3hielo?></td>
+                        <td><?=  $dr->Lima_refrihielo?></td>
+                        <td><?=  $dr->prov_bio1hielo?></td>
+                        <td><?=  $dr->prov_bio2hielo?></td>
+                        <td colspan=""><?=  $dr->prov_bio3hielo?></td>
+                        <td><?=  $dr->prov_refrihielo?></td>
+                        <!-- datos finales -->
+                        <td colspan="2"><?=  $dr->costovariable?></td>
+                        <td><?=  $dr->costohandling?></td>
+                        <td><?=  $dr->gastohandling?></td>
+                        <td colspan="1"><?=  $dr->utilidadhandling?></td>
+                        <td colspan="1"><?=  $dr->tramiteoperativo?></td>
+                        <td colspan="2"><?=  $dr->tarifacaja?></td>
+                        <td colspan="4"><?=  $dr->costoembalar?></td>
+                        <td><?=  $dr->Utilidad?></td>
                     </tr>
 
                 <?php }  ?>

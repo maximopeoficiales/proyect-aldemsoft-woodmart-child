@@ -7,6 +7,23 @@ function query_getMarkenExportReporteGeneral1($periodo)
     $wpdb->flush();
     return $result;
 }
+
+function query_getMarkenExportReporteGeneral2($periodo)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT * FROM `marken_export_reporte_general2` WHERE periodo = $periodo";
+    $result = $wpdb->get_results($wpdb->prepare($sql));
+    $wpdb->flush();
+    return $result;
+}
+function query_getMarkenExportReporteGeneral5($periodo)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT * FROM `marken_export_reporte_general5` WHERE periodo = $periodo";
+    $result = $wpdb->get_results($wpdb->prepare($sql));
+    $wpdb->flush();
+    return $result;
+}
 function query_getCostoMarken($periodo)
 {
     $wpdb = query_getWPDB();
