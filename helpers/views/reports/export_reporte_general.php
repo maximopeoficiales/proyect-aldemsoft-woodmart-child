@@ -91,11 +91,7 @@ aldem_cargarStyles();
 
 
 <div class="row justify-content-end my-2 ">
-    <form action="" method="get" class="p-2">
-        <input type="hidden" name="">
-        <input type="hidden" name="">
-        <button type="submit" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</button>
-    </form>
+    <a type="submit" href="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" download="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</a>
 </div>
 <div class="row" style="overflow-x: scroll; height: 500px;">
     <!-- 36 -->
@@ -203,44 +199,44 @@ aldem_cargarStyles();
                         <td colspan="2"><?= $dr->Lima_Bio2 ?></td>
                         <td colspan="2"><?= $dr->Lima_Bio3 ?></td>
                         <td colspan="1"><?= $dr->Lima_refrigerado ?></td>
-                        <td colspan="2"><?= $dr->Prov_Amb?></td>
-                        <td colspan="2"><?= $dr->Prov_Bio1?></td>
-                        <td colspan="2"><?=  $dr->Prov_Bio2?></td>
-                        <td colspan="2"><?=  $dr->Prov_Bio3?></td>
-                        <td colspan="1"><?=  $dr->Prov_Refrigerado?></td>
-                        <td class="aldem-bg-blue-white"><?=  $dr->estado?></td>
-                        <td colspan="2"><?=  $dr->Lima_Amb_precio?></td>
-                        <td colspan="2"><?=  $dr->Lima_Bio1_precio?></td>
-                        <td colspan="2"><?=  $dr->Lima_Bio2_precio?></td>
-                        <td colspan="2"><?=  $dr->Lima_Bio3_precio?></td>
-                        <td colspan="1"><?=  $dr->Lima_refrigerado_precio?></td>
-                        <td colspan="2"><?=  $dr->Prov_Amb_precio?></td>
-                        <td colspan="2"><?=  $dr->Prov_Bio1_precio?></td>
-                        <td colspan="2"><?=  $dr->Prov_Bio2_precio?></td>
-                        <td colspan="1"><?=  $dr->Prov_Bio3_precio?></td>
-                        <td colspan="3"><?=  $dr->Prov_Refrigerado_precio?></td>
-                        <td><?=  $dr->Total?></td>
-                        <td colspan="3"><?=  $dr->cantidad?></td>
-                        <td colspan="10"><?=  $dr->observaciones?></td>
-                        <td colspan="3"><?=  $dr->costo?></td>
-                        <td colspan="3"><?=  $dr->costo_dolares?></td>
-                        <td><?=  $dr->Lima_bio1hielo?></td>
-                        <td><?=  $dr->Lima_bio2hielo?></td>
-                        <td><?=  $dr->Lima_bio3hielo?></td>
-                        <td><?=  $dr->Lima_refrihielo?></td>
-                        <td><?=  $dr->prov_bio1hielo?></td>
-                        <td><?=  $dr->prov_bio2hielo?></td>
-                        <td colspan=""><?=  $dr->prov_bio3hielo?></td>
-                        <td><?=  $dr->prov_refrihielo?></td>
+                        <td colspan="2"><?= $dr->Prov_Amb ?></td>
+                        <td colspan="2"><?= $dr->Prov_Bio1 ?></td>
+                        <td colspan="2"><?= $dr->Prov_Bio2 ?></td>
+                        <td colspan="2"><?= $dr->Prov_Bio3 ?></td>
+                        <td colspan="1"><?= $dr->Prov_Refrigerado ?></td>
+                        <td class="aldem-bg-blue-white"><?= $dr->estado ?></td>
+                        <td colspan="2"><?= $dr->Lima_Amb_precio ?></td>
+                        <td colspan="2"><?= $dr->Lima_Bio1_precio ?></td>
+                        <td colspan="2"><?= $dr->Lima_Bio2_precio ?></td>
+                        <td colspan="2"><?= $dr->Lima_Bio3_precio ?></td>
+                        <td colspan="1"><?= $dr->Lima_refrigerado_precio ?></td>
+                        <td colspan="2"><?= $dr->Prov_Amb_precio ?></td>
+                        <td colspan="2"><?= $dr->Prov_Bio1_precio ?></td>
+                        <td colspan="2"><?= $dr->Prov_Bio2_precio ?></td>
+                        <td colspan="1"><?= $dr->Prov_Bio3_precio ?></td>
+                        <td colspan="3"><?= $dr->Prov_Refrigerado_precio ?></td>
+                        <td><?= $dr->Total ?></td>
+                        <td colspan="3"><?= $dr->cantidad ?></td>
+                        <td colspan="10"><?= $dr->observaciones ?></td>
+                        <td colspan="3"><?= $dr->costo ?></td>
+                        <td colspan="3"><?= $dr->costo_dolares ?></td>
+                        <td><?= $dr->Lima_bio1hielo ?></td>
+                        <td><?= $dr->Lima_bio2hielo ?></td>
+                        <td><?= $dr->Lima_bio3hielo ?></td>
+                        <td><?= $dr->Lima_refrihielo ?></td>
+                        <td><?= $dr->prov_bio1hielo ?></td>
+                        <td><?= $dr->prov_bio2hielo ?></td>
+                        <td colspan=""><?= $dr->prov_bio3hielo ?></td>
+                        <td><?= $dr->prov_refrihielo ?></td>
                         <!-- datos finales -->
-                        <td colspan="2"><?=  $dr->costovariable?></td>
-                        <td><?=  $dr->costohandling?></td>
-                        <td><?=  $dr->gastohandling?></td>
-                        <td colspan="1"><?=  $dr->utilidadhandling?></td>
-                        <td colspan="1"><?=  $dr->tramiteoperativo?></td>
-                        <td colspan="2"><?=  $dr->tarifacaja?></td>
-                        <td colspan="4"><?=  $dr->costoembalar?></td>
-                        <td><?=  $dr->Utilidad?></td>
+                        <td colspan="2"><?= $dr->costovariable ?></td>
+                        <td><?= $dr->costohandling ?></td>
+                        <td><?= $dr->gastohandling ?></td>
+                        <td colspan="1"><?= $dr->utilidadhandling ?></td>
+                        <td colspan="1"><?= $dr->tramiteoperativo ?></td>
+                        <td colspan="2"><?= $dr->tarifacaja ?></td>
+                        <td colspan="4"><?= $dr->costoembalar ?></td>
+                        <td><?= $dr->Utilidad ?></td>
                     </tr>
 
                 <?php }  ?>

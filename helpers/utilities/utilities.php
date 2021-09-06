@@ -44,7 +44,11 @@ function aldem_cargarStyles(): void
 {
     require aldem_get_directory_helper() . "public/styles.php";
 }
-
+function aldem_getUrlExcel($tipo, $fecha)
+{
+    $urlAjax = admin_url("admin-ajax.php");
+    return "$urlAjax?action=aldem_excel&type_report=$tipo&fecha_reporte=$fecha";
+}
 
 function aldem_getRoleCodes()
 {
@@ -123,7 +127,7 @@ function aldem_cCellExcel(Spreadsheet  $spreadsheet, $range, $text, $bold = fals
     $styleExcel->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(aldem_setColorExcel($bgColor));
     return $spreadsheet;
 }
-function aldem_getSpreadsheet1(): Spreadsheet
+function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spreadsheet
 {
 
     $tipoCambio = "4.1";

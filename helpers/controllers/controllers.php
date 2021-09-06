@@ -776,23 +776,29 @@ function aldem_post_new_pickup()
 function aldem_export_excel()
 {
     try {
-        if ($_GET["type_report"] == "courier") {
-            // creacion de excel para  courier
-            $fileName = "courier.xlsx";
-            $spreadsheet = aldem_generateExcelReportCourier();
-            $writer = new Xlsx($spreadsheet);
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
-            $writer->save('php://output');
+        if (isset($_GET["fecha_reporte"])) {
+            $fechaReporte = $_GET["fecha_reporte"];
+            if ($_GET["type_report"] == "courier") {
+                // creacion de excel para  courier
+                $fileName = "courier.xlsx";
+                $spreadsheet = aldem_generateExcelReportCourier();
+                $writer = new Xlsx($spreadsheet);
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+                $writer->save('php://output');
 
-            return;
+                return;
+            } else if (($_GET["type_report"] == "export")) {
+                $dataReport =  query_getMarkenExportReporteGeneral5(intval($fechaReporte));
+                $fileName = "export-$fechaReporte.xlsx";
+                $spreadsheet = aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte);
+                $writer = new Xlsx($spreadsheet);
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+                $writer->save('php://output');
+            }
         }
-        $fileName = "hello.xlsx";
-        $spreadsheet = aldem_getSpreadsheet1();
-        $writer = new Xlsx($spreadsheet);
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
-        $writer->save('php://output');
+        return;
         // $writer->save('hello world.xlsx');
     } catch (\Throwable $th) {
         echo $th;
