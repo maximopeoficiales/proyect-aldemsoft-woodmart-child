@@ -118,8 +118,8 @@ aldem_cargarStyles();
                     <!-- 23 -->
                     <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO SECO EN LIMA SOLES(SIN IGV)</th>
                     <!-- 20 -->
-                    <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO EN LIMA DOLARES TIPO DE CAMBIO: @TC</th>
-                    <!-- 17 -->
+                    <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO EN LIMA DOLARES TIPO DE CAMBIO: <?= number_format($moneda, 2) ?>/th>
+                        <!-- 17 -->
                     <th rowspan="2" colspan="8" class="aldem-bg-gray">TARIFA DE HIELO SECO DOLARES</th>
                     <!-- 11 -->
                     <th rowspan="2" colspan="2" class="aldem-bg-gray-white">UTILIDAD HIELO SECO DOLARES</th>
@@ -171,19 +171,19 @@ aldem_cargarStyles();
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
                     <th colspan="1" class="aldem-bg-gray">Refrigerado</th>
-                    
+
                     <th colspan="2" class="aldem-bg-black-white">Ambiente</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO I</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO II</th>
                     <th colspan="3" class="aldem-bg-black-white">BIO II</th>
                     <th colspan="1" class="aldem-bg-black-white">Refrigerado</th>
-                    
+
                     <!-- 6 espacios para LIMA - PROVINCIA -->
                     <th class="aldem-bg-gray">BIO I</th>
                     <th class="aldem-bg-gray">BIO II</th>
                     <th class="aldem-bg-gray">BIO II</th>
                     <th colspan="1" class="aldem-bg-gray">Refrigerado</th>
-                    
+
                     <th class="aldem-bg-black-white">BIO I</th>
                     <th class="aldem-bg-black-white">BIO II</th>
                     <th class="aldem-bg-black-white">BIO II</th>
@@ -193,22 +193,27 @@ aldem_cargarStyles();
             <tbody style="color:black; text-align: center;">
                 <tr>
                     <td>dato 1</td>
+                    <td>waybill</td>
                     <td colspan="2">dato 2</td>
                     <td colspan="2">dato 4</td>
                     <td colspan="2">dato 6</td>
                     <td colspan="2">dato 8</td>
+                    <td colspan="1">refrigerado</td>
                     <td colspan="2">dato 10</td>
                     <td colspan="2">dato 12</td>
                     <td colspan="2">dato 15</td>
                     <td colspan="2">dato 16</td>
+                    <td colspan="1">refrigerado</td>
                     <td class="aldem-bg-blue-white">dato 17</td>
                     <td colspan="2">dato 18</td>
                     <td colspan="2">dato 20</td>
                     <td colspan="2">dato 22</td>
                     <td colspan="2">dato 24</td>
+                    <td colspan="1">refrigerado</td>
                     <td colspan="2">dato 26</td>
                     <td colspan="2">dato 28</td>
                     <td colspan="2">dato 30</td>
+                    <td colspan="1">refrigerado</td>
                     <td colspan="3">dato 31</td>
                     <td>dato 34</td>
                     <td colspan="3">dato 35</td>
@@ -221,13 +226,16 @@ aldem_cargarStyles();
                     <td>dato 57</td>
                     <td>dato 58</td>
                     <td>dato 59</td>
-                    <td colspan="2">dato 60</td>
+                    <td colspan="">dato 60</td>
+                    <td>refrigerado</td>
                     <td>dato 62</td>
                     <td>dato 63</td>
                     <td>dato 64</td>
-                    <td colspan="2">dato 65</td>
+                    <td colspan="1">dato 65</td>
+                    <td colspan="1">ttt</td>
                     <td colspan="2">dato 67</td>
-                    <td colspan="5">dato 69jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</td>
+                    <td colspan="4">dato 69jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</td>
+                    <td>utlimo dattoo</td>
                 </tr>
 
             </tbody>
