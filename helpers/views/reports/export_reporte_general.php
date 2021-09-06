@@ -102,7 +102,7 @@ aldem_cargarStyles();
             <thead>
                 <tr>
                     <th colspan="39" class="aldem-bg-gray aldem-text-white">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
-                    <th colspan="41" class="aldem-bg-gray aldem-text-white">TARIFA HIELO SECO</th>
+                    <th colspan="43" class="aldem-bg-gray aldem-text-white">TARIFA HIELO SECO</th>
                 </tr>
                 <tr>
                     <th colspan="20" class="aldem-bg-blue">CANTIDAD DE PICK UP (RECOJOS)
@@ -120,7 +120,7 @@ aldem_cargarStyles();
                     <!-- 20 -->
                     <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO EN LIMA DOLARES TIPO DE CAMBIO: @TC</th>
                     <!-- 17 -->
-                    <th rowspan="2" colspan="6" class="aldem-bg-gray">TARIFA DE HIELO SECO DOLARES</th>
+                    <th rowspan="2" colspan="8" class="aldem-bg-gray">TARIFA DE HIELO SECO DOLARES</th>
                     <!-- 11 -->
                     <th rowspan="2" colspan="2" class="aldem-bg-gray-white">UTILIDAD HIELO SECO DOLARES</th>
                     <!-- 9 -->
@@ -146,8 +146,8 @@ aldem_cargarStyles();
                     <th colspan="9" class="aldem-bg-black-white">FROZEN</th>
                     <th colspan="9" class="aldem-bg-gray">FROZEN</th>
                     <th colspan="10" class="aldem-bg-black-white">FROZEN</th>
-                    <th colspan="3" class="aldem-bg-gray-white">LIMA</th>
-                    <th colspan="3" class="aldem-bg-black-white">Provincia</th>
+                    <th colspan="4" class="aldem-bg-gray-white">LIMA</th>
+                    <th colspan="4" class="aldem-bg-black-white">Provincia</th>
                     <th colspan="2" class="aldem-text-black" rowspan="2">LIMA</th>
                     <th rowspan="2" class="aldem-bg-yellow">TARIFA DOLARES</th>
                     <th rowspan="2" class="aldem-bg-black-white">GASTO DOLARES</th>
@@ -171,20 +171,23 @@ aldem_cargarStyles();
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
                     <th colspan="2" class="aldem-bg-gray">BIO II</th>
                     <th colspan="1" class="aldem-bg-gray">Refrigerado</th>
-
+                    
                     <th colspan="2" class="aldem-bg-black-white">Ambiente</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO I</th>
                     <th colspan="2" class="aldem-bg-black-white">BIO II</th>
                     <th colspan="3" class="aldem-bg-black-white">BIO II</th>
                     <th colspan="1" class="aldem-bg-black-white">Refrigerado</th>
-
+                    
                     <!-- 6 espacios para LIMA - PROVINCIA -->
                     <th class="aldem-bg-gray">BIO I</th>
                     <th class="aldem-bg-gray">BIO II</th>
                     <th class="aldem-bg-gray">BIO II</th>
+                    <th colspan="1" class="aldem-bg-gray">Refrigerado</th>
+                    
                     <th class="aldem-bg-black-white">BIO I</th>
                     <th class="aldem-bg-black-white">BIO II</th>
                     <th class="aldem-bg-black-white">BIO II</th>
+                    <th colspan="1" class="aldem-bg-black-white">Refrigerado</th>
                 </tr>
             </thead>
             <tbody style="color:black; text-align: center;">
