@@ -205,6 +205,7 @@ aldem_cargarStyles();
                         <td colspan="2"><?= $dr->Prov_Bio3 ?></td>
                         <td colspan="1"><?= $dr->Prov_Refrigerado ?></td>
                         <td class="aldem-bg-blue-white"><?= $dr->estado ?></td>
+
                         <td colspan="2"><?= $dr->Lima_Amb_precio ?></td>
                         <td colspan="2"><?= $dr->Lima_Bio1_precio ?></td>
                         <td colspan="2"><?= $dr->Lima_Bio2_precio ?></td>
@@ -215,11 +216,13 @@ aldem_cargarStyles();
                         <td colspan="2"><?= $dr->Prov_Bio2_precio ?></td>
                         <td colspan="1"><?= $dr->Prov_Bio3_precio ?></td>
                         <td colspan="3"><?= $dr->Prov_Refrigerado_precio ?></td>
+
                         <td><?= $dr->Total ?></td>
                         <td colspan="3"><?= $dr->cantidad ?></td>
                         <td colspan="10"><?= $dr->observaciones ?></td>
                         <td colspan="3"><?= $dr->costo ?></td>
                         <td colspan="3"><?= $dr->costo_dolares ?></td>
+
                         <td><?= $dr->Lima_bio1hielo ?></td>
                         <td><?= $dr->Lima_bio2hielo ?></td>
                         <td><?= $dr->Lima_bio3hielo ?></td>
@@ -228,6 +231,7 @@ aldem_cargarStyles();
                         <td><?= $dr->prov_bio2hielo ?></td>
                         <td colspan=""><?= $dr->prov_bio3hielo ?></td>
                         <td><?= $dr->prov_refrihielo ?></td>
+                        
                         <!-- datos finales -->
                         <td colspan="2"><?= $dr->costovariable ?></td>
                         <td><?= $dr->costohandling ?></td>

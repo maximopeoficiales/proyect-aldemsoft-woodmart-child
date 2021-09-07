@@ -777,8 +777,8 @@ function aldem_post_new_pickup()
 function aldem_export_excel()
 {
     try {
-        if (isset($_GET["fecha_reporte"])) {
-            $fechaReporte = $_GET["fecha_reporte"];
+        $fechaReporte = $_GET["fecha_reporte"];
+        if (isset($fechaReporte)) {
             if ($_GET["type_report"] == "courier") {
                 // creacion de excel para  courier
                 $fileName = "courier.xlsx";
@@ -797,6 +797,7 @@ function aldem_export_excel()
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
                 $writer->save('php://output');
+                
             }
         }
         return;
