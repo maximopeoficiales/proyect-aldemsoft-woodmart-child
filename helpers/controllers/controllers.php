@@ -18,6 +18,7 @@ add_action('admin_post_process_form', 'aldem_post_new_pickup');
 // ajax excel
 // http://localhost/wp-admin/admin-ajax.php?action=aldem_excel
 add_action('wp_ajax_aldem_excel', 'aldem_export_excel');
+add_action('wp_ajax_nopriv_aldem_excel', 'aldem_export_excel');
 // fin de ajax excel
 
 // Funcion callback
@@ -788,7 +789,7 @@ function aldem_export_excel()
                 $writer->save('php://output');
 
                 return;
-            } else if (($_GET["type_report"] == "export")) {
+            } else if ($_GET["type_report"] == "export") {
                 $dataReport =  query_getMarkenExportReporteGeneral5(intval($fechaReporte));
                 $fileName = "export-$fechaReporte.xlsx";
                 $spreadsheet = aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte);
