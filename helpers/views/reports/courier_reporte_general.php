@@ -19,7 +19,7 @@ try {
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();
     $costoHandlingMaster = query_getCostoHandlingPorMaster();
-    $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral($fecha);
+    $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral1($fecha);
 } catch (\Throwable $th) {
     echo $th;
 }
@@ -116,7 +116,7 @@ aldem_cargarStyles();
     <!-- 36 -->
     <div class="col-12">
 
-        <table class="table   aldem-table " id="table_courier_reporte_general">
+        <table class="table aldem-table" id="table_courier_reporte_general">
             <thead>
                 <tr>
                     <th class="aldem-bg-blue">MANIFIESTO EER</th>
@@ -139,7 +139,6 @@ aldem_cargarStyles();
                     <th class="aldem-bg-gray">COSTO ALMACENAJE POR GUIA HIJA - DOLARES</th>
                     <th class="aldem-bg-blue">IMPUESTOS POR GUIA HIJA - USD</th>
                     <th class="aldem-bg-blue">TARIFA TRAMITE OPEATIVO / GUIA HIJA - USD</th>
-                    <th class="aldem-bg-yellow">COBRO A MARKEN POR GUIA HIJA</th>
                     <th class="aldem-bg-blue">COSTO VARIABLE</th>
                     <th class="aldem-bg-black">TOTAL INGRESOS DOLARES</th>
                     <th class="aldem-bg-gray">TOTAL GASTOS DOLARES</th>
@@ -149,31 +148,30 @@ aldem_cargarStyles();
             <tbody>
                 <?php foreach ($markenCourierReporteGeneral as $marken) { ?>
                     <tr>
-                        <td><?= $marken->manifiesto ?></td>
-                        <td><?= $marken->dua ?></td>
-                        <td><?= $marken->guia ?></td>
-                        <td><?= $marken->fecha_entrega ?></td>
+                        <td><?= $marken->Manifiesto ?></td>
+                        <td><?= $marken->DUA ?></td>
+                        <td><?= $marken->Fecha ?></td>
                         <td><?= $marken->guia_master ?></td>
-                        <td><?= $marken->protocolo ?></td>
-                        <td><?= $marken->exportador ?></td>
-                        <td><?= $marken->importador ?></td>
-                        <td><?= $marken->cantidad ?></td>
-                        <td><?= $marken->peso ?></td>
-                        <td><?= $marken->periodo ?></td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
+                        <td><?= $marken->guia_master ?></td>
+                        <td><?= $marken->Protocolo ?></td>
+                        <td><?= $marken->Exportador ?></td>
+                        <td><?= $marken->Importador ?></td>
+                        <td><?= $marken->Cantidad ?></td>
+                        <td><?= $marken->Peso ?></td>
+                        <td><?= $marken->delivery ?></td>
+                        <td><?= $marken->Serv_Transporte ?></td>
+                        <td><?= $marken->Serv_Aduana ?></td>
+                        <td><?= $marken->Costo_Aduana ?></td>
+                        <td><?= $marken->Tarifa_handling ?></td>
+                        <td><?= $marken->Costo_handling ?></td>
+                        <td><?= $marken->tarifa_almacenaje ?></td>
+                        <td><?= $marken->tarifa_costo ?></td>
+                        <td><?= $marken->tarifa_impuestos ?></td>
+                        <td><?= $marken->Tramite_Operativo ?></td>
+                        <td>0</td>
+                        <td><?= $marken->Ingresos ?></td>
+                        <td><?= $marken->Egresos ?></td>
+                        <td>0</td>
                     </tr>
                 <?php } ?>
 

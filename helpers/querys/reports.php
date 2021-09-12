@@ -1,4 +1,14 @@
 <?php
+
+function query_getMarkenCourierReporteGeneral1($periodo)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT t1.*,t2.Ingresos,t2.Egresos FROM `marken_courier_reporte_general1`as t1 JOIN
+    marken_courier_reporte_general2 as t2 ON t1.id = t2.id  WHERE periodo = $periodo";
+    $result = $wpdb->get_results($wpdb->prepare($sql));
+    $wpdb->flush();
+    return $result;
+}
 function query_getMarkenExportReporteGeneral1($periodo)
 {
     $wpdb = query_getWPDB();

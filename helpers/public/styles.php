@@ -219,6 +219,10 @@
         text-align: center;
         font-size: .8rem;
     }
+    .aldem-table td {
+        text-align: center;
+        font-size: .8rem;
+    }
 
     .aldem-border-black {
         border-color: black !important;
