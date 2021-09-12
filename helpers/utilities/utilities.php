@@ -472,6 +472,37 @@ function aldem_generateExcelReportCourier($dataReport, $fechaReporte): Spreadshe
     $spreadsheet = aldem_cCellExcel($spreadsheet, "W16", "TOTAL GASTOS DOLARES", true, 9, $blue, $gray);
     $spreadsheet = aldem_cCellExcel($spreadsheet, "X16", "TOTAL UTILIDAD DOLARES", true, 9, COLOR::COLOR_BLACK, $yellow);
     // falta rellenar con data
+    $count = 17;
+    foreach ($dataReport as $dr) {
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "A$count", $dr->Manifiesto, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "B$count", $dr->DUA, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "C$count", $dr->Fecha, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "D$count", $dr->Fecha_Levante, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "E$count", $dr->guia_master, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "F$count", $dr->Protocolo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "G$count", $dr->Exportador, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "H$count", $dr->Importador, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "I$count", $dr->Cantidad, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "J$count", $dr->Peso, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "K$count", $dr->delivery, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "L$count", $dr->Serv_Transporte, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "M$count", $dr->Serv_Aduana, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "N$count", $dr->Costo_Aduana, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "O$count", $dr->Tarifa_handling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "P$count", $dr->Costo_handling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "Q$count", $dr->tarifa_almacenaje, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "R$count", $dr->tarifa_costo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "S$count", $dr->tarifa_impuestos, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "T$count", $dr->Tramite_Operativo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "U$count", $dr->Tramite_Operativo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "V$count", $dr->Ingresos, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "W$count", $dr->Egresos, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "X$count", 0, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+
+        $count++;
+    }
+
 
     $spreadsheet = aldem_format_excelByAZ($spreadsheet, "AZ");
 

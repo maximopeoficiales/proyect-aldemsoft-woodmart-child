@@ -153,7 +153,7 @@ aldem_cargarStyles();
                         <td><?= $marken->Manifiesto ?></td>
                         <td><?= $marken->DUA ?></td>
                         <td><?= $marken->Fecha ?></td>
-                        <td><?= $marken->guia_master ?></td>
+                        <td><?= $marken->Fecha_Levante ?></td>
                         <td><?= $marken->guia_master ?></td>
                         <td><?= $marken->Protocolo ?></td>
                         <td><?= $marken->Exportador ?></td>
