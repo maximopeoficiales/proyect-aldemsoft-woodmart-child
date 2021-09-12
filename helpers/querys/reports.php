@@ -106,20 +106,3 @@ function query_getCostoHandlingPorMaster()
     return $result;
 }
 
-function query_getMarkenCourierReporteGeneral($periodo)
-{
-    $wpdb = query_getWPDB();
-    $prefix = query_getAldemPrefix();
-    $sql = "SELECT `t1`.`id`, `t1`.`manifiesto`,
-     ifnull(concat(CAST(t1.dua AS CHAR),'-',CAST(t1.dua2 AS CHAR),'-',CAST(t1.dua3 AS CHAR),'-',t1.dua4),dua) AS `dua`
-     , `t1`.`guia` AS `guia`
-     ,`t1`.`schd_collection` AS `fecha_entrega`,`t1`.`guia_master` ,`t1`.`protocolo` , `t2`.`descripcion` AS `exportador`, `t1`.`importador`,`t1`.`pcs` AS `cantidad`,
-     `t1`.`peso` AS `peso`, year(`t1`.`schd_collection`) * 100 + month(`t1`.`schd_collection`) AS `Periodo`
-      from `${prefix}marken_job` `t1` 
-      left join `${prefix}marken_shipper` `t2` on`t2`.`id` = `t1`.`id_exportador`
-       where `t1`.`id_cliente_subtipo` = 3
-    ";
-    $result = $wpdb->get_results($wpdb->prepare($sql, $periodo));
-    $wpdb->flush();
-    return $result;
-}

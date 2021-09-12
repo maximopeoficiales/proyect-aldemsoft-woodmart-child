@@ -376,10 +376,9 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
 }
 
 
-function aldem_generateExcelReportCourier(): Spreadsheet
+function aldem_generateExcelReportCourier($dataReport, $fechaReporte): Spreadsheet
 {
 
-    $tipoCambio = "4.1";
     $gray = "#ACB9CA";
     $blue = "#002060";
     $grayWhite = "##D6DCE4";
@@ -391,21 +390,18 @@ function aldem_generateExcelReportCourier(): Spreadsheet
     $spreadsheet = new Spreadsheet();
 
     // data
-    $fecha = "202104";
-    $totalCostoMarken = query_getCostoMarken($fecha)->total_costo_marken;
-    $totalGuias = query_getTotalGuias($fecha)->total_guias;
-    $totalGuiasCourier = query_getTotalGuiasExport($fecha)->total_guias_courier;
-
+    $totalCostoMarken = query_getCostoMarken($fechaReporte)->total_costo_marken;
+    $totalGuias = query_getTotalGuias($fechaReporte)->total_guias;
+    $totalGuiasCourier = query_getTotalGuiasExport($fechaReporte)->total_guias_courier;
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();
     $costoHandlingMaster = query_getCostoHandlingPorMaster();
-    // $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral($fecha);
 
     // titulos
     //TARIFA SERVICIO IMPORTACIONES COURIER				
     $spreadsheet = aldem_cCellExcel($spreadsheet, "F3:J3", "TARIFA SERVICIO IMPORTACIONES COURIER", true, 18, Color::COLOR_WHITE, $skyblue);
 
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "H4:I4", $fecha, true, 18, Color::COLOR_WHITE, $skyblue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "H4:I4", $fechaReporte, true, 18, Color::COLOR_WHITE, $skyblue);
 
 
     // QueryA
@@ -448,40 +444,36 @@ function aldem_generateExcelReportCourier(): Spreadsheet
 
 
     // Query E
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "A16:A17", "MANIFIESTO EER", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "B16:B17", "DUA", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "C16:C17", "GUIA HIJA", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "D16:D17", "FECHA DE ENTREGA", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "E16:E17", "GUIA MASTER", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "F16:F17", "PROTOCOLO", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "G16:G17", "EXPORTADOR (MIAMI)", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "H16:H17", "EXPORTADOR (LIMA)", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "I16:I17", "EXPORTADOR (CANTIDAD DE BULTOS)", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "A16", "MANIFIESTO EER", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B16", "DUA", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C16", "GUIA HIJA", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D16", "FECHA DE ENTREGA", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "E16", "GUIA MASTER", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "F16", "PROTOCOLO", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "G16", "EXPORTADOR (MIAMI)", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "H16", "EXPORTADOR (LIMA)", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "I16", "EXPORTADOR (CANTIDAD DE BULTOS)", true, 9, Color::COLOR_WHITE, $blue);
 
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "J16:J17", "PESO", true, 9, Color::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "K16:K17", "DELIVERY (ENTREGA LOCAL) X GUIA HIJA -  DOLARES", true, 9, Color::COLOR_WHITE, $blueWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "L16:L17", "COSTO SERVICIO TRANSPORTE POR GUIA HIJA - DOLARES", true, 9, $blue, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "M16:M17", "TARIFA SERVICIO
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J16", "PESO", true, 9, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "K16", "DELIVERY (ENTREGA LOCAL) X GUIA HIJA -  DOLARES", true, 9, Color::COLOR_WHITE, $blueWhite);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "L16", "COSTO SERVICIO TRANSPORTE POR GUIA HIJA - DOLARES", true, 9, $blue, $gray);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "M16", "TARIFA SERVICIO
     ADUANA POR GUIA HIJA - DOLARES", true, 9, Color::COLOR_WHITE, $blueWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "N16:N17", "COSTO SERV. ADUANA
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "N16", "COSTO SERV. ADUANA
     POR GUIA HIJA - DOLARES", true, 9, $blue, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "O16:O17", "TARIFA HANDLING POR GUIA HIJA -  USD", true, 9, COLOR::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "P16:P17", "COSTO HANDLING POR GUIA HIJA - DOLARES", true, 9, $blue, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "Q16:Q17", "TARIFA ALMACENAJE POR GUIA HIJA -  USD", true, 9, COLOR::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "R16:R17", "COSTO ALMACENAJE POR GUIA HIJA - DOLARES", true, 9, $blue, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "S16:S17", "IMPUESTOS POR GUIA HIJA - USD", true, 9, COLOR::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "T16:T17", "TARIFA TRAMITE OPEATIVO / GUIA HIJA - USD", true, 9, COLOR::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "U16:U17", "COBRO A MARKEN POR GUIA HIJA", true, 9, COLOR::COLOR_BLACK, $yellow);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "V16:V17", "COSTO VARIABLE", true, 9, COLOR::COLOR_WHITE, $blue);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "W16:W17", "TOTAL INGRESOS DOLARES", true, 9, COLOR::COLOR_WHITE, COLOR::COLOR_BLACK);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "X16:X17", "TOTAL GASTOS DOLARES", true, 9, $blue, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "Y16:Y17", "TOTAL UTILIDAD DOLARES", true, 9, COLOR::COLOR_BLACK, $yellow);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "O16", "TARIFA HANDLING POR GUIA HIJA -  USD", true, 9, COLOR::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "P16", "COSTO HANDLING POR GUIA HIJA - DOLARES", true, 9, $blue, $gray);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "Q16", "TARIFA ALMACENAJE POR GUIA HIJA -  USD", true, 9, COLOR::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "R16", "COSTO ALMACENAJE POR GUIA HIJA - DOLARES", true, 9, $blue, $gray);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "S16", "IMPUESTOS POR GUIA HIJA - USD", true, 9, COLOR::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "T16", "TARIFA TRAMITE OPEATIVO / GUIA HIJA - USD", true, 9, COLOR::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "U16", "COSTO VARIABLE", true, 9, COLOR::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "V16", "TOTAL INGRESOS DOLARES", true, 9, COLOR::COLOR_WHITE, COLOR::COLOR_BLACK);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "W16", "TOTAL GASTOS DOLARES", true, 9, $blue, $gray);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "X16", "TOTAL UTILIDAD DOLARES", true, 9, COLOR::COLOR_BLACK, $yellow);
     // falta rellenar con data
 
+    $spreadsheet = aldem_format_excelByAZ($spreadsheet, "AZ");
 
-
-    foreach (aldem_generate_arrayAZ("AZ") as $col) {
-        $spreadsheet->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);
-    }
     return $spreadsheet;
 }
