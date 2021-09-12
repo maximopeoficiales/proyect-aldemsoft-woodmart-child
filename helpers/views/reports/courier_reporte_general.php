@@ -8,18 +8,18 @@
 // wp_enqueue_script("DT_PRINT", "https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js", '', '1.0.0');
 
 
-$fecha = $_GET["fecha"];
-if (empty($fecha)) return;
+$fechaReporte = $_GET["fecha"];
+if (empty($fechaReporte)) return;
 try {
 
-    $totalCostoMarken = query_getCostoMarken($fecha)->total_costo_marken;
-    $totalGuias = query_getTotalGuias($fecha)->total_guias;
-    $totalGuiasCourier = query_getTotalGuiasExport($fecha)->total_guias_courier;
+    $totalCostoMarken = query_getCostoMarken($fechaReporte)->total_costo_marken;
+    $totalGuias = query_getTotalGuias($fechaReporte)->total_guias;
+    $totalGuiasCourier = query_getTotalGuiasExport($fechaReporte)->total_guias_courier;
 
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();
     $costoHandlingMaster = query_getCostoHandlingPorMaster();
-    $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral1($fecha);
+    $markenCourierReporteGeneral = query_getMarkenCourierReporteGeneral1(intval($fechaReporte));
 } catch (\Throwable $th) {
     echo $th;
 }
@@ -111,7 +111,9 @@ aldem_cargarStyles();
     </div>
 </div>
 
-
+<div class="row justify-content-end my-2 ">
+    <a type="submit" href="<?= aldem_getUrlExcel("courier", $fechaReporte) ?>" download="<?= aldem_getUrlExcel("courier", $fechaReporte) ?>" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</a>
+</div>
 <div class="row my-4" style="overflow-x: scroll;">
     <!-- 36 -->
     <div class="col-12">
