@@ -117,8 +117,9 @@ aldem_cargarStyles();
     </div>
 </div>
 
-<div class="row justify-content-end my-2 ">
-    <a type="submit" href="<?= aldem_getUrlExcel("courier", $fechaReporte) ?>" download="<?= aldem_getUrlExcel("courier", $fechaReporte) ?>" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</a>
+<div class="row justify-content-end my-2 align-items-center">
+    <p class="help-text mx-2 my-0 d-none" id="textCargandoExcel">Espere unos segundo se esta cargando el excel...</p>
+    <a onclick="document.querySelector('#textCargandoExcel').classList.remove('d-none')" type="submit" href="<?= aldem_getUrlExcel("courier", $fechaReporte) ?>" download="<?= aldem_getUrlExcel("courier", $fechaReporte) ?>" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</a>
 </div>
 <div class="row my-4" style="overflow-x: scroll;">
     <!-- 36 -->
