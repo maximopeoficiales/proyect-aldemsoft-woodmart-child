@@ -334,15 +334,14 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
     $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCobroMarkenPickUP, "COBRO A MARKEN PICK UP  DOLARES USD", true, 14, Color::COLOR_WHITE, $blue);
 
     // // TOTAL PICK UP DOLARES USD
-    $rangeTotalPickUp = "Y31:Y33";
+    $rangeTotalPickUp = "Y31:Y34";
     $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalPickUp, "TOTAL PICK UP DOLARES USD", true, 9, Color::COLOR_BLACK, $yellow);
 
     // TOTAL CANTIDAD DE HIELO SECO KG
     $rangeTotalHieloSeco = "Z31:Z34";
     $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalHieloSeco, "TOTAL CANTIDAD DE HIELO SECO KG PARA MUESTRAS EXPORTACIÓN x MAWB", true, 9, Color::COLOR_WHITE, $blackWhite);
 
-    // // PARA MUESTRAS EXPORTACIÓN x MAWB
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "U34", "", true, 9, Color::COLOR_BLACK, $yellow);
+   
 
     // OBSERVACIONES
     $rangeObservaciones = "AA31:AA34";
