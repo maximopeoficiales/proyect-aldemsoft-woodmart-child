@@ -139,9 +139,9 @@ function aldem_generateFreezeColum(Spreadsheet $spreadsheet, int  $numberColumn,
     }
     return $spreadsheet;
 }
-function aldem_freezeColumn(Spreadsheet $spreadsheet, int $columnIndex, int $row)
+function aldem_freezeColumn(Spreadsheet $spreadsheet,  string $coord)
 {
-    $spreadsheet->getActiveSheet()->freezePaneByColumnAndRow($columnIndex, $row);
+    $spreadsheet->getActiveSheet()->freezePane($coord);
 }
 function aldem_cCellExcel(Spreadsheet  $spreadsheet, $range, $text, $bold = false, $fontSize = 10, $color = Color::COLOR_WHITE, $bgColor = Color::COLOR_BLACK, $wrapText = true)
 {
@@ -173,6 +173,7 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
 
     $spreadsheet = new Spreadsheet();
 
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "A1", "", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
 
     // tablas superiores
     $spreadsheet = aldem_cCellExcel($spreadsheet, "B6:D6", "TARIFA DE HIELO SECO POR KILO EN DOLARES", true, 13, Color::COLOR_WHITE, $blue);
@@ -341,7 +342,7 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
     $rangeTotalHieloSeco = "Z31:Z34";
     $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalHieloSeco, "TOTAL CANTIDAD DE HIELO SECO KG PARA MUESTRAS EXPORTACIÓN x MAWB", true, 9, Color::COLOR_WHITE, $blackWhite);
 
-   
+
 
     // OBSERVACIONES
     $rangeObservaciones = "AA31:AA34";
@@ -409,7 +410,7 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
     $spreadsheet = aldem_cCellExcel($spreadsheet, "AR31:AR34", "COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas) DOLARES", true, 11, $blue, $grayWhite);
 
 
-    // aldem_freezeColumn($spreadsheet, 1, 13);
+    aldem_freezeColumn($spreadsheet, "A35");
     $count = 35;
     foreach ($dataReport as $dr) {
         $spreadsheet = aldem_cCellExcel($spreadsheet, "B$count", $dr->Fecha, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
@@ -575,7 +576,7 @@ function aldem_generateExcelReportCourier($dataReport, $fechaReporte): Spreadshe
     $spreadsheet = aldem_cCellExcel($spreadsheet, "X16", "TOTAL UTILIDAD DOLARES", true, 9, COLOR::COLOR_BLACK, $yellow);
 
     // inmovilizacion de columns
-    aldem_freezeColumn($spreadsheet, 0, 17);
+    aldem_freezeColumn($spreadsheet, "A17");
 
     // falta rellenar con data
     $count = 17;

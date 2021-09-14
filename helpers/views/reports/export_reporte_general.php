@@ -208,7 +208,7 @@ aldem_cargarStyles();
 
 <div class="row justify-content-end my-2 align-items-center ">
     <!-- solucion rapida  -->
-    <p class="help-text my-0 mx-2 d-none" id="textCargandoExcel">Espere unos segundo se esta cargando el excel...</p>
+    <p class="help-text my-0 mx-2 d-none" id="textCargandoExcel">Espere unos segundos se esta cargando el excel...</p>
     <a onclick="document.querySelector('#textCargandoExcel').classList.remove('d-none')" href="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" download="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</a>
 </div>
 <div class="row" style="overflow-x: scroll; height: 500px;">
