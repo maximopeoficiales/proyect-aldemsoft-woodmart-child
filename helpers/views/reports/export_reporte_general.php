@@ -11,6 +11,9 @@ if (doubleval($_GET["tcCustom"]) > 0) {
 }
 
 $dataReport = query_getMarkenExportReporteGeneral5(intval($fechaReporte));
+$queryA = query_getMarkenExportQueryA();
+$queryB = query_getMarkenExportQueryB();
+$queryC = query_getMarkenExportQueryC();
 
 aldem_cargarStyles();
 ?>

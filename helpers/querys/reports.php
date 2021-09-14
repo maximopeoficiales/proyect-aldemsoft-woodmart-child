@@ -139,7 +139,7 @@ function query_getMarkenExportQueryA()
     $sql = "SELECT		
     t1.descripcion, t1.precio1, t1.cantidad		
     as 'tarifa'		
-    from ${prefix}_marken_export_tarifa_hielo t1		
+    from ${prefix}marken_export_tarifa_hielo t1		
     order by t1.orden";
     $result = $wpdb->get_results($wpdb->prepare($sql));
     $wpdb->flush();
@@ -153,7 +153,7 @@ function query_getMarkenExportQueryB()
     $sql = "SELECT
     t1.descripcion, t1.precio
     as 'tarifa'
-    from ${prefix}_marken_export_tarifa_pickup t1
+    from ${prefix}marken_export_tarifa_pickup t1
     where (t1.id > 1 and t1.id <= 11)
     order by t1.orden";
     $result = $wpdb->get_results($wpdb->prepare($sql));
@@ -167,7 +167,7 @@ function query_getMarkenExportQueryC()
     $prefix = query_getAldemPrefix();
     $sql = "SELECT 
     t1.descripcion, t1.precio
-    from ${prefix}_marken_export_tarifa_pickup t1
+    from ${prefix}marken_export_tarifa_pickup t1
     where id = 22";
     $result = $wpdb->get_results($wpdb->prepare($sql));
     $wpdb->flush();
