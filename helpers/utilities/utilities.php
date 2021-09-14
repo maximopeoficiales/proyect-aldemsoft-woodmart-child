@@ -158,6 +158,8 @@ function aldem_cCellExcel(Spreadsheet  $spreadsheet, $range, $text, $bold = fals
 function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spreadsheet
 {
 
+    // querys para las primeras tablas
+    
     $tipoCambio = "4.1";
     $gray = "#ACB9CA";
     $blue = "#333F4F";
