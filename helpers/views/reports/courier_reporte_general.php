@@ -12,9 +12,13 @@ $fechaReporte = $_GET["fecha"];
 if (empty($fechaReporte)) return;
 try {
 
-    $totalCostoMarken = query_getCostoMarken($fechaReporte)->total_costo_marken;
-    $totalGuias = query_getTotalGuias($fechaReporte)->total_guias;
-    $totalGuiasCourier = query_getTotalGuiasExport($fechaReporte)->total_guias_courier;
+    $totalCostoMarken = query_getMarkenCourierMarkenCostos($fechaReporte);
+    $totalGuias = query_getMarkenCourierMarkenGuias($fechaReporte);
+    $totalGuiasCourier = query_getMarkenCourierMarkenGuiasTipo($fechaReporte);
+
+    // $totalCostoMarken = query_getCostoMarken($fechaReporte)->total_costo_marken;
+    // $totalGuias = query_getTotalGuias($fechaReporte)->total_guias;
+    // $totalGuiasCourier = query_getTotalGuiasExport($fechaReporte)->total_guias_courier;
 
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();

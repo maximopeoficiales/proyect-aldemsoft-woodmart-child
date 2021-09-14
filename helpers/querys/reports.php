@@ -1,5 +1,30 @@
 <?php
+// pequeñas tablas
+function query_getMarkenCourierMarkenCostos($periodo)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT * FROM marken_costos  WHERE periodo = $periodo";
+    $result = $wpdb->get_results($wpdb->prepare($sql));
+    $wpdb->flush();
+    return $result[0]->costomarken;
+}
 
+function query_getMarkenCourierMarkenGuias($periodo)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT * FROM marken_guias  WHERE periodo = $periodo";
+    $result = $wpdb->get_results($wpdb->prepare($sql));
+    $wpdb->flush();
+    return $result[0]->totalguias;
+}
+function query_getMarkenCourierMarkenGuiasTipo($periodo)
+{
+    $wpdb = query_getWPDB();
+    $sql = "SELECT * FROM marken_guias_tipo  WHERE id_client_subtipo=3 AND periodo = $periodo";
+    $result = $wpdb->get_results($wpdb->prepare($sql));
+    $wpdb->flush();
+    return $result[0]->totalguiastipo;
+}
 function query_getMarkenCourierReporteGeneral1($periodo)
 {
     $wpdb = query_getWPDB();
@@ -105,4 +130,3 @@ function query_getCostoHandlingPorMaster()
     $wpdb->flush();
     return $result;
 }
-
