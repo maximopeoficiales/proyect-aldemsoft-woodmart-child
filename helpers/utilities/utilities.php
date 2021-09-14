@@ -168,232 +168,301 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
 
     $spreadsheet = new Spreadsheet();
 
+
+    // tablas superiores
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B6:D6", "TARIFA DE HIELO SECO POR KILO EN DOLARES", true, 13, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B7:D7", "LIMA", true, 13, Color::COLOR_WHITE, $gray);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B8", "BOX BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C8", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D8", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B9", "BOX BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C9", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D9", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B10", "BOX BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C10", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D10", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B11:D11", "PROVINCIA (SECOND CITY)", true, 13, Color::COLOR_WHITE, $gray);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B12", "BOX BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C12", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D12", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B13", "BOX BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C13", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D13", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B14", "BOX BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C14", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D14", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B15", "BOX BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "C15", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "D15", 4.24, true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B17:D17", "HANDLING POR GUIA MASTER EN DOLARES", true, 13, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B18:D18", "35.00", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B19:D19", "FLETE EN DOLARES (MINIMO)", true, 13, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B20:D20", "35.00", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    // segunda parte del tarifario 
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J6:T6", "TARIFARIO MARKEN EXPORTACIÓN", true, 13, Color::COLOR_WHITE, $gray);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J7:L7", "TARIFA DE PICK UP POR GUIA EN DOLARES", true, 13, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J8:L8", "LIMA", true, 13, Color::COLOR_WHITE, $blueWhite);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J9", "AMBIENTE", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "K9:L9", "7.54", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J10", "FROZEN BIO I/BIO II/ BIO III", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "K10:L10", "7.54", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J11:L11", "PROVINCIA (SECOND CITY)", true, 13, Color::COLOR_WHITE, $blueWhite);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J12", "AMBIENTE", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "K12:L12", "22.2", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J13", "FROZEN BIO I", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "K13:L13", "44.4", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J14", "FROZEN BIO II", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "K14:L14", "44.40", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "J15", "FROZEN BIO III", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "K15:L15", "44.40", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "N7:S7", "TARIFA DE GASTOS OPERATIVOS POR GUIA MASTER EN DOLARES", true, 13, Color::COLOR_WHITE, $blue);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "N8:S8", "18.00", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+
+
+    // dejare espacios abajo por si acaso
+
+
     // titulos
     // TARIFA PICK UP (RECOJO DE MUESTRAS)
-    $rangeRecojoMuestras = "B8:AC8";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeRecojoMuestras, "TARIFA PICK UP (RECOJO DE MUESTRAS)", true, 18, Color::COLOR_WHITE, Color::COLOR_BLACK);
+    // $rangeRecojoMuestras = "B8:AC8";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeRecojoMuestras, "TARIFA PICK UP (RECOJO DE MUESTRAS)", true, 18, Color::COLOR_WHITE, Color::COLOR_BLACK);
 
-    // TARIFA HIELO SECO
-    $rangeTarifaHieloSeco = "AD8:AR8";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTarifaHieloSeco, "TARIFA HIELO SECO", true, 18, Color::COLOR_WHITE, Color::COLOR_BLACK);
+    // // TARIFA HIELO SECO
+    // $rangeTarifaHieloSeco = "AD8:AR8";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTarifaHieloSeco, "TARIFA HIELO SECO", true, 18, Color::COLOR_WHITE, Color::COLOR_BLACK);
 
 
-    // CANTIDAD DE PICK UP (RECOJOS
-    $rangeCantidadPickUp = "B9:M9";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCantidadPickUp, "CANTIDAD DE PICK UP (RECOJOS)", true, 14, Color::COLOR_WHITE, $blue);
+    // // CANTIDAD DE PICK UP (RECOJOS
+    // $rangeCantidadPickUp = "B9:M9";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCantidadPickUp, "CANTIDAD DE PICK UP (RECOJOS)", true, 14, Color::COLOR_WHITE, $blue);
 
-    // FECHA 1
-    $rangeFecha1 = "B10:B12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeFecha1, "FECHA", true, 11, Color::COLOR_BLACK, $blackWhite, false);
-    // JOB
-    $rangeFecha1 = "C10:C12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeFecha1, "JOB", true, 11, Color::COLOR_BLACK, $blackWhite, false);
+    // // FECHA 1
+    // $rangeFecha1 = "B10:B12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeFecha1, "FECHA", true, 11, Color::COLOR_BLACK, $blackWhite, false);
+    // // JOB
+    // $rangeFecha1 = "C10:C12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeFecha1, "JOB", true, 11, Color::COLOR_BLACK, $blackWhite, false);
 
-    // GUIAS DE LIMA
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "D10:H10", "GUIAS DE LIMA", true, 11, Color::COLOR_BLACK, $gray);
+    // // GUIAS DE LIMA
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "D10:H10", "GUIAS DE LIMA", true, 11, Color::COLOR_BLACK, $gray);
 
-    // GUIAS DE PROVINCIA
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "I10:M10", "GUIAS DE PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // // GUIAS DE PROVINCIA
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "I10:M10", "GUIAS DE PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+    // // // FROZEN
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "D11:H11", "FROZEN", true, 11, Color::COLOR_BLACK, $gray);
+
+    // // FROZEN2
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "I11:M11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
+
+    // // AMBIENTE1
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "D12", "Ambiente", true, 11, Color::COLOR_BLACK, $gray, false);
+
+    // // BIO I II III
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "E12", "BIO I", true, 11, Color::COLOR_BLACK, $gray);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "F12", "BIO II", true, 11, Color::COLOR_BLACK, $gray);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "G12", "BIO III", true, 11, Color::COLOR_BLACK, $gray);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "H12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $gray, false);
+
+    // // AMBIENTE2
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "I12", "AMBIENTE", true, 11, Color::COLOR_BLACK, $blackWhite, false);
+
+    // // BIO I II III
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "J12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "K12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "L12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "M12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $blackWhite, false);
+
+
+    // // total guias marken
+    // $rangeTotalGuiasMarken = "N9:N12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalGuiasMarken, "Estado", true, 9, Color::COLOR_BLACK, $yellow, false);
+
+    // // SEGUNDA PARTE COBRO A MARKEN PICK UP DOLARES USD
+    // // GUIAS DE LIMA
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "O10:S10", "GUIAS DE LIMA", true, 11, Color::COLOR_BLACK, $gray);
+
+    // // GUIAS DE PROVINCIA
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "T10:X10", "GUIAS DE PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
 
     // // FROZEN
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "D11:H11", "FROZEN", true, 11, Color::COLOR_BLACK, $gray);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "O11:S11", "FROZEN", true, 11, Color::COLOR_BLACK, $gray);
 
-    // FROZEN2
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "I11:M11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // // FROZEN2
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "T11:X11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
 
-    // AMBIENTE1
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "D12", "Ambiente", true, 11, Color::COLOR_BLACK, $gray, false);
+    // // AMBIENTE1
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "O12", "Ambiente", true, 11, Color::COLOR_BLACK, $gray, false);
 
-    // BIO I II III
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "E12", "BIO I", true, 11, Color::COLOR_BLACK, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "F12", "BIO II", true, 11, Color::COLOR_BLACK, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "G12", "BIO III", true, 11, Color::COLOR_BLACK, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "H12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $gray, false);
+    // // BIO I II III
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "P12", "BIO I", true, 11, Color::COLOR_BLACK, $gray);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "Q12", "BIO II", true, 11, Color::COLOR_BLACK, $gray);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "R12", "BIO III", true, 11, Color::COLOR_BLACK, $gray);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "S12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $gray, false);
 
-    // AMBIENTE2
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "I12", "AMBIENTE", true, 11, Color::COLOR_BLACK, $blackWhite, false);
+    // // AMBIENTE2
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "T12", "AMBIENTE", true, 11, Color::COLOR_BLACK, $blackWhite, false);
 
-    // BIO I II III
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "J12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "K12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "L12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "M12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $blackWhite, false);
-
-
-    // total guias marken
-    $rangeTotalGuiasMarken = "N9:N12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalGuiasMarken, "Estado", true, 9, Color::COLOR_BLACK, $yellow, false);
-
-    // SEGUNDA PARTE COBRO A MARKEN PICK UP DOLARES USD
-    // GUIAS DE LIMA
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "O10:S10", "GUIAS DE LIMA", true, 11, Color::COLOR_BLACK, $gray);
-
-    // GUIAS DE PROVINCIA
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "T10:X10", "GUIAS DE PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
-
-    // FROZEN
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "O11:S11", "FROZEN", true, 11, Color::COLOR_BLACK, $gray);
-
-    // FROZEN2
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "T11:X11", "FROZEN", true, 11, Color::COLOR_BLACK, $blackWhite);
-
-    // AMBIENTE1
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "O12", "Ambiente", true, 11, Color::COLOR_BLACK, $gray, false);
-
-    // BIO I II III
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "P12", "BIO I", true, 11, Color::COLOR_BLACK, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "Q12", "BIO II", true, 11, Color::COLOR_BLACK, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "R12", "BIO III", true, 11, Color::COLOR_BLACK, $gray);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "S12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $gray, false);
-
-    // AMBIENTE2
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "T12", "AMBIENTE", true, 11, Color::COLOR_BLACK, $blackWhite, false);
-
-    // BIO I II III
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "U12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "V12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "W12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "X12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $blackWhite, false);
+    // // BIO I II III
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "U12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "V12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "W12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "X12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $blackWhite, false);
 
 
-    // COBRO A MARKEN PICK UP  DOLARES USD
-    $rangeCobroMarkenPickUP = "O9:X9";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCobroMarkenPickUP, "COBRO A MARKEN PICK UP  DOLARES USD", true, 14, Color::COLOR_WHITE, $blue);
+    // // COBRO A MARKEN PICK UP  DOLARES USD
+    // $rangeCobroMarkenPickUP = "O9:X9";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCobroMarkenPickUP, "COBRO A MARKEN PICK UP  DOLARES USD", true, 14, Color::COLOR_WHITE, $blue);
 
-    // TOTAL PICK UP DOLARES USD
-    $rangeTotalPickUp = "Y9:Y12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalPickUp, "TOTAL PICK UP DOLARES USD", true, 9, Color::COLOR_BLACK, $yellow);
+    // // TOTAL PICK UP DOLARES USD
+    // $rangeTotalPickUp = "Y9:Y12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalPickUp, "TOTAL PICK UP DOLARES USD", true, 9, Color::COLOR_BLACK, $yellow);
 
-    // TOTAL CANTIDAD DE HIELO SECO KG
-    $rangeTotalHieloSeco = "Z9:Z12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalHieloSeco, "TOTAL CANTIDAD DE HIELO SECO KG PARA MUESTRAS EXPORTACIÓN x MAWB", true, 9, Color::COLOR_WHITE, $blackWhite);
+    // // TOTAL CANTIDAD DE HIELO SECO KG
+    // $rangeTotalHieloSeco = "Z9:Z12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTotalHieloSeco, "TOTAL CANTIDAD DE HIELO SECO KG PARA MUESTRAS EXPORTACIÓN x MAWB", true, 9, Color::COLOR_WHITE, $blackWhite);
 
-    // // PARA MUESTRAS EXPORTACIÓN x MAWB
-    // $spreadsheet = aldem_cCellExcel($spreadsheet, "U12", "", true, 9, Color::COLOR_BLACK, $yellow);
+    // // // PARA MUESTRAS EXPORTACIÓN x MAWB
+    // // $spreadsheet = aldem_cCellExcel($spreadsheet, "U12", "", true, 9, Color::COLOR_BLACK, $yellow);
 
-    // OBSERVACIONES
-    $rangeObservaciones = "AA9:AA12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeObservaciones, "OBSERVACIONES", true, 12, Color::COLOR_WHITE, $blackWhite);
+    // // OBSERVACIONES
+    // $rangeObservaciones = "AA9:AA12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeObservaciones, "OBSERVACIONES", true, 12, Color::COLOR_WHITE, $blackWhite);
 
-    // COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA SOLES (SIN IGV)
-    $rangeCostoHieloSeco = "AB9:AB12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCostoHieloSeco, "COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA SOLES (SIN IGV)", true, 9, Color::COLOR_WHITE, $blackWhite);
+    // // COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA SOLES (SIN IGV)
+    // $rangeCostoHieloSeco = "AB9:AB12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCostoHieloSeco, "COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA SOLES (SIN IGV)", true, 9, Color::COLOR_WHITE, $blackWhite);
 
-    // COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA DOLARES
-    $rangeCostoHieloSecoDolares = "AC9:AC12";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCostoHieloSecoDolares, "COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA DOLARES Tipo de CAMBIO: $tipoCambio", true, 9, Color::COLOR_WHITE, $blackWhite);
-
-
-    // TARIFA DE HIELO SECO
-    $rangeTarifaHieloSeco = "AD9:AK9";
-    $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTarifaHieloSeco, "TARIFA DE HIELO SECO DOLARES", true, 11, Color::COLOR_WHITE, $blackWhite);
+    // // COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA DOLARES
+    // $rangeCostoHieloSecoDolares = "AC9:AC12";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeCostoHieloSecoDolares, "COSTO (INVERSIÓN) DE HIELO SECO SECO EN LIMA DOLARES Tipo de CAMBIO: $tipoCambio", true, 9, Color::COLOR_WHITE, $blackWhite);
 
 
-    // LIMA
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AD10:AG11", "LIMA", true, 11, Color::COLOR_BLACK, $grayWhite);
-    // PROVINCIA
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AH10:AK11", "PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
-
-    // LIMA BIO
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AD12", "BIO I", true, 11, Color::COLOR_BLACK, $grayWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AE12", "BIO II", true, 11, Color::COLOR_BLACK, $grayWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AF12", "BIO III", true, 11, Color::COLOR_BLACK, $grayWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AG12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $grayWhite);
-
-    // PROVINCIA BIO
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AH12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AI12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AJ12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AK12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $blackWhite, false);
-
-    // // UTILIDAD HIELO SECO
-
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AL9:AL11", "UTILIDAD HIELO SECO DOLARES", true, 11, Color::COLOR_BLACK, $grayWhite);
+    // // TARIFA DE HIELO SECO
+    // $rangeTarifaHieloSeco = "AD9:AK9";
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeTarifaHieloSeco, "TARIFA DE HIELO SECO DOLARES", true, 11, Color::COLOR_WHITE, $blackWhite);
 
 
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AL12", "LIMA", true, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    // // LIMA
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AD10:AG11", "LIMA", true, 11, Color::COLOR_BLACK, $grayWhite);
+    // // PROVINCIA
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AH10:AK11", "PROVINCIA", true, 11, Color::COLOR_BLACK, $blackWhite);
 
-    // HANDLING
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AM9:AN11", "HANDLING", true, 11, Color::COLOR_WHITE, $blackWhite);
+    // // LIMA BIO
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AD12", "BIO I", true, 11, Color::COLOR_BLACK, $grayWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AE12", "BIO II", true, 11, Color::COLOR_BLACK, $grayWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AF12", "BIO III", true, 11, Color::COLOR_BLACK, $grayWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AG12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $grayWhite);
 
-    // TARIFA
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AM12", "TARIFA DOLARES", true, 11, Color::COLOR_BLACK, $yellow);
+    // // PROVINCIA BIO
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AH12", "BIO I", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AI12", "BIO II", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AJ12", "BIO III", true, 11, Color::COLOR_BLACK, $blackWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AK12", "REFRIGERADO", true, 11, Color::COLOR_BLACK, $blackWhite, false);
 
-    // GASTO
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AN12", "GASTO DOLARES", true, 11, Color::COLOR_BLACK, $grayWhite);
+    // // // UTILIDAD HIELO SECO
 
-
-    // UTILIDAD
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AO9:AO12", "UTILIDAD HANDLING DOLARES", true, 11, $blue, $grayWhite);
-
-    // // TARIFA DE TRAMITE OPERATIVO
-
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AP9:AP12", "TARIFA DE TRAMITE OPERATIVO DOLARES", true, 11, Color::COLOR_WHITE, $blue);
-
-    // TARIFA DE CAJA DE EMBALAJE MUESTRAS DE AMBIENTE
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AQ9:AQ12", "TARIFA DE CAJA DE EMBALAJE MUESTRAS DE AMBIENTE DOLARES", true, 11, Color::COLOR_WHITE, $blue);
-
-    // COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas)
-    $spreadsheet = aldem_cCellExcel($spreadsheet, "AR9:AR12", "COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas) DOLARES", true, 11, $blue, $grayWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AL9:AL11", "UTILIDAD HIELO SECO DOLARES", true, 11, Color::COLOR_BLACK, $grayWhite);
 
 
-    aldem_freezeColumn($spreadsheet, 1, 13);
-    $count = 13;
-    foreach ($dataReport as $dr) {
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "B$count", $dr->Fecha, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "C$count", $dr->Job, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "D$count", $dr->Lima_Amb, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "E$count", $dr->Lima_Bio1, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "F$count", $dr->Lima_Bio2, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "G$count", $dr->Lima_Bio3, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "H$count", $dr->Lima_refrigerado, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "I$count", $dr->Prov_Amb, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "J$count", $dr->Prov_Bio1, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "K$count", $dr->Prov_Bio2, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "L$count", $dr->Prov_Bio3, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "M$count", $dr->Prov_Refrigerado, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "N$count", $dr->estado, false, 11, Color::COLOR_WHITE, $blueWhite);
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AL12", "LIMA", true, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
 
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "O$count", $dr->Lima_Amb_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "P$count", $dr->Lima_Bio1_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "Q$count", $dr->Lima_Bio2_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "R$count", $dr->Lima_Bio3_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "S$count", $dr->Lima_refrigerado_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "T$count", $dr->Prov_Amb_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "U$count", $dr->Prov_Bio1_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "V$count", $dr->Prov_Bio2_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "W$count", $dr->Prov_Bio3_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "X$count", $dr->Prov_Refrigerado_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    // // HANDLING
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AM9:AN11", "HANDLING", true, 11, Color::COLOR_WHITE, $blackWhite);
 
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "Y$count", $dr->Total, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "Z$count", $dr->cantidad, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AA$count", $dr->observaciones, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AB$count", $dr->costo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AC$count", $dr->costo_dolares, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    // // TARIFA
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AM12", "TARIFA DOLARES", true, 11, Color::COLOR_BLACK, $yellow);
 
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AD$count", $dr->Lima_bio1hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AE$count", $dr->Lima_bio2hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AF$count", $dr->Lima_bio3hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AG$count", $dr->Lima_refrihielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AH$count", $dr->prov_bio1hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AI$count", $dr->prov_bio2hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AJ$count", $dr->prov_bio3hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    // // GASTO
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AN12", "GASTO DOLARES", true, 11, Color::COLOR_BLACK, $grayWhite);
 
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AK$count", $dr->prov_refrihielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    // // UTILIDAD
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AO9:AO12", "UTILIDAD HANDLING DOLARES", true, 11, $blue, $grayWhite);
+
+    // // // TARIFA DE TRAMITE OPERATIVO
+
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AP9:AP12", "TARIFA DE TRAMITE OPERATIVO DOLARES", true, 11, Color::COLOR_WHITE, $blue);
+
+    // // TARIFA DE CAJA DE EMBALAJE MUESTRAS DE AMBIENTE
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AQ9:AQ12", "TARIFA DE CAJA DE EMBALAJE MUESTRAS DE AMBIENTE DOLARES", true, 11, Color::COLOR_WHITE, $blue);
+
+    // // COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas)
+    // $spreadsheet = aldem_cCellExcel($spreadsheet, "AR9:AR12", "COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas) DOLARES", true, 11, $blue, $grayWhite);
+
+
+    // aldem_freezeColumn($spreadsheet, 1, 13);
+    // $count = 13;
+    // foreach ($dataReport as $dr) {
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "B$count", $dr->Fecha, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "C$count", $dr->Job, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "D$count", $dr->Lima_Amb, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "E$count", $dr->Lima_Bio1, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "F$count", $dr->Lima_Bio2, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "G$count", $dr->Lima_Bio3, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "H$count", $dr->Lima_refrigerado, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "I$count", $dr->Prov_Amb, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "J$count", $dr->Prov_Bio1, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "K$count", $dr->Prov_Bio2, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "L$count", $dr->Prov_Bio3, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "M$count", $dr->Prov_Refrigerado, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "N$count", $dr->estado, false, 11, Color::COLOR_WHITE, $blueWhite);
+
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "O$count", $dr->Lima_Amb_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "P$count", $dr->Lima_Bio1_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "Q$count", $dr->Lima_Bio2_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "R$count", $dr->Lima_Bio3_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "S$count", $dr->Lima_refrigerado_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "T$count", $dr->Prov_Amb_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "U$count", $dr->Prov_Bio1_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "V$count", $dr->Prov_Bio2_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "W$count", $dr->Prov_Bio3_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "X$count", $dr->Prov_Refrigerado_precio, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "Y$count", $dr->Total, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "Z$count", $dr->cantidad, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AA$count", $dr->observaciones, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AB$count", $dr->costo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AC$count", $dr->costo_dolares, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AD$count", $dr->Lima_bio1hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AE$count", $dr->Lima_bio2hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AF$count", $dr->Lima_bio3hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AG$count", $dr->Lima_refrihielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AH$count", $dr->prov_bio1hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AI$count", $dr->prov_bio2hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AJ$count", $dr->prov_bio3hielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AK$count", $dr->prov_refrihielo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
 
 
 
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AL$count", $dr->costovariable, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AM$count", $dr->costohandling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AN$count", $dr->gastohandling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AO$count", $dr->utilidadhandling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AP$count", $dr->tramiteoperativo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AQ$count", $dr->tarifacaja, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
-        $spreadsheet = aldem_cCellExcel($spreadsheet, "AR$count", $dr->costoembalar, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AL$count", $dr->costovariable, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AM$count", $dr->costohandling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AN$count", $dr->gastohandling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AO$count", $dr->utilidadhandling, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AP$count", $dr->tramiteoperativo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AQ$count", $dr->tarifacaja, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    //     $spreadsheet = aldem_cCellExcel($spreadsheet, "AR$count", $dr->costoembalar, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
 
 
-        $count++;
-    }
+    //     $count++;
+    // }
     $spreadsheet = aldem_format_excelByAZ($spreadsheet, "BZ");
     return $spreadsheet;
 }

@@ -66,7 +66,7 @@ aldem_cargarStyles();
 </style>
 
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
             <label for="tipoCambio">Tipo de Cambio:</label>
             <div class="input-group mb-3">
