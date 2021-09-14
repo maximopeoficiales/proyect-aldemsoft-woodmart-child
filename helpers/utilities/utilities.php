@@ -71,7 +71,7 @@ function aldem_isValidNumber($number)
     $number = empty($number) ? 0 : $number;
     $number = is_infinite($number) ? 0 : $number;
     $number = is_numeric($number) ? $number : 0;
-    return $number;
+    return number_format($number, 2);
 }
 
 
