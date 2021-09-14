@@ -121,7 +121,18 @@ function aldem_getFirstCoordExcel($coord): string
 {
     return explode(":", $coord)[0];
 }
+function aldem_generateFreezeColum(Spreadsheet $spreadsheet, int  $numberColumn, string $rangoLetterFreeze): Spreadsheet
+{
 
+    foreach (aldem_generate_arrayAZ($rangoLetterFreeze) as $letter) {
+        $spreadsheet->getActiveSheet()->freezePane($letter . $numberColumn);
+    }
+    return $spreadsheet;
+}
+function aldem_freezeColumn(Spreadsheet $spreadsheet, int $columnIndex, int $row)
+{
+    $spreadsheet->getActiveSheet()->freezePaneByColumnAndRow($columnIndex, $row);
+}
 function aldem_cCellExcel(Spreadsheet  $spreadsheet, $range, $text, $bold = false, $fontSize = 10, $color = Color::COLOR_WHITE, $bgColor = Color::COLOR_BLACK, $wrapText = true)
 {
     $excel = $spreadsheet->getActiveSheet();
@@ -315,6 +326,8 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
     // COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas)
     $spreadsheet = aldem_cCellExcel($spreadsheet, "AR9:AR12", "COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas) DOLARES", true, 11, $blue, $grayWhite);
 
+
+    aldem_freezeColumn($spreadsheet, 1, 13);
     $count = 13;
     foreach ($dataReport as $dr) {
         $spreadsheet = aldem_cCellExcel($spreadsheet, "B$count", $dr->Fecha, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
@@ -475,6 +488,10 @@ function aldem_generateExcelReportCourier($dataReport, $fechaReporte): Spreadshe
     $spreadsheet = aldem_cCellExcel($spreadsheet, "V16", "TOTAL INGRESOS DOLARES", true, 9, COLOR::COLOR_WHITE, COLOR::COLOR_BLACK);
     $spreadsheet = aldem_cCellExcel($spreadsheet, "W16", "TOTAL GASTOS DOLARES", true, 9, $blue, $gray);
     $spreadsheet = aldem_cCellExcel($spreadsheet, "X16", "TOTAL UTILIDAD DOLARES", true, 9, COLOR::COLOR_BLACK, $yellow);
+
+    // inmovilizacion de columns
+    aldem_freezeColumn($spreadsheet, 0, 17);
+
     // falta rellenar con data
     $count = 17;
     foreach ($dataReport as $dr) {
