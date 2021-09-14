@@ -116,8 +116,9 @@ aldem_cargarStyles();
                     <!-- 23 -->
                     <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO SECO EN LIMA SOLES(SIN IGV)</th>
                     <!-- 20 -->
-                    <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO EN LIMA DOLARES TIPO DE CAMBIO: <?= number_format($moneda, 2) ?>/th>
-                        <!-- 17 -->
+                    <th rowspan="4" colspan="3" class="aldem-bg-black-white">COSTO (INVERSIÓN)DE HIELO SECO EN LIMA DOLARES TIPO DE CAMBIO: <?= number_format($moneda, 2) ?>
+                    </th>
+                    <!-- 17 -->
                     <th rowspan="2" colspan="8" class="aldem-bg-gray">TARIFA DE HIELO SECO DOLARES</th>
                     <!-- 11 -->
                     <th rowspan="2" colspan="2" class="aldem-bg-gray-white">UTILIDAD HIELO SECO DOLARES</th>

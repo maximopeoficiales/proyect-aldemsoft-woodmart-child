@@ -16,9 +16,11 @@ try {
     $totalGuias = query_getMarkenCourierMarkenGuias($fechaReporte);
     $totalGuiasCourier = query_getMarkenCourierMarkenGuiasTipo($fechaReporte);
 
-    // $totalCostoMarken = query_getCostoMarken($fechaReporte)->total_costo_marken;
-    // $totalGuias = query_getTotalGuias($fechaReporte)->total_guias;
-    // $totalGuiasCourier = query_getTotalGuiasExport($fechaReporte)->total_guias_courier;
+    // validaciones de campos
+    $totalCostoMarken = aldem_isValidNumber($totalCostoMarken);
+    $totalGuias = aldem_isValidNumber($totalGuias);
+    $totalGuiasCourier = aldem_isValidNumber($totalGuiasCourier);
+
 
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();
@@ -152,7 +154,23 @@ aldem_cargarStyles();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($markenCourierReporteGeneral as $marken) { ?>
+                <?php foreach ($markenCourierReporteGeneral as $marken) {
+                    // validaciones 
+                    $marken->Ingresos = aldem_isValidNumber($marken->Ingresos);
+                    $marken->Egresos = aldem_isValidNumber($marken->Egresos);
+
+                    // operaciones
+                    $costoVariable = $totalCostoMarken / $totalGuiasCourier;
+                    $costoVariable = aldem_isValidNumber($costoVariable);
+
+                    $gastos = $marken->Egresos + $totalCostoMarken / $totalGuiasCourier;
+                    $gastos = $gastos = aldem_isValidNumber($gastos);
+
+                    $totalUtilidad = $marken->Ingresos - $marken->Egresos - $totalCostoMarken / $totalGuiasCourier;
+
+                    $totalUtilidad  = aldem_isValidNumber($totalUtilidad);
+
+                ?>
                     <tr>
                         <td><?= $marken->Manifiesto ?></td>
                         <td><?= $marken->DUA ?></td>
@@ -174,10 +192,10 @@ aldem_cargarStyles();
                         <td><?= $marken->tarifa_costo ?></td>
                         <td><?= $marken->tarifa_impuestos ?></td>
                         <td><?= $marken->Tramite_Operativo ?></td>
-                        <td>0</td>
+                        <td><?= $costoVariable ?></td>
                         <td><?= $marken->Ingresos ?></td>
-                        <td><?= $marken->Egresos ?></td>
-                        <td>0</td>
+                        <td><?= $gastos ?></td>
+                        <td><?= $totalUtilidad ?></td>
                     </tr>
                 <?php } ?>
 

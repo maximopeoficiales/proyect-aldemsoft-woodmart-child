@@ -64,6 +64,16 @@ function aldem_getRoleCodes()
         ["id" => 73, "name" => "(73) Zofratacna"],
     ];
 }
+// valida si es nan o empty o infinty o number
+function aldem_isValidNumber($number)
+{
+    $number = floatval($number);
+    $number = empty($number) ? 0 : $number;
+    $number = is_infinite($number) ? 0 : $number;
+    $number = is_numeric($number) ? $number : 0;
+    return $number;
+}
+
 
 function aldem_get_currency(string $currency)
 {
@@ -402,14 +412,17 @@ function aldem_generateExcelReportCourier($dataReport, $fechaReporte): Spreadshe
     $green = "#76923C";
     $spreadsheet = new Spreadsheet();
 
-    // data
     $totalCostoMarken = query_getMarkenCourierMarkenCostos($fechaReporte);
     $totalGuias = query_getMarkenCourierMarkenGuias($fechaReporte);
     $totalGuiasCourier = query_getMarkenCourierMarkenGuiasTipo($fechaReporte);
 
-    // $totalCostoMarken = query_getCostoMarken($fechaReporte)->total_costo_marken;
-    // $totalGuias = query_getTotalGuias($fechaReporte)->total_guias;
-    // $totalGuiasCourier = query_getTotalGuiasExport($fechaReporte)->total_guias_courier;
+    // validaciones de campos
+    $totalCostoMarken = aldem_isValidNumber($totalCostoMarken);
+    $totalGuias = aldem_isValidNumber($totalGuias);
+    $totalGuiasCourier = aldem_isValidNumber($totalGuiasCourier);
+
+
+
     $transporteGuiaHija = query_servicioTransportePorGuiaHija();
     $courierReportC = query_courierReportQueryC();
     $costoHandlingMaster = query_getCostoHandlingPorMaster();
@@ -495,6 +508,22 @@ function aldem_generateExcelReportCourier($dataReport, $fechaReporte): Spreadshe
     // falta rellenar con data
     $count = 17;
     foreach ($dataReport as $dr) {
+        // validaciones 
+        $dr->Ingresos = aldem_isValidNumber($dr->Ingresos);
+        $dr->Egresos = aldem_isValidNumber($dr->Egresos);
+
+        // operaciones
+        $costoVariable = $totalCostoMarken / $totalGuiasCourier;
+        $costoVariable = aldem_isValidNumber($costoVariable);
+
+        $gastos = $dr->Egresos + $totalCostoMarken / $totalGuiasCourier;
+        $gastos = $gastos = aldem_isValidNumber($gastos);
+
+        $totalUtilidad = $dr->Ingresos - $dr->Egresos - $totalCostoMarken / $totalGuiasCourier;
+
+        $totalUtilidad  = aldem_isValidNumber($totalUtilidad);
+
+
         $spreadsheet = aldem_cCellExcel($spreadsheet, "A$count", $dr->Manifiesto, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
         $spreadsheet = aldem_cCellExcel($spreadsheet, "B$count", $dr->DUA, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
         $spreadsheet = aldem_cCellExcel($spreadsheet, "C$count", $dr->Fecha, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
