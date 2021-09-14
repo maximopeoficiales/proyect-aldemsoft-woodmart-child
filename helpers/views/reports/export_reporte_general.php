@@ -92,6 +92,119 @@ aldem_cargarStyles();
     </div>
 </div>
 
+<div class="row my-2 ">
+    <div class="col-md-6 my-2">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="3" class=" aldem-bg-blue text-center aldem-border-black">TARIFA DE HIELO SECO POR KILO EN DOLARES</th>
+                </tr>
+                <tr>
+                    <th colspan="3" class=" aldem-bg-gray-white text-center aldem-border-black">LIMA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">BOX BIO I</td>
+                    <td class="text-center"><?= $queryA[1]->precio1 ?></td>
+                    <td class="text-center"><?= $queryA[1]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">BOX BIO II</td>
+                    <td class="text-center"><?= $queryA[2]->precio1 ?></td>
+                    <td class="text-center"><?= $queryA[2]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">BOX BIO III</td>
+                    <td class="text-center"><?= $queryA[3]->precio1 ?></td>
+                    <td class="text-center"><?= $queryA[3]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <th colspan="3" class=" aldem-bg-gray-white text-center aldem-border-black">PROVINCIA(SECOND CITY)</th>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">BOX BIO I</td>
+                    <td class="text-center"><?= $queryA[5]->precio1 ?></td>
+                    <td class="text-center"><?= $queryA[5]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">BOX BIO II</td>
+                    <td class="text-center"><?= $queryA[6]->precio1 ?></td>
+                    <td class="text-center"><?= $queryA[6]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">IQUITOS - BOX BIO II</td>
+                    <td class="text-center"><?= $queryA[7]->precio1 ?></td>
+                    <td class="text-center"><?= $queryA[7]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">BOX BIO III</td>
+                    <td class="text-center"><?= $queryA[8]->precio1 ?></td>
+                    <td class="text-center"><?= $queryA[8]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <th colspan="3" class=" aldem-bg-blue text-center aldem-border-black">HANDLING POR GUIA MASTER EN DOLARES</th>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="3"><?= $queryA[11]->precio1 ?></td>
+                </tr>
+                <tr>
+                    <th colspan="3" class=" aldem-bg-blue text-center aldem-border-black">FLETE EN DOLARES (MINIMO)</th>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="3"><?= $queryA[13]->precio1 ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6 my-2">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2" class=" aldem-bg-blue text-center aldem-border-black">TARIFA DE PICK UP POR GUIA EN DOLARES</th>
+                </tr>
+                <tr>
+                    <th colspan="2" class=" aldem-bg-gray-white text-center aldem-border-black">LIMA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">AMBIENTE</td>
+                    <td class="text-center"><?= $queryB[1]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">FROZEN BIO I/BIO II/ BIO III</td>
+                    <td class="text-center"><?= $queryB[2]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <th colspan="2" class=" aldem-bg-gray-white text-center aldem-border-black">PROVINCIA (SECOND CITY)</th>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">AMBIENTE</td>
+                    <td class="text-center"><?= $queryB[6]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">FROZEN BIO I</td>
+                    <td class="text-center"><?= $queryB[7]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">FROZEN BIO II</td>
+                    <td class="text-center"><?= $queryB[8]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <td class=" aldem-border-black text-uppercase">FROZEN BIO III</td>
+                    <td class="text-center"><?= $queryB[9]->tarifa ?></td>
+                </tr>
+                <tr>
+                    <th colspan="2" class=" aldem-bg-blue text-center aldem-border-black">TARIFA DE GASTOS OPERATIVOS POR GUIA MASTER EN DOLARES</th>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="2"><?= $queryC[0]->precio ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <div class="row justify-content-end my-2 ">
     <a type="submit" href="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" download="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</a>
