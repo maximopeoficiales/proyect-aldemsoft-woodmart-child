@@ -190,6 +190,7 @@ aldem_cargarStyles();
             </thead>
             <tbody style="color:black; text-align: center;">
                 <?php foreach ($dataReport as $dr) {
+                    $costoDolares = $dr->costo_dolares / $moneda;
                 ?>
                     <tr>
                         <td><?= $dr->Fecha ?></td>
@@ -221,7 +222,7 @@ aldem_cargarStyles();
                         <td colspan="3"><?= $dr->cantidad ?></td>
                         <td colspan="10"><?= $dr->observaciones ?></td>
                         <td colspan="3"><?= $dr->costo ?></td>
-                        <td colspan="3"><?= $dr->costo_dolares ?></td>
+                        <td colspan="3"><?= $costoDolares ?></td>
 
                         <td><?= $dr->Lima_bio1hielo ?></td>
                         <td><?= $dr->Lima_bio2hielo ?></td>
@@ -231,7 +232,7 @@ aldem_cargarStyles();
                         <td><?= $dr->prov_bio2hielo ?></td>
                         <td colspan=""><?= $dr->prov_bio3hielo ?></td>
                         <td><?= $dr->prov_refrihielo ?></td>
-                        
+
                         <!-- datos finales -->
                         <td colspan="2"><?= $dr->costovariable ?></td>
                         <td><?= $dr->costohandling ?></td>
