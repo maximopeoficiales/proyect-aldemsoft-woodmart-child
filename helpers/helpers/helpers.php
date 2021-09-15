@@ -176,13 +176,14 @@ function aldem_getYears(): array
  */
 function aldem_isUserCreated($id_usuario_created): bool
 {
-    $validation = false;
-    $validation = (intval($id_usuario_created) === intval(get_current_user_id())) ? true : false;
+    // $validation = false;
+    // $validation = (intval($id_usuario_created) === intval(get_current_user_id())) ? true : false;
 
-    if (intval(get_current_user_id()) === 42) {
-        $validation = true;
-    }
-    return $validation;
+    // if (intval(get_current_user_id()) === 42) {
+    //     $validation = true;
+    // }
+    // return $validation;
+    return true;
 }
 
 /**
