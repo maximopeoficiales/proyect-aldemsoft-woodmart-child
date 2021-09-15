@@ -792,9 +792,10 @@ function aldem_export_excel()
                     exit($e->getMessage());
                 }
 
+
+                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
                 unlink($fileName);
                 exit($content);
-                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
             } else if ($_GET["type_report"] == "export") {
                 $dataReport =  query_getMarkenExportReporteGeneral5(intval($fechaReporte));
                 $fileName = "export-$fechaReporte.xlsx";
@@ -807,9 +808,10 @@ function aldem_export_excel()
                     exit($e->getMessage());
                 }
 
+
+                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
                 unlink($fileName);
                 exit($content);
-                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
             }
         }
         return;
