@@ -784,20 +784,34 @@ function aldem_export_excel()
                 $dataReport =  query_getMarkenCourierReporteGeneral1(intval($fechaReporte));
                 $fileName = "courier-$fechaReporte.xlsx";
                 $spreadsheet = aldem_generateExcelReportCourier($dataReport, $fechaReporte);
-                $writer = new Xlsx($spreadsheet);
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
-                $writer->save('php://output');
+                try {
+                    $writer = new Xlsx($spreadsheet);
+                    $writer->save($fileName);
+                    $content = file_get_contents($fileName);
+                } catch (Exception $e) {
+                    exit($e->getMessage());
+                }
 
-                return;
+
+                header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+                unlink($fileName);
+                exit($content);
             } else if ($_GET["type_report"] == "export") {
                 $dataReport =  query_getMarkenExportReporteGeneral5(intval($fechaReporte));
                 $fileName = "export-$fechaReporte.xlsx";
                 $spreadsheet = aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte);
-                $writer = new Xlsx($spreadsheet);
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                try {
+                    $writer = new Xlsx($spreadsheet);
+                    $writer->save($fileName);
+                    $content = file_get_contents($fileName);
+                } catch (Exception $e) {
+                    exit($e->getMessage());
+                }
+
+
                 header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
-                $writer->save('php://output');
+                unlink($fileName);
+                exit($content);
             }
         }
         return;
