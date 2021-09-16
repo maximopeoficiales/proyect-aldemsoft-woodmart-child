@@ -173,7 +173,7 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
 
     $spreadsheet = new Spreadsheet();
 
-   
+
 
     // tablas superiores
     $spreadsheet = aldem_cCellExcel($spreadsheet, "B1:D1", "TARIFA DE HIELO SECO POR KILO EN DOLARES", true, 13, Color::COLOR_WHITE, $blue);
@@ -247,7 +247,7 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
     $rangeRecojoMuestras = "B18:AC18";
     $spreadsheet = aldem_cCellExcel($spreadsheet, $rangeRecojoMuestras, "TARIFA PICK UP (RECOJO DE MUESTRAS)", true, 18, Color::COLOR_WHITE, Color::COLOR_BLACK);
 
-    
+
 
     // CANTIDAD DE PICK UP (RECOJOS
     $rangeCantidadPickUp = "B19:M19";
@@ -406,6 +406,8 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
     // COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas)
     $spreadsheet = aldem_cCellExcel($spreadsheet, "AR19:AR22", "COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas) DOLARES", true, 11, $blue, $grayWhite);
 
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "AS19:AS22", "Utilidad", true, 11, Color::COLOR_WHITE, $blue);
+
 
     aldem_freezeColumn($spreadsheet, "B23");
     $count = 23;
@@ -460,6 +462,7 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
         $spreadsheet = aldem_cCellExcel($spreadsheet, "AP$count", $dr->tramiteoperativo, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
         $spreadsheet = aldem_cCellExcel($spreadsheet, "AQ$count", $dr->tarifacaja, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
         $spreadsheet = aldem_cCellExcel($spreadsheet, "AR$count", $dr->costoembalar, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
+        $spreadsheet = aldem_cCellExcel($spreadsheet, "AS$count", $dr->Utilidad, false, 11, Color::COLOR_BLACK, Color::COLOR_WHITE);
 
 
         $count++;

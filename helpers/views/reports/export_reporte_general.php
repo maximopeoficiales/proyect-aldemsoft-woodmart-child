@@ -218,7 +218,7 @@ aldem_cargarStyles();
             <thead>
                 <tr>
                     <th colspan="39" class="aldem-bg-gray aldem-text-white">TARIFA PICK UP (RECOJO DE MUESTRAS)</th>
-                    <th colspan="43" class="aldem-bg-gray aldem-text-white">TARIFA HIELO SECO</th>
+                    <th colspan="44" class="aldem-bg-gray aldem-text-white">TARIFA HIELO SECO</th>
                 </tr>
                 <tr>
                     <th colspan="20" class="aldem-bg-blue">CANTIDAD DE PICK UP (RECOJOS)
@@ -248,6 +248,7 @@ aldem_cargarStyles();
                     <th rowspan="4" colspan="2" class="aldem-bg-blue">TARIFA DE TRAMITE OPERATIVO DOLARES</th>
                     <th rowspan="4" colspan="2" class="aldem-bg-blue">TARIFA DE CAJA DE EMBALAJE MUESTRAS DE AMBIENTE DOLARES</th>
                     <th rowspan="4" colspan="5" class="aldem-bg-gray-white">COSTO DE ALDEM POR EMBALAR (Costo del tiempo que se usa para embalar las cajas) DOLARES</th>
+                    <th rowspan="4" colspan="1" class="aldem-bg-blue">Utilidad</th>
                 </tr>
 
                 <tr>
@@ -360,7 +361,7 @@ aldem_cargarStyles();
                         <td colspan="1"><?= $dr->tramiteoperativo ?></td>
                         <td colspan="2"><?= $dr->tarifacaja ?></td>
                         <td colspan="4"><?= $dr->costoembalar ?></td>
-                        <td><?= $dr->Utilidad ?></td>
+                        <td colspan="4"><?= $dr->Utilidad ?></td>
                     </tr>
 
                 <?php }  ?>
