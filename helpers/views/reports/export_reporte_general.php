@@ -383,13 +383,12 @@ aldem_cargarStyles();
     </div>
 </div>
 
-<!-- <script>
+<script>
     $(document).ready(function() {
         <?php aldem_datatables_in_spanish(); ?>
-        $('#table_export_reporte_general').DataTable();
-
+        // $('#table_export_reporte_general').DataTable();
     });
-</script> -->
+</script>
 
 <script>
     document.querySelector("#btnResetCurrency").addEventListener("click", () => {
