@@ -163,6 +163,13 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
     $queryB = query_getMarkenExportQueryB();
     $queryC = query_getMarkenExportQueryC();
 
+    // total
+    $totalCostoMarken = query_getMarkenCourierMarkenCostos($fechaReporte);
+    $totalGuias = query_getMarkenCourierMarkenGuias($fechaReporte);
+    $totalGuiasCourier = query_getMarkenCourierMarkenGuiasTipo($fechaReporte);
+
+
+
     $tipoCambio = "4.1";
     $gray = "#ACB9CA";
     $blue = "#333F4F";
@@ -173,7 +180,9 @@ function aldem_getSpreadsheetMarkenReportExport($dataReport, $fechaReporte): Spr
 
     $spreadsheet = new Spreadsheet();
 
-
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "B17", "Total costo marken: {$totalCostoMarken}", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "H16", "Total Guias marken en Exportacion: {$totalGuiasCourier}", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
+    $spreadsheet = aldem_cCellExcel($spreadsheet, "H17", "Total guias marken: {$totalGuias}", true, 13, Color::COLOR_BLACK, Color::COLOR_WHITE);
 
     // tablas superiores
     $spreadsheet = aldem_cCellExcel($spreadsheet, "B1:D1", "TARIFA DE HIELO SECO POR KILO EN DOLARES", true, 13, Color::COLOR_WHITE, $blue);

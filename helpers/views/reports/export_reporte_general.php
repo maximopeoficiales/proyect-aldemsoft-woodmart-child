@@ -14,6 +14,14 @@ $dataReport = query_getMarkenExportReporteGeneral5(intval($fechaReporte));
 $queryA = query_getMarkenExportQueryA();
 $queryB = query_getMarkenExportQueryB();
 $queryC = query_getMarkenExportQueryC();
+// total
+$totalCostoMarken = query_getMarkenCourierMarkenCostos($fechaReporte);
+$totalGuias = query_getMarkenCourierMarkenGuias($fechaReporte);
+$totalGuiasCourier = query_getMarkenCourierMarkenGuiasTipo($fechaReporte);
+
+
+
+
 
 aldem_cargarStyles();
 ?>
@@ -206,11 +214,15 @@ aldem_cargarStyles();
     </div>
 </div>
 
+<p class="d-block my-0">Total costo marken: <b> <?= $totalCostoMarken ?? 0 ?></b></p>
+<p class="d-block my-0">Total Guías Marken exportación: <b><?= $totalGuiasCourier ?? 0 ?></b></p>
+<p class="d-block my-0">total guias marken: <b><?= $totalGuias ?? 0 ?></b></p>
 <div class="row justify-content-end my-2 align-items-center ">
     <!-- solucion rapida  -->
     <p class="help-text my-0 mx-2 d-none" id="textCargandoExcel">Espere unos segundos se esta cargando el excel...</p>
     <a onclick="document.querySelector('#textCargandoExcel').classList.remove('d-none')" href="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" download="<?= aldem_getUrlExcel("export", $fechaReporte) ?>" class="btn btn-success btn-aldem-verde"><i class="fas fa-file-excel mx-1"></i> Exportar a excel</a>
 </div>
+
 <div class="row" style="overflow-x: scroll; height: 500px;">
     <!-- 36 -->
     <div class="col-12">
