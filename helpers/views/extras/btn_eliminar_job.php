@@ -2,8 +2,8 @@
 $urlDeleteJob = get_site_url() . "/wp-json/aldem/v1/deleteJob/" . aldem_getUserNameCurrent();
 // print_r($atts);
 $id_job = $atts["param"];
-if (empty($id_job)) return;
 $id_job = $_GET[$id_job];
+if (empty($id_job)) return;
 ?>
 <div class="my-2">
 

@@ -228,214 +228,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
     </div>
 </div>
 
-<!-- modal de shippers -->
-<div class="modal" id="modalShipper" tabindex="-1" role="dialog" aria-labelledby="modalShipper" aria-hidden="true" style="margin-top: 100px; ">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Elige un Shipper</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseListShippers">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="modal-body-shippers">
-                <table class="table table-striped table-bordered dt-responsive nowrap" id="table-shippers-select" style="width: 100%;">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col" class="none">Direccion</th>
-                            <th scope="col" class="none">Site</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($shippers as $key => $shipper) {
-                        ?>
-                            <!-- Modal -->
-                            <tr>
-                                <td class="d-flex justify-content-between" style="align-items: center !important;">
-                                    <span><?= $shipper->nombre ?></span>
-                                    <div class="">
-                                        <button type="button" class="btn edit-btn" style="background: transparent;" data-id="<?= $shipper->id_shipper  ?>">
-
-                                            <i class="fas fa-edit fa-2x edit-btn" data-id="<?= $shipper->id_shipper  ?>" style="color: #17A2B8"></i>
-                                        </button>
-
-                                        <button type="button" class="btn shipper-btn" style="background: transparent;" data-id-shipper="<?= $shipper->id_shipper  ?>" data-nombre-shipper="<?= $shipper->nombre ?>"><i class="fas fa-check-circle fa-2x shipper-btn" style="color: #32CC52;" data-id-shipper="<?= $shipper->id_shipper  ?>" data-nombre-shipper="<?= $shipper->nombre ?>"></i></button>
-                                    </div>
 
 
-                                </td>
-                                <td><?= $shipper->direccion ?></td>
-                                <td><?= $shipper->site ?></td>
-
-                            </tr>
-                        <?php }  ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- modal de creacion de shipper -->
-<div class="modal" id="modalNewShipper" tabindex="-1" role="dialog" aria-labelledby="modalNewShipper" aria-hidden="true" style="margin-top: 100px; ">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Crea un Shipper</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseNewShippers">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="post" id="formNewShipper">
-                    <div class="form-group">
-                        <label for="nombreShipper">Nombre: </label>
-                        <input type="text" name="nombreShipper" id="nombreShipper" class="form-control" placeholder="Ingrese su nombre" aria-describedby="helpId" required maxlength="50">
-                    </div>
-                    <div class="form-group">
-                        <label for="direccionShipper">Direccion:</label>
-                        <input type="text" name="direccionShipper" id="direccionShipper" class="form-control" placeholder="Ingrese su direccion" aria-describedby="helpId" required maxlength="50">
-                    </div>
-
-                    <div class="row mt-2">
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="paisShipper" style="display: block;">Pais:</label>
-                                <select class="form-control select-countrys" name="paisShipper" id="paisShipper" style="width: 100% !important;">
-                                    <?php
-                                    foreach ($countrys as $kq => $country) {
-                                    ?>
-                                        <option value="<?= $country->id_pais ?>">
-                                            <?= $country->desc_pais ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="shiteShipper">Site:</label>
-                                <select class="form-control" name="siteShipper" id="siteShipper">
-                                    <?php foreach ($markenSites as $markenSite) { ?>
-
-                                        <option value="<?= $markenSite->id_marken_site ?>">
-                                            <?= $markenSite->descripcion ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group ">
-                                <label for="ubigeoShipper">Ubigeo:</label>
-                                <select class="form-control"" name=" ubigeoShipper" id="ubigeoShipper" style="width:100%">
-                                    <?php foreach ($ubigeosPeru as
-                                        $ubigeo) { ?>
-                                        <option value="<?= $ubigeo->id_ubigeo ?>">
-                                            <?= $ubigeo->descripcion ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <?php aldem_set_input_hidden("id_user_new", get_current_user_id()) ?>
-                    <button type="submit" class="my-2 btn w-100 btn-aldem-verde"> <i class="fa fa-save mr-1"></i>Guardar</button>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modalEdit" id="btnOpenModalEdit">
-</button>
-
-<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true" style="margin-top: 100px; ">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title aldem-text-white text-capitalize" id="titleEdit">Editar Marken Shipper</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="btnCloseModalEdit">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <form action="#" method="post" id="formEditMarken">
-
-                <div class="modal-body">
-                    <input type="hidden" id="idEditMarken">
-                    <div class="form-group">
-                        <label for="nombreEdit">Nombre</label>
-                        <input type="text" name="nombreEdit" id="nombreEdit" class="form-control" placeholder="Ingrese nombre" aria-describedby="nombreEdit" required maxlength="50">
-                    </div>
-                    <div class="form-group">
-                        <label for="direccionEdit">Direccion</label>
-                        <input type="text" name="direccionEdit" id="direccionEdit" class="form-control" placeholder="Ingrese direccion" aria-describedby="direccionEdit" maxlength="50">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="paisEdit" style="display: block;">Pais:</label>
-                        <select class="form-control select-countrys" name="paisEdit" id="paisEdit" style="width: 100% !important;">
-                            <?php
-                            foreach ($countrys as $country) {
-                            ?>
-                                <option value="<?= $country->id_pais ?>">
-                                    <?= $country->desc_pais ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-
-
-                    <div class="row mt-2">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="siteEdit">Site:</label>
-                                <select class="form-control" name="siteEdit" id="siteEdit">
-                                    <?php foreach ($markenSites as $markenSite) { ?>
-
-                                        <option value="<?= $markenSite->id_marken_site ?>">
-                                            <?= $markenSite->descripcion ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group ">
-                                <label for="ubigeoEdit">Ubigeo:</label>
-                                <select class="form-control"" name=" ubigeoEdit" id="ubigeoEdit" style="width:100%">
-                                    <?php foreach ($ubigeosPeru as
-                                        $ubigeo) { ?>
-                                        <option value="<?= $ubigeo->id_ubigeo ?>">
-                                            <?= $ubigeo->descripcion ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-success w-100 btn-aldem-verde my-2"> <i class="fa fa-save mr-1"></i>Guardar</button>
-                </div>
-            </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger text-capitalize" data-dismiss="modal">Salir</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -704,8 +498,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     showConfirmButton: false,
                     timer: 1500
                 })
-                document.querySelector("#id_shipper").value = response.data.id_marken_shipper;
-                document.querySelector("#desc_shipper").value = response.data.descripcion;
+                // document.querySelector("#id_shipper").value = response.data.id_marken_shipper;
+                // document.querySelector("#desc_shipper").value = response.data.descripcion;
             } else if (response.status == 404) {
                 Swal.fire({
                     icon: 'error',
@@ -838,26 +632,26 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
         });
 
         document.addEventListener("click", async (e) => {
-            if (e.target.classList.value.includes("shipper-btn")) {
-                let idShipper = e.target.getAttribute("data-id-shipper");
-                let nombreShipper = e.target.getAttribute("data-nombre-shipper");
-                document.querySelector("#id_shipper").value = idShipper;
-                document.querySelector("#desc_shipper").value = nombreShipper;
-                document.querySelector("#btnCloseListShippers").click();
-            }
+            // if (e.target.classList.value.includes("shipper-btn")) {
+            //     let idShipper = e.target.getAttribute("data-id-shipper");
+            //     let nombreShipper = e.target.getAttribute("data-nombre-shipper");
+            //     document.querySelector("#id_shipper").value = idShipper;
+            //     document.querySelector("#desc_shipper").value = nombreShipper;
+            //     document.querySelector("#btnCloseListShippers").click();
+            // }
             await executeEventFormEditMarken(e);
         })
 
-        document.querySelector("#formNewShipper").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            document.querySelector("#btnCloseNewShippers").click();
-            try {
-                await postShipperAsync();
-                e.target.reset();
-            } catch (error) {
-                console.error(error);
-            }
-        })
-        eventSubmitFormEditMarken();
+        // document.querySelector("#formNewShipper").addEventListener("submit", async (e) => {
+        //     e.preventDefault();
+        //     document.querySelector("#btnCloseNewShippers").click();
+        //     try {
+        //         await postShipperAsync();
+        //         e.target.reset();
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // })
+        // eventSubmitFormEditMarken();
     })()
 </script>
