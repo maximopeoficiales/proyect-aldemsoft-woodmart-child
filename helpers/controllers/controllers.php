@@ -162,10 +162,8 @@ function aldem_post_new_export()
             'waybill'                  =>  'required|max:35',
             // shipper
             'remitente'                  =>  'max:250',
-            'consigge'                  => 'max:150',
             'ciudad'                  => 'max:100',
             'paisremitente'                  => 'max:50',
-            'consigge_direccion'                  => 'max:150',
             'id_marken_site'                  => 'numeric',
             'contacto'                  => 'max:50',
             'contacto_telf'                  => 'max:50',
@@ -185,115 +183,95 @@ function aldem_post_new_export()
             'ind_activo'                  => 'required|numeric',
             'user_id'                  => 'required|numeric',
         ];
-
+        if ($action_name == 'update-job') {
+            // id_marken_job es el primary key
+            array_push($validations, ['id_marken_job' => 'required|numeric']);
+        }
         $responseValidator = adldem_UtilityValidator($_POST, $validations);
         if ($responseValidator["validate"]) {
             // se va crear un shipper
             $waybill = sanitize_text_field($_POST['waybill']);
-            $id_shipper = intval(sanitize_text_field($_POST['id_shipper']));
             // consigge
-            $consigge_nombre = sanitize_text_field($_POST['consigge_nombre']);
-            $consigge_direccion = sanitize_text_field($_POST['consigge_direccion']);
-            $id_pais = intval(sanitize_text_field($_POST['id_pais']));
+            $remitente = sanitize_text_field($_POST['remitente']);
+            $ciudad = sanitize_text_field($_POST['ciudad']);
+            $paisremitente = sanitize_text_field($_POST['paisremitente']);
+            $id_marken_site = intval(sanitize_text_field($_POST['paisremitente']));
             $contacto = sanitize_text_field($_POST['contacto']);
             $contacto_telf = sanitize_text_field($_POST['contacto_telf']);
             $protocolo = sanitize_text_field($_POST['protocolo']);
 
-            // $content = sanitize_text_field($_POST['content']);
+            $consignee = sanitize_text_field($_POST['consignee']);
+            $consigge_direccion = sanitize_text_field($_POST['consigge_direccion']);
+            $paisconsignee = sanitize_text_field($_POST['paisconsignee']);
+
             $pcs = intval(sanitize_text_field($_POST['pcs']));
-            // $range = sanitize_text_field($_POST['range']);
             $id_marken_type = intval(sanitize_text_field($_POST['id_marken_type']));
             $id_caja = intval(sanitize_text_field($_POST['id_caja']));
             $instrucciones = sanitize_text_field($_POST['instrucciones']);
-            $fechaHora = sanitize_text_field($_POST['fecha']);
+            $fecha = sanitize_text_field($_POST['fecha']);
+
             $fecha_actual = date("Y-m-d H:i:s");
-            $user_id = sanitize_text_field($_POST['user_id']);
+            $user_id = intval(sanitize_text_field($_POST['user_id']));
             $ind_activo = intval(sanitize_text_field($_POST['ind_activo']));
 
-            // campos necesarios para la actualizacion
-            $id_marken_jobUpdated = intval(sanitize_text_field($_POST['id_marken_job']));
-            $id_marken_consiggneUpdated = intval(sanitize_text_field($_POST['id_marken_consiggne']));
 
 
             // query 1
             $table = "{$prefix}marken_job";
-            $table2 = "{$prefix}marken_job_consignee";
             $data = [
                 "id_cliente_subtipo" => 1,
-                "id_shipper" => $id_shipper,
                 "waybill" => $waybill,
-                // "content" => $content,
-                "pcs" => $pcs,
-                // "range" => $range,
-                "id_marken_type" => $id_marken_type,
-                "instrucciones" => $instrucciones,
-                "id_caja" => $id_caja,
-                "protocolo" => $protocolo,
-                "contact" => $contacto,
+
+                "remitente" => $remitente,
+                "ciudad" => $ciudad,
+                "paisremitente" => $paisremitente,
+                "id_marken_site" => $id_marken_site,
+                "contacto" => $contacto,
                 "contact_telephone" => $contacto_telf,
-                "fecha_hora" => $fechaHora,
-                "id_usuario_created" => $user_id,
+                "protocolo" => $protocolo,
+
+                "consignee" => $consignee,
+                "consigge_direccion" => $consigge_direccion,
+                "paisconsignee" => $paisconsignee,
+                "pcs" => $pcs,
+                "id_marken_type" => $id_marken_type,
+                "id_caja" => $id_caja,
+                "instrucciones" => $instrucciones,
+                "fecha_hora" => $fecha,
                 "ind_activo" => $ind_activo,
+                "id_usuario_created" => $user_id,
                 "created_at" => $fecha_actual,
             ];
             if ($action_name == "new-job") {
                 $format = array(
-                    '%d', '%d', '%s'
-                    // , '%s'
-                    , '%d',
-                    //  '%s',
+                    '%d', '%d', '%s', '%d',
                     '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s'
                 );
                 $queryExistoso = $wpdb->insert($table, $data, $format);
                 $id_marken_job = $wpdb->insert_id; //obtemgo el id 
                 $wpdb->flush();
-                $data2 = [
-                    "id_marken_job" => $id_marken_job,
-                    "id_pais" => $id_pais,
-                    "nombre" => $consigge_nombre,
-                    "direccion" => $consigge_direccion,
-                    "id_usuario_created" => $user_id,
-                    "created_at" => $fecha_actual,
-                ];
-                $format2 = array('%d', '%d', '%s', '%s',   '%d', '%s');
-                $queryExistoso2 = $wpdb->insert($table2, $data2, $format2);
-                $wpdb->flush();
 
-                if ($queryExistoso && $queryExistoso2) {
+                if ($queryExistoso) {
                     // wp_redirect(home_url("marken_export_nuevo") . "?msg=" . 1);
                     wp_redirect(home_url("marken_export"));
                 } else {
                     wp_redirect(home_url("marken_export_nuevo") . "?msg=");
                 }
             } else if ($action_name == "update-job") {
+                $id_marken_job = intval(sanitize_text_field($_POST['id_marken_job']));
+
                 unset($data["created_at"]);
                 $data["updated_at"] = $fecha_actual;
                 $formatUpdated = array('%d', '%d', '%s', '%d',  '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s');
                 $queryExistosoUpdated = $wpdb->update($table, $data, [
-                    "id" => $id_marken_jobUpdated
+                    "id" => $id_marken_job
                 ], $formatUpdated);
                 $wpdb->flush();
 
-                // query 2 updated
-                $data2 = [
-                    "id_pais" => $id_pais,
-                    "nombre" => $consigge_nombre,
-                    "direccion" => $consigge_direccion,
-                    "id_usuario_created" => $user_id,
-                    "created_at" => $fecha_actual,
-                ];
-                $formatUpdated2 = array('%d', '%s', '%s',   '%d', '%s');
-                unset($data2["created_at"]);
-                $data2["updated_at"] = $fecha_actual;
-                $queryExistoso2Updated = $wpdb->update($table2, $data2, [
-                    "id" => $id_marken_consiggneUpdated
-                ], $formatUpdated2);
-                $wpdb->flush();
-
-                if ($queryExistosoUpdated && $queryExistoso2Updated) {
-                    wp_redirect(home_url("marken_export_nuevo") . "?editjob=$id_marken_jobUpdated&msg=" . 2);
+                if ($queryExistosoUpdated) {
+                    wp_redirect(home_url("marken_export_nuevo") . "?editjob=$id_marken_job&msg=" . 2);
                 } else {
-                    wp_redirect(home_url("marken_export_nuevo") . "?editjob=$id_marken_jobUpdated&msg=");
+                    wp_redirect(home_url("marken_export_nuevo") . "?editjob=$id_marken_job&msg=");
                 }
             }
         } else {

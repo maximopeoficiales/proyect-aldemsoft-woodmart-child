@@ -230,7 +230,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     <?php if ($update) {
                         aldem_set_action_name("update-job");
                         aldem_set_input_hidden("contacto_telf",                         $markenJob->contact_telephone);
-                        aldem_set_input_hidden("id_marken_job", $markenJob->id);
+                        aldem_set_input_hidden("id_marken_job", $id_marken_job);
                     } else {
                         aldem_set_input_hidden("contacto_telf", "", false);
                         aldem_set_action_name("new-job");
