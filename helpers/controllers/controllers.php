@@ -160,28 +160,32 @@ function aldem_post_new_export()
     if ($action_name === "new-job" || $action_name === "update-job") {
         $validations = [
             'waybill'                  =>  'required|max:35',
-            'id_shipper'                  =>  'numeric',
-            'consigge_nombre'                  => 'max:150',
+            // shipper
+            'remitente'                  =>  'max:250',
+            'consigge'                  => 'max:150',
+            'ciudad'                  => 'max:100',
+            'paisremitente'                  => 'max:50',
             'consigge_direccion'                  => 'max:150',
-            'id_pais'                  => 'numeric',
+            'id_marken_site'                  => 'numeric',
             'contacto'                  => 'max:50',
             'contacto_telf'                  => 'max:50',
             'protocolo'                  => 'max:50',
-            // 'content'                  => 'required|max:250',
+
+            // consignatorio
+            'consignee'                  => 'max:150',
+            'consigge_direccion'         => 'max:250',
+            'paisconsignee'         => 'max:5',
+
             'pcs'                  => 'required|numeric',
-            // 'range'                  => 'required|max:25',
             'id_marken_type'                  => 'required|numeric',
             'id_caja'                  => 'required|numeric',
             'instrucciones'                  => 'max:250',
+
             'fecha'                  => 'required',
-            // 'hora'                  => 'required|max:5',
-            'user_id'                  => 'required|numeric',
             'ind_activo'                  => 'required|numeric',
+            'user_id'                  => 'required|numeric',
         ];
-        if ($action_name == "update-job") {
-            $validations["id_marken_job"] = "required|numeric";
-            $validations["id_marken_consiggne"] = "required|numeric";
-        }
+
         $responseValidator = adldem_UtilityValidator($_POST, $validations);
         if ($responseValidator["validate"]) {
             // se va crear un shipper
