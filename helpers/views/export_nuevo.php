@@ -28,6 +28,7 @@ $urlVerifyWaybill = get_site_url() . "/wp-json/aldem/v1/existsWaybill/" . aldem_
 // para el update
 $update = $_GET["editjob"] != null || $_GET["editjob"] != "" ? true : false;
 $id_marken_job = $update ? $_GET["editjob"] : null;
+$sites = query_getMarkenSiteTipos(null, 1);
 $markenJob = $update ? (object) query_getMarkenJobs($id_marken_job)[0] : null;
 $shipperCurrent = $update ? (object) query_getShippers($markenJob->id_shipper)[0] : null;
 $consiggneCurrent = $update ? (object) query_getMarkenConsiggne(null, $markenJob->id)[0] : null;
@@ -65,7 +66,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                                 <?php } ?>
                             </div>
 
-                            <label for="exportador-text">Shipper:</label>
+                            <!-- <label for="exportador-text">Shipper:</label>
                             <div class="input-group my-2">
                                 <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="desc_shipper" placeholder="Elija un Shipper" value="<?= $shipperCurrent->nombre ?>">
                                 <div class="input-group-append">
@@ -75,8 +76,40 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewShipper">Crear Shipper</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                        </div>
 
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label for="remitente">Remitente: </label>
+                                <input type="text" name="remitente" id="remitente" class="form-control" placeholder="Ingrese el remitente" aria-describedby="remitente" maxlength="50" value="<?= $markenJob->remitente ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label for="ciudad">Ciudad: </label>
+                                <input type="text" name="ciudad" id="ciudad" class="form-control" placeholder="Ingrese el ciudad" aria-describedby="ciudad" maxlength="50" value="<?= $markenJob->ciudad ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label for="pais">Pais: </label>
+                                <input type="text" name="pais" id="pais" class="form-control" placeholder="Ingrese el pais" aria-describedby="pais" maxlength="50" value="<?= $markenJob->pais ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class=" form-group my-2">
+                                <label for="id_site">Site:</label>
+                                <select name="id_site" id="id_site" class="form-control" placeholder="Elija el Site" aria-describedby="site" style="width: 100%;">
+                                    <option value="">Selecciona un Site</option>
+                                    <?php foreach ($sites as $key => $site) {
+                                    ?>
+                                        <option value="<?= $site->id_marken_site ?>"><?= $site->descripcion ?></option>
+                                    <?php }  ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
