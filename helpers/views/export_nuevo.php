@@ -118,8 +118,8 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label for="contacto">Contact: </label>
-                                <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contacto" maxlength="50" value="<?= $markenJob->contact ?>">
+                                <label for="contact">Contact: </label>
+                                <input type="text" name="contact" id="contact" class="form-control" placeholder="Ingrese el Contacto" aria-describedby="contact" maxlength="50" value="<?= $markenJob->contact ?>">
                             </div>
 
                         </div>
@@ -144,7 +144,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="consigge_direccion">Direccion: </label>
-                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion del Consignatario" aria-describedby="consigge_direccion" maxlength="250" value="<?= $markenJob->consigge_direccion ?>">
+                                    <input type="text" name="consigge_direccion" id="consigge_direccion" class="form-control" placeholder="Ingrese la Direccion del Consignatario" aria-describedby="consigge_direccion" maxlength="250" value="<?= $markenJob->direccionconsignee ?>">
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="paisconsignee">Pais: </label>
@@ -163,12 +163,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                             </div>
                         </div>
 
-                        <!-- <div class="col-md-6">
-                            <div class="form-group mb-2">
-                                <label for="range">Rango: </label>
-                                <input type="text" name="range" id="range" class="form-control" placeholder="Ingrese el Rango" aria-describedby="range" minlength="1" maxlength="25" value="<?= $markenJob->range ?>">
-                            </div>
-                        </div> -->
+
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -229,7 +224,7 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
                     <?php aldem_set_input_hidden("user_id", get_current_user_id()); ?>
                     <?php if ($update) {
                         aldem_set_action_name("update-job");
-                        aldem_set_input_hidden("contacto_telf",                         $markenJob->contact_telephone);
+                        aldem_set_input_hidden("contacto_telf",                         $markenJob->contact_telephone, false);
                         aldem_set_input_hidden("id_marken_job", $id_marken_job);
                     } else {
                         aldem_set_input_hidden("contacto_telf", "", false);
