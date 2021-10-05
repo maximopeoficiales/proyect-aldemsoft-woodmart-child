@@ -675,13 +675,15 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
         $("#fecha_levante").flatpickr({
             enableTime: true,
-            minTime: "09:00"
+            minTime: "09:00",
+            allowInput: true
         });
         <?php if ($update && $courierCurrent->fecha_levante != "0000-00-00 00:00:00") {
         ?>
             $("#fecha_levante").flatpickr({
                 enableTime: true,
-                defaultDate: "<?= $courierCurrent->fecha_levante ?>"
+                defaultDate: "<?= $courierCurrent->fecha_levante ?>",
+                allowInput: true
             });
         <?php        }
         ?>
@@ -1107,7 +1109,8 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 $setValue("#importador", id_importador);
                 $("#fecha_levante").flatpickr({
                     defaultDate: fecha_levante ?? "",
-                    enableTime: true
+                    enableTime: true,
+                    allowInput: true
                 })
                 // seleccion de semaforo
                 switch (green_channel) {

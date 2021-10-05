@@ -267,13 +267,15 @@ aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha a
         // fecha
         $("#fecha").flatpickr({
             enableTime: true,
-            minTime: "09:00"
+            minTime: "09:00",
+            allowInput: true
         });
         <?php if ($update && $markenJob->fecha_hora != "0000-00-00 00:00:00") {
         ?>
             $("#fecha").flatpickr({
                 enableTime: true,
-                defaultDate: "<?= $markenJob->fecha_hora ?>"
+                defaultDate: "<?= $markenJob->fecha_hora ?>",
+                allowInput: true
             });
         <?php        }
         ?>
