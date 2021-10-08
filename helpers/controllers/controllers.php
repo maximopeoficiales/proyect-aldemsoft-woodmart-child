@@ -37,32 +37,41 @@ function aldem_post_upload_excel()
         ];
 
         $responseValidator = adldem_UtilityValidator($_POST + $_FILES, $validations);
+        $dataJobs = [];
         if ($responseValidator["validate"]) {
             $fileName = $_FILES["file_export_jobs"]["tmp_name"];
             // si no esta vacio
             if ($_FILES["file_export_jobs"]["size"] > 0) {
                 $file = fopen($fileName, "r");
-
                 while (($colum = fgetcsv($file, 1000, ",")) !== FALSE) {
-                    // var_dump($colum);
-                    $name = $colum[1];
-                    $email = $colum[2];
-                    $password = $colum[3];
-                    $fecha = $colum[7];
-                    echo $fecha . "<br>";
-                    // aqui se pone la logica de insercion
-                    // $sqlInsert = "INSERT INTO data(name,email,password) values ('{$name}','{$email}','{$password}') ";
-                    // $resultQuery = mysqli_query($conexion, $sqlInsert);
-                    // if (!empty($resultQuery)) {
-                    //     echo "Data importada correctamente<br>";
-                    // } else {
-                    //     echo "Error al procesar CSV<br>";
-                    // }
+                    $job = $colum[0];
+                    $remitente = $colum[2];
+                    $ciudad = $colum[3];
+                    $pais = $colum[4];
+                    $consignee = $colum[5];
+                    $paisConsignee = $colum[6];
+                    $fechaRecoleccion = $colum[8];
+                    array_push($dataJobs, [
+                        "job" => $job,
+                        "remitente" => $remitente,
+                        "ciudad" => $ciudad,
+                        "pais" => $pais,
+                        "consignee" => $consignee,
+                        "paisConsignee" => $paisConsignee,
+                        "fechaRecoleccion" => $fechaRecoleccion,
+                    ]);
                 }
-            }else{
+                unset($dataJobs[0]);
+
+
+                foreach ($dataJobs as $key => $job) {
+                    // aqui se ejecuta la logica de insercion
+                    echo $job["job"]."<br>";
+                
+                }
+            } else {
                 echo "no hay archivo";
             }
-
         } else {
             wp_redirect(home_url("$page") . "?errors=" . $responseValidator["message"]);
         }
