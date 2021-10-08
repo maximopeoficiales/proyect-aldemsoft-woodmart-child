@@ -509,9 +509,9 @@ function query_existsWaybill(string  $job): bool
     $prefix = query_getAldemPrefix();
     $sql = "SELECT EXISTS(					
         SELECT *					
-        FROM {$prefix}_marken_job					
-        WHERE waybill = $job and id_cliente_subtipo = 1) as existe";
-    $result = $wpdb->get_results($sql);
+        FROM {$prefix}marken_job					
+        WHERE waybill = %s and id_cliente_subtipo = 1) as existe";
+    $result = $wpdb->get_results($wpdb->prepare($sql, $job));
     $wpdb->flush();
     return intval($result[0]->existe) ? true : false;
 }
@@ -521,8 +521,8 @@ function query_getIdMarkenSiteByDescription(string $description): int
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
-    $sql = "SELECT id_marken_site from {$prefix}_marken_site_data				
-    where descripcion = %s";
+    $sql = "SELECT id_marken_site from {$prefix}marken_site_data				
+    where  LOWER(descripcion) = %s";
     $result = $wpdb->get_results($wpdb->prepare($sql, $description));
     $wpdb->flush();
     return intval($result[0]->id_marken_site ?? 0);
@@ -546,18 +546,19 @@ function query_insertJobByCsv($idUser, $job, $remitente, $ciudad, $paisRemitente
         "id_marken_site" => $idMarkenSite,
         "id_usuario_created" => $idUser,
 
-        "updated_at" => date("Y-m-d H:i:s"),
         "created_at" => date("Y-m-d H:i:s"),
     ];
 
     $format = array(
         '%s', '%s', '%s', '%s', '%s', '%s', '%s',
         '%d',  '%d', '%d',
-        '%s', '%s'
+        '%s',
     );
-
-    $queryExistoso = $wpdb->insert($table, $data, $format);
+    // print_r($data);
+    // print_r($table);
+    $queryExistoso = $wpdb->insert($table, $data);
+    // print_r($wpdb->show_errors()); 
+    // print_r($wpdb->print_error());
     $wpdb->flush();
-
     return $queryExistoso;
 }

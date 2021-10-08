@@ -25,6 +25,17 @@ function aldem_show_message_custom($msg_success, $msg_act, $msg_error): void
         </div>
             ';
     }
+
+    if (isset($_GET['msgs'])) {
+        echo '
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>' . aldem_transform_text_p($_GET['msgs']) . '</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+            ';
+    }
     if (isset($_GET['msg'])) {
 
 
