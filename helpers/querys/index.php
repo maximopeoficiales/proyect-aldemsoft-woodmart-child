@@ -499,3 +499,31 @@ function query_getMarkenExportReporte($periodo)
     $wpdb->flush();
     return $result;
 }
+
+
+// Querys para la subida del csv
+// devuelve true si existe el waybill
+function query_existsWaybill(string  $job): bool
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT EXISTS(					
+        SELECT *					
+        FROM {$prefix}_marken_job					
+        WHERE waybill = $job and id_cliente_subtipo = 1) as existe";
+    $result = $wpdb->get_results($sql);
+    $wpdb->flush();
+    return intval($result[0]->existe) ? true : false;
+}
+
+// obtiene el idMarkenSite buscando por la descripcion
+function query_getIdMarkenSiteByDescription(string $description): int
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+    $sql = "SELECT id_marken_site from {$prefix}_marken_site_data				
+    where descripcion = %s";
+    $result = $wpdb->get_results($wpdb->prepare($sql, $description));
+    $wpdb->flush();
+    return intval($result[0]->id_marken_site ?? 0);
+}
