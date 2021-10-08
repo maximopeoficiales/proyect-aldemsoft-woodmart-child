@@ -527,3 +527,37 @@ function query_getIdMarkenSiteByDescription(string $description): int
     $wpdb->flush();
     return intval($result[0]->id_marken_site ?? 0);
 }
+function query_insertJobByCsv($idUser, $job, $remitente, $ciudad, $paisRemitente, $consignee, $paisConsignee, $fechaRecoleccion, $idMarkenSite): bool
+{
+    $wpdb = query_getWPDB();
+    $prefix = query_getAldemPrefix();
+
+    $table = "{$prefix}marken_job";
+    $data = [
+        "waybill" => $job,
+        "remitente" => $remitente,
+        "ciudad" => $ciudad,
+        "paisremitente" => $paisRemitente,
+        "consignee" => $consignee,
+        "paisconsignee" => $paisConsignee,
+        "fecha_hora" => $fechaRecoleccion,
+
+        "id_cliente_subtipo" => 1,
+        "id_marken_site" => $idMarkenSite,
+        "id_usuario_created" => $idUser,
+
+        "updated_at" => date("Y-m-d H:i:s"),
+        "created_at" => date("Y-m-d H:i:s"),
+    ];
+
+    $format = array(
+        '%s', '%s', '%s', '%s', '%s', '%s', '%s',
+        '%d',  '%d', '%d',
+        '%s', '%s'
+    );
+
+    $queryExistoso = $wpdb->insert($table, $data, $format);
+    $wpdb->flush();
+
+    return $queryExistoso;
+}
