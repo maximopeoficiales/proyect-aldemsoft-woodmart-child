@@ -14,6 +14,7 @@ add_action('admin_post_process_form', 'aldem_post_new_export_job_hielo');
 add_action('admin_post_process_form', 'aldem_post_new_export');
 add_action('admin_post_process_form', 'aldem_post_new_courier');
 add_action('admin_post_process_form', 'aldem_post_new_pickup');
+add_action('admin_post_process_form', 'aldem_post_new_pickup');
 
 // ajax excel
 // http://localhost/wp-admin/admin-ajax.php?action=aldem_excel
@@ -21,6 +22,17 @@ add_action('wp_ajax_aldem_excel', 'aldem_export_excel');
 add_action('wp_ajax_nopriv_aldem_excel', 'aldem_export_excel');
 // fin de ajax excel
 
+
+
+function aldem_post_upload_excel()
+{
+    $prefix = query_getAldemPrefix();
+    $action_name = $_POST["action_name"];
+    if ($action_name === "upload-excel-job") {
+        
+    
+    }
+}
 // Funcion callback
 function aldem_post_new_shipper_data()
 {

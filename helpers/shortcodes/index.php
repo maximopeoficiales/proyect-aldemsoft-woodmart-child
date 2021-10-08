@@ -20,6 +20,7 @@ function aldem_getShorcodesViewList(): array
     // $nameFile viene de la carpeta views
     // name-shorcode => aldem_$name, view => $nameFile
     return [
+        ["name" => "btn_excel_job", "view" => "extras/btn_excel_job"],
         ["name" => "form_mes_ano", "view" => "extras/form_mes_ano"],
         ["name" => "btn_eliminar_job", "view" => "extras/btn_eliminar_job"],
         ["name" => "marken_shipper", "view" => "shippers"],
