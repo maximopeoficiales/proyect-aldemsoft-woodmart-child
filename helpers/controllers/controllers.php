@@ -14,7 +14,7 @@ add_action('admin_post_process_form', 'aldem_post_new_export_job_hielo');
 add_action('admin_post_process_form', 'aldem_post_new_export');
 add_action('admin_post_process_form', 'aldem_post_new_courier');
 add_action('admin_post_process_form', 'aldem_post_new_pickup');
-add_action('admin_post_process_form', 'aldem_post_new_pickup');
+add_action('admin_post_process_form', 'aldem_post_upload_excel');
 
 // ajax excel
 // http://localhost/wp-admin/admin-ajax.php?action=aldem_excel
@@ -27,10 +27,45 @@ add_action('wp_ajax_nopriv_aldem_excel', 'aldem_export_excel');
 function aldem_post_upload_excel()
 {
     $prefix = query_getAldemPrefix();
+    $page = "/marken_carga/";
     $action_name = $_POST["action_name"];
+
     if ($action_name === "upload-excel-job") {
-        
-    
+        // echo "hola";
+        $validations = [
+            "file_export_jobs" => "uploaded_file|max:5M|mimes:csv"
+        ];
+
+        $responseValidator = adldem_UtilityValidator($_POST + $_FILES, $validations);
+        if ($responseValidator["validate"]) {
+            $fileName = $_FILES["file_export_jobs"]["tmp_name"];
+            // si no esta vacio
+            if ($_FILES["file_export_jobs"]["size"] > 0) {
+                $file = fopen($fileName, "r");
+
+                while (($colum = fgetcsv($file, 1000, ",")) !== FALSE) {
+                    // var_dump($colum);
+                    $name = $colum[1];
+                    $email = $colum[2];
+                    $password = $colum[3];
+                    $fecha = $colum[7];
+                    echo $fecha . "<br>";
+                    // aqui se pone la logica de insercion
+                    // $sqlInsert = "INSERT INTO data(name,email,password) values ('{$name}','{$email}','{$password}') ";
+                    // $resultQuery = mysqli_query($conexion, $sqlInsert);
+                    // if (!empty($resultQuery)) {
+                    //     echo "Data importada correctamente<br>";
+                    // } else {
+                    //     echo "Error al procesar CSV<br>";
+                    // }
+                }
+            }else{
+                echo "no hay archivo";
+            }
+
+        } else {
+            wp_redirect(home_url("$page") . "?errors=" . $responseValidator["message"]);
+        }
     }
 }
 // Funcion callback
