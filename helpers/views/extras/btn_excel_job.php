@@ -14,5 +14,5 @@ aldem_cargarStyles();
 </form>
 <!-- </div> -->
 
-<?php aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha actualizado correctamente el Job😀", "Ocurrio un error 😢 en la subida del Archivo");
+<?php aldem_show_message_custom("Se ha registrado correctamente el Job 😀", "Se ha actualizado correctamente el Job😀", "Ocurrio un error 😢 en la subida del Archivo, Solo se permiten archivos .csv");
 ?>
