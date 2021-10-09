@@ -39,7 +39,7 @@ function aldem_post_upload_excel()
         $responseValidator = adldem_UtilityValidator($_POST + $_FILES, $validations);
         $dataJobs = [];
         $mensajes = [];
-        if ($responseValidator["validate"]) {
+        // if ($responseValidator["validate"]) {
             $fileName = $_FILES["file_export_jobs"]["tmp_name"];
             $user_id = get_current_user_id();
             // si no esta vacio
@@ -107,9 +107,9 @@ function aldem_post_upload_excel()
             } else {
                 wp_redirect(home_url("$page") . "?msg=");
             }
-        } else {
-            wp_redirect(home_url("$page") . "?errors=" . $responseValidator["message"]);
-        }
+        // } else {
+        //     wp_redirect(home_url("$page") . "?errors=" . $responseValidator["message"]);
+        // }
     }
 }
 // Funcion callback
