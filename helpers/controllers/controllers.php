@@ -46,7 +46,7 @@ function aldem_post_upload_excel()
             if ($_FILES["file_export_jobs"]["size"] > 0) {
                 try {
                     $file = fopen($fileName, "r");
-                    while (($colum = fgetcsv($file, 1000, ",")) !== FALSE) {
+                    while (($colum = fgetcsv($file, 1000, ";")) !== FALSE) {
                         $job = $colum[0];
                         $remitente = $colum[2];
                         $ciudad = $colum[3];
