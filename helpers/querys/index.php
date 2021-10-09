@@ -525,7 +525,7 @@ function query_getIdMarkenSiteByDescription(string $description): int
     where  LOWER(descripcion) = %s";
     $result = $wpdb->get_results($wpdb->prepare($sql, $description));
     $wpdb->flush();
-    return intval($result[0]->id_marken_site ?? 0);
+    return intval($result[0]->id_marken_site);
 }
 function query_insertJobByCsv($idUser, $job, $remitente, $ciudad, $paisRemitente, $consignee, $paisConsignee, $fechaRecoleccion, $idMarkenSite): bool
 {
