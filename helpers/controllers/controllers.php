@@ -40,73 +40,75 @@ function aldem_post_upload_excel()
         $dataJobs = [];
         $mensajes = [];
         // if ($responseValidator["validate"]) {
-            $fileName = $_FILES["file_export_jobs"]["tmp_name"];
-            $user_id = get_current_user_id();
-            // si no esta vacio
-            if ($_FILES["file_export_jobs"]["size"] > 0) {
-                try {
-                    $file = fopen($fileName, "r");
-                    while (($colum = fgetcsv($file, 1000, ";")) !== FALSE) {
-                        $job = $colum[0];
-                        $remitente = $colum[2];
-                        $ciudad = $colum[3];
-                        $pais = $colum[4];
-                        $consignee = $colum[5];
-                        $paisConsignee = $colum[6];
-                        $fechaRecoleccion = $colum[8];
-                        if ($job !== "") {
-                            array_push($dataJobs, [
-                                "job" => $job,
-                                "remitente" => $remitente,
-                                "ciudad" => $ciudad,
-                                "pais" => $pais,
-                                "consignee" => $consignee,
-                                "paisConsignee" => $paisConsignee,
-                                "fechaRecoleccion" => $fechaRecoleccion,
-                            ]);
-                        }
+        $fileName = $_FILES["file_export_jobs"]["tmp_name"];
+        $user_id = get_current_user_id();
+        // si no esta vacio
+        if ($_FILES["file_export_jobs"]["size"] > 0) {
+            try {
+                $file = fopen($fileName, "r");
+                while (($colum = fgetcsv($file, 1000, ";")) !== FALSE) {
+                    $job = $colum[0];
+                    $remitente = $colum[2];
+                    $ciudad = $colum[3];
+                    $pais = $colum[4];
+                    $consignee = $colum[5];
+                    $paisConsignee = $colum[6];
+                    $fechaRecoleccion = $colum[8];
+                    if ($job !== "") {
+                        array_push($dataJobs, [
+                            "job" => $job,
+                            "remitente" => $remitente,
+                            "ciudad" => $ciudad,
+                            "pais" => $pais,
+                            "consignee" => $consignee,
+                            "paisConsignee" => $paisConsignee,
+                            "fechaRecoleccion" => $fechaRecoleccion,
+                        ]);
                     }
-                    unset($dataJobs[0]);
-                    foreach ($dataJobs as $key => $job) {
-                        // aqui se ejecuta la logica de insercion
-                        // echo $job["job"] . "<br>";
-                        $waybill = $job["job"];
-                        $remitente = $job["remitente"];
-                        $ciudad = $job["ciudad"];
-                        $pais = $job["pais"];
-                        $consignee = $job["consignee"];
-                        $paisConsignee = $job["paisConsignee"];
-                        $fechaRecoleccion = $job["fechaRecoleccion"];
-                        // echo $waybill."<br>";
-                        $existWaybill = query_existsWaybill($waybill);
-                        if (!$existWaybill) {
-                            $idMarkenSite = query_getIdMarkenSiteByDescription(strtolower($ciudad));
-
-                            $insertJob = query_insertJobByCsv($user_id, $waybill, $remitente, $ciudad, $pais, $consignee, $paisConsignee, $fechaRecoleccion . " 00:00:00", $idMarkenSite);
-
-                            if ($insertJob) {
-                                // insercion correctamente
-                                array_push($mensajes, "Job $waybill fue creado satisfactoriamente");
-                            } else {
-                                // ocurrio un error en la insercion
-                                array_push($mensajes, "Ocurrio un Error en la creacion del Job $waybill, Verifique el formato de los campos");
-                            }
-                        } else {
-                            array_push($mensajes, "Job $waybill ya existe");
-                        }
-                    }
-                    $msgs = "";
-                    foreach ($mensajes as $mensaje) {
-                        $msgs .= $mensaje . "-";
-                    }
-
-                    wp_redirect(home_url("$page") . "?msgs=$msgs");
-                } catch (\Throwable $th) {
-                    wp_redirect(home_url("$page") . "?msg=");
                 }
-            } else {
+                unset($dataJobs[0]);
+                foreach ($dataJobs as $key => $job) {
+                    // aqui se ejecuta la logica de insercion
+                    // echo $job["job"] . "<br>";
+                    $waybill = $job["job"];
+                    $remitente = $job["remitente"];
+                    $ciudad = $job["ciudad"];
+                    $pais = $job["pais"];
+                    $consignee = $job["consignee"];
+                    $paisConsignee = $job["paisConsignee"];
+                    $fechaRecoleccion = $job["fechaRecoleccion"];
+
+                    $fechaFormateda = explode("/", $fechaRecoleccion);
+                    $fechaFormateda = $fechaFormateda[2] . "-" . $fechaFormateda[1] . "-" .  $fechaFormateda[0];
+                    
+                    $existWaybill = query_existsWaybill($waybill);
+                    if (!$existWaybill) {
+                        $idMarkenSite = query_getIdMarkenSiteByDescription(strtolower($ciudad));
+                        $insertJob = query_insertJobByCsv($user_id, $waybill, $remitente, $ciudad, $pais, $consignee, $paisConsignee, $fechaFormateda . " 00:00:00", $idMarkenSite);
+
+                        if ($insertJob) {
+                            // insercion correctamente
+                            array_push($mensajes, "Job $waybill fue creado satisfactoriamente");
+                        } else {
+                            // ocurrio un error en la insercion
+                            array_push($mensajes, "Ocurrio un Error en la creacion del Job $waybill, Verifique el formato de los campos");
+                        }
+                    } else {
+                        array_push($mensajes, "Job $waybill ya existe");
+                    }
+                }
+                $msgs = "";
+                foreach ($mensajes as $mensaje) {
+                    $msgs .= $mensaje . "-";
+                }
+
+                wp_redirect(home_url("$page") . "?msgs=$msgs");
+            } catch (\Throwable $th) {
                 wp_redirect(home_url("$page") . "?msg=");
             }
+        } else {
+            wp_redirect(home_url("$page") . "?msg=");
+        }
         // } else {
         //     wp_redirect(home_url("$page") . "?errors=" . $responseValidator["message"]);
         // }
