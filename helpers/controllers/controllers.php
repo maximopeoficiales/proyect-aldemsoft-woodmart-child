@@ -80,7 +80,8 @@ function aldem_post_upload_excel()
 
                     $fechaFormateda = explode("/", $fechaRecoleccion);
                     $fechaFormateda = $fechaFormateda[2] . "-" . $fechaFormateda[1] . "-" .  $fechaFormateda[0];
-                    
+                    $fechaFormateda = str_replace("--", "", $fechaFormateda);
+                    // echo $fechaFormateda . "<br>";
                     $existWaybill = query_existsWaybill($waybill);
                     if (!$existWaybill) {
                         $idMarkenSite = query_getIdMarkenSiteByDescription(strtolower($ciudad));

@@ -9,7 +9,7 @@ aldem_cargarStyles();
     <?= aldem_set_input_hidden("page", $atts["page"]) ?>
     <?php aldem_set_proccess_form(); ?>
     <?php aldem_set_action_name("upload-excel-job"); ?>
-    <input type="file" name="file_export_jobs" id="" accept=".csv">
+    <input type="file" name="file_export_jobs" id="" accept=".csv" required>
     <button type="submit">Subir CSV</button>
 </form>
 <!-- </div> -->
