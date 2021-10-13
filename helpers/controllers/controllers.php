@@ -54,6 +54,7 @@ function aldem_post_upload_excel()
                     $consignee = $colum[5];
                     $paisConsignee = $colum[6];
                     $fechaRecoleccion = $colum[8];
+                    $idMarkenType = $colum[12];
                     if ($job !== "") {
                         array_push($dataJobs, [
                             "job" => $job,
@@ -63,6 +64,7 @@ function aldem_post_upload_excel()
                             "consignee" => $consignee,
                             "paisConsignee" => $paisConsignee,
                             "fechaRecoleccion" => $fechaRecoleccion,
+                            "id_marken_type" => $idMarkenType,
                         ]);
                     }
                 }
@@ -77,15 +79,17 @@ function aldem_post_upload_excel()
                     $consignee = $job["consignee"];
                     $paisConsignee = $job["paisConsignee"];
                     $fechaRecoleccion = $job["fechaRecoleccion"];
+                    $idMarkenType = $job["id_marken_type"];
 
                     $fechaFormateda = explode("/", $fechaRecoleccion);
                     $fechaFormateda = $fechaFormateda[2] . "-" . $fechaFormateda[1] . "-" .  $fechaFormateda[0];
                     $fechaFormateda = str_replace("--", "", $fechaFormateda);
                     // echo $fechaFormateda . "<br>";
+                    // echo $idMarkenTipe . "<br>";
                     $existWaybill = query_existsWaybill($waybill);
                     if (!$existWaybill) {
                         $idMarkenSite = query_getIdMarkenSiteByDescription(strtolower($ciudad));
-                        $insertJob = query_insertJobByCsv($user_id, $waybill, $remitente, $ciudad, $pais, $consignee, $paisConsignee, $fechaFormateda . " 00:00:00", $idMarkenSite);
+                        $insertJob = query_insertJobByCsv($user_id, $waybill, $remitente, $ciudad, $pais, $consignee, $paisConsignee, $fechaFormateda . " 00:00:00", $idMarkenSite, $idMarkenType);
 
                         if ($insertJob) {
                             // insercion correctamente

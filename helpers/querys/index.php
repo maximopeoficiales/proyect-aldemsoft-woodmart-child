@@ -527,7 +527,7 @@ function query_getIdMarkenSiteByDescription(string $description): int
     $wpdb->flush();
     return intval($result[0]->id_marken_site);
 }
-function query_insertJobByCsv($idUser, $job, $remitente, $ciudad, $paisRemitente, $consignee, $paisConsignee, $fechaRecoleccion, $idMarkenSite): bool
+function query_insertJobByCsv($idUser, $job, $remitente, $ciudad, $paisRemitente, $consignee, $paisConsignee, $fechaRecoleccion, $idMarkenSite, $idMarkenTipe): bool
 {
     $wpdb = query_getWPDB();
     $prefix = query_getAldemPrefix();
@@ -541,8 +541,10 @@ function query_insertJobByCsv($idUser, $job, $remitente, $ciudad, $paisRemitente
         "consignee" => $consignee,
         "paisconsignee" => $paisConsignee,
         "fecha_hora" => $fechaRecoleccion,
+        "pcs" => 1,
 
         "id_cliente_subtipo" => 1,
+        "id_marken_type" => $idMarkenTipe,
         "id_marken_site" => $idMarkenSite,
         "id_usuario_created" => $idUser,
 
