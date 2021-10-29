@@ -14,7 +14,7 @@ $incoTerms = query_getIncoterms();
 $exportadores = query_getExportadores();
 $importadores = query_getImportadores();
 $handlings = query_getMarkenHandlings();
-$sites = query_getMarkenSiteTipos();
+$sites = query_getMarkenSiteTipos(null, 3);
 $courierCurrent = $update ? query_getCourierJobs($id_courier_job)[0] : null;
 // update
 $exportadorCurrent = $update ?  query_getExportadores($courierCurrent->id_exportador)[0] : null;
