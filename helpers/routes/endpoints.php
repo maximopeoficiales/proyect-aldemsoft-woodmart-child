@@ -400,6 +400,22 @@ function post_aldem_verificar_levante(WP_REST_Request $request)
 
             // si existe data
             if (!empty($data)) {
+                $data->handling = null;
+                $data->schd_collection = null;
+                $data->guia_master = null;
+                $data->exportador = null;
+                if ($data->job && $data->manifiesto) {
+                    $formatManifiesto = str_replace($dua2, "", $data->manifiesto);
+                    $formatManifiesto = intval($data->manifiesto);
+                    
+                    $dataWebScrapping = getDataJobSunat($dua2, $formatManifiesto, $data->job);
+                    if ($dataWebScrapping) {
+                        $data->handling = $dataWebScrapping["handling"];
+                        $data->schd_collection = $dataWebScrapping["schd_collection"];
+                        $data->guia_master = $dataWebScrapping["guia_master"];
+                        $data->exportador = $dataWebScrapping["exportador"];
+                    }
+                }
                 return  aldem_rest_response($data);
             }
             return  aldem_rest_response(null, "No hay hay resultados con ese DUA", 204);
@@ -609,3 +625,72 @@ function post_aldem_delete_job(WP_REST_Request $request)
         return  aldem_rest_response($th, "Error en servidor", 500);
     }
 }
+
+function getDataJobSunat(int $ano, int $manifesto, string $job)
+{
+    try {
+
+        $arrayJob = [
+            "handling" => null,
+            "schd_collection" => null,
+            "guia_master" => null,
+            "exportador" => null,
+        ];
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://www.aduanet.gob.pe/cl-ad-itconsmanifiesto/manifiestoITS01Alias?accion=consultarxNumeroManifiesto',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => "CMc1_Anno=${ano}&CMc1_Numero=${manifesto}&CMc1_Terminal=0000&CG_cadu=235&TipM=mc",
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Cookie: ITCONSMANIFIESTOSESSION=yjLxh7QLQKl1KGT1ypD7z7rf2MByQv7DJCp1b65n1KtlqJkbr7wTTpNyDtTxXpGGCrLZflBh4dJHnplk0jSnxQhy2Frkc402PndF729PTV5xq1x1QkhFs2GYC2Vqk22dtQGllddbn97ZGMnHhnMCSd7Lh9hvQT16k6rpzv2J6nSnQSTznRMj2ySGnJsftG7sqCqXLQHmNWh8fPhBPfLLDrLrcGTJbb1Bk6HfsvwJFnQSFyZxh4MkKlPbVQSd3JnJ!1463191871!1177480056; TS01577d4a=014dc399cb5b351205256b2dc923563df3acdce79aa74838fc7f00d02fcb77a3f9f3af940ab142c530288822cde33fe91fe4a347569b6a8dfa226d2c7232e24625828b61a7'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        if (strlen($response) > 0) {
+            $html = str_get_html($response);
+            $ret = $html->find('table tr', 2);
+            $aereoLinea = ($ret->find('td', 1)->plaintext ?? null);
+            $ret2 = $html->find('table tr', 1);
+            $fechaLlegada = ($ret2->find('td', 1)->plaintext ?? null);
+
+            $arrayJob["handling"] = trim($aereoLinea);
+            $arrayJob["schd_collection"] = trim($fechaLlegada);
+
+            // busqueda de datos en el html
+            // echo $html ?? "null";
+            $tableData = $html->find('table', 1)->find('tr');
+            if (!empty($tableData)) {
+                foreach ($tableData as $key => $value) {
+                    if (trim($value->find('td', 1)->plaintext) == trim($job)) {
+                        $guiaMaster = trim($value->find('td', 2)->plaintext);
+                        $exportadorText = trim($value->find('td', 14)->plaintext);
+                        $arrayJob["guia_master"] = $guiaMaster;
+                        $arrayJob["exportador"] = $exportadorText;
+                    }
+                }
+            }
+
+            return ($arrayJob);
+        } else {
+            return null;
+        }
+    } catch (\Throwable $th) {
+        // echo  $th;
+        return null;
+    }
+}
+
+// $data = getDataJobSunat(2021, 5881, "620X16111142");

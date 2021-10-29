@@ -2,6 +2,7 @@
 // necesario para cargar el autoload.php para todo lo que venga de vendor
 
 require aldem_get_directory_helper() . "vendor/autoload.php";
+require aldem_get_directory_helper() . "libs/simplehtmldom/simple_html_dom.php";
 // funciones generales by maximoprog
 
 /**
@@ -9,7 +10,7 @@ require aldem_get_directory_helper() . "vendor/autoload.php";
  * @param string $name Nombre del archivo
  * @return void
  */
-function aldem_cargar_view($name,$atts=null)
+function aldem_cargar_view($name, $atts = null)
 {
      require(aldem_get_view_directory_helper() . "$name.php");
 }
