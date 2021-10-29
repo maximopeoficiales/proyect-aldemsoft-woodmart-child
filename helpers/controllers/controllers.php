@@ -542,15 +542,14 @@ function aldem_post_new_courier()
             'dua2'                  => 'max:15',
             'dua3'                  => 'max:15',
             'dua4'                  => 'max:15',
-            // 'guia'                  => 'max:12',
+
             'master'                  => 'max:20',
             'pcs'                  => 'numeric',
             'kilos'                  => 'numeric',
-            // 'id_importador'                  => 'numeric',
             'importador'                  => 'max:250',
-            'id_exportador'                  => 'numeric',
+            'exportador'                  => 'max:250',
             'incoterm'                  => 'numeric',
-            'collection'                  => 'date:Y-m-d',
+            'collection'                  => 'max:250',
             'delivery'                  => 'date:Y-m-d',
             'instructions'                  => 'max:500',
             'protocolo'                  => 'max:150',
@@ -559,7 +558,7 @@ function aldem_post_new_courier()
 
             'id_delivery'                  => 'numeric',
             'ind_costo_delivery'                  => 'numeric',
-            'id_handling'                  => 'numeric',
+            'handling'                  => 'max:250',
             'ind_servicio_aduana'                  => 'numeric',
             'ind_costo_aduana'                  => 'numeric',
 
@@ -591,7 +590,7 @@ function aldem_post_new_courier()
             $peso = doubleval(sanitize_text_field($_POST['kilos']));
             // $id_importador = intval(sanitize_text_field($_POST['id_importador']));
             $importador = sanitize_text_field($_POST['importador']);
-            $id_exportador = intval(sanitize_text_field($_POST['id_exportador']));
+            $exportador = sanitize_text_field($_POST['exportador']);
             $id_incoterm = intval(sanitize_text_field($_POST['incoterm']));
             $schd_collection = sanitize_text_field($_POST['collection']);
             $schd_delivery = sanitize_text_field($_POST['delivery']);
@@ -603,7 +602,7 @@ function aldem_post_new_courier()
 
             $id_delivery = intval(sanitize_text_field($_POST['id_delivery']));
             $ind_costo_delivery = intval(sanitize_text_field(isset($_POST['ind_costo_delivery']) ? 1 : 0));
-            $id_handling = intval(sanitize_text_field($_POST['id_handling']));
+            $handling = sanitize_text_field($_POST['handling']);
             $ind_transporte = intval(sanitize_text_field(isset($_POST['ind_transporte']) ? 1 : 0));
             $ind_servicio_aduana = intval(sanitize_text_field(isset($_POST['ind_servicio_aduana']) ? 1 : 0));
             $ind_costo_aduana = intval(sanitize_text_field(isset($_POST['ind_costo_aduana']) ? 1 : 0));
@@ -636,7 +635,7 @@ function aldem_post_new_courier()
 
                 // "id_importador" => $id_importador,
                 "importador" => $importador,
-                "id_exportador" => $id_exportador,
+                "exportador" => $exportador,
                 "id_incoterm" => $id_incoterm,
                 "instrucciones" => $instrucciones,
 
@@ -647,7 +646,7 @@ function aldem_post_new_courier()
                 "observaciones" => $observaciones,
 
                 "id_delivery" => $id_delivery,
-                "id_handling" => $id_handling,
+                "handling" => $handling,
 
                 "ind_costo_delivery" => $ind_costo_delivery,
                 "ind_servicio_aduana" => $ind_servicio_aduana,
@@ -666,22 +665,8 @@ function aldem_post_new_courier()
                 "created_at" => $fecha_actual,
             ];
             if ($action_name == "new-cargo") {
-                $format = array(
-                    '%d', '%s', '%d', '%s',
-                    // duas
-                    '%s', '%s', '%s',
-                    '%s', '%s', '%d',
-                    '%s', '%d', '%d', '%s',
-                    '%s', '%s', '%s', '%d', '%s',
 
-                    '%d', '%d',
-                    '%d', '%d', '%d', //ids
-                    '%s', '%s', '%s', //doubles
-                    '%s', '%d', '%s', //nuevos campos
-
-                    '%s', '%s'
-                );
-                $queryExistoso = $wpdb->insert($table, $data, $format);
+                $queryExistoso = $wpdb->insert($table, $data);
                 $wpdb->flush();
                 if ($queryExistoso) {
                     wp_redirect(home_url($pagina2) . "?msg=" . 1);
@@ -691,24 +676,10 @@ function aldem_post_new_courier()
             } else if ($action_name == "update-cargo") {
                 $id_cargo_job = intval(sanitize_text_field($_POST['id_cargo_job']));
                 unset($data["created_at"]);
-                $format2 = array(
-                    '%d', '%s', '%d', '%s',
-                    '%s', '%s', '%s',
-                    '%s', '%s', '%d',
-                    '%s', '%d', '%d', '%s',
-                    '%s', '%s', '%s', '%d', '%s',
 
-                    '%d', '%d',
-                    '%d', '%d', '%d', //ids
-                    '%s', '%s', '%s', //doubles
-                    '%s', '%d', '%s', //nuevos campos
-
-
-                    '%s',
-                );
                 if ($wpdb->update($table, $data, [
                     "id" => $id_cargo_job
-                ], $format2)) {
+                ])) {
                     wp_redirect(home_url($pagina2) . "?editjob=$id_cargo_job&msg=" . 2);
                 } else {
                     wp_redirect(home_url($pagina2) . "?editjob=$id_cargo_job&msg=");
