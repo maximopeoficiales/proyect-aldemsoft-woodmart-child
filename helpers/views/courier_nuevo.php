@@ -317,7 +317,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 </div> -->
                                 <div class="form-group my-2">
                                     <label for="handling">Handling: </label>
-                                    <input type="text" class="form-control" id="handling" placeholder="Ingrese Dam" name="dam" maxlength="150" value="<?= $courierCurrent->dam ?>">
+                                    <input type="text" class="form-control" id="handling" placeholder="Ingresar Handling" name="handling" maxlength="150" value="<?= $courierCurrent->handling ?>">
                                 </div>
 
                             </div>
@@ -1120,6 +1120,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 $setValue("#importador", id_importador);
                 $setValue("#exportador", exportador);
                 $setValue("#master", guia_master);
+                $setValue("#handling", handling);
                 $("#fecha_levante").flatpickr({
                     defaultDate: fecha_levante ?? "",
                     enableTime: true,
