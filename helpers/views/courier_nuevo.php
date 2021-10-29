@@ -152,7 +152,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                         </div>
                     </div> -->
-                        <label for="exportador-text">Exportador</label>
+                        <!-- <label for="exportador-text">Exportador</label>
                         <div class="input-group my-2">
                             <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador" value="<?= $exportadorCurrent->nombre ?>">
                             <div class="input-group-append">
@@ -162,8 +162,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewExportador">Nuevo Exportador</a>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="exportador">Exportador</label>
+                            <input type="text" name="exportador" id="exportador" class="form-control" placeholder="Ingrese el Exportador" value="<?= $courierCurrent->exportador ?>" maxlength="250">
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -302,7 +305,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class=" form-group my-2">
+                                <!-- <div class=" form-group my-2">
                                     <label for="id_handling">Handling:</label>
                                     <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
                                         <option value="">Selecciona un Handling</option>
@@ -311,6 +314,10 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                             <option value="<?= $handling->id_handling ?>"><?= $handling->descripcion ?></option>
                                         <?php }  ?>
                                     </select>
+                                </div> -->
+                                <div class="form-group my-2">
+                                    <label for="handling">Handling: </label>
+                                    <input type="text" class="form-control" id="handling" placeholder="Ingrese Dam" name="dam" maxlength="150" value="<?= $courierCurrent->dam ?>">
                                 </div>
 
                             </div>
@@ -694,7 +701,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     ?>
         $('#incoterm').val('<?= $courierCurrent->id_incoterm ?>');
         $('#id_site').val('<?= $courierCurrent->id_site ?>');
-        $('#id_handling').val('<?= $courierCurrent->id_handling ?>');
+        // $('#id_handling').val('<?= $courierCurrent->id_handling ?>');
     <?php        }
     ?>
 
@@ -706,7 +713,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
     // formulario edit
     $('#paisEdit').select2();
     $('#id_site').select2();
-    $('#id_handling').select2();
+    // $('#id_handling').select2();
     (() => {
         const isPickup = false;
         // nuevas funciones
@@ -1111,8 +1118,15 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 $setValue("#kilos", kilos);
                 $setValue("#protocolo", protocolo);
                 $setValue("#importador", id_importador);
+                $setValue("#exportador", exportador);
+                $setValue("#master", guia_master);
                 $("#fecha_levante").flatpickr({
                     defaultDate: fecha_levante ?? "",
+                    enableTime: true,
+                    allowInput: true
+                })
+                $("#collection").flatpickr({
+                    defaultDate: schd_collection ?? "",
                     enableTime: true,
                     allowInput: true
                 })
@@ -1148,26 +1162,26 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
         }
         // fin de nuevas funciones
         // eventos
-        document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            document.querySelector("#btnCloseModalExportador").click();
-            try {
-                await saveMarkenShipperAsync(true, 2);
-                e.target.reset();
-            } catch (error) {
-                console.error(error);
-            }
-        });
-        document.querySelector("#formNewImportador").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            document.querySelector("#btnCloseModalImportador").click();
-            try {
-                await saveMarkenShipperAsync(false, 3);
-                e.target.reset();
-            } catch (error) {
-                console.error(error);
-            }
-        });
+        // document.querySelector("#formNewExportador").addEventListener("submit", async (e) => {
+        //     e.preventDefault();
+        //     document.querySelector("#btnCloseModalExportador").click();
+        //     try {
+        //         await saveMarkenShipperAsync(true, 2);
+        //         e.target.reset();
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // });
+        // document.querySelector("#formNewImportador").addEventListener("submit", async (e) => {
+        //     e.preventDefault();
+        //     document.querySelector("#btnCloseModalImportador").click();
+        //     try {
+        //         await saveMarkenShipperAsync(false, 3);
+        //         e.target.reset();
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // });
         // seleccionador del modal
         document.addEventListener("click", async (e) => {
             if (e.target.classList.value.includes("exportador-btn")) {
