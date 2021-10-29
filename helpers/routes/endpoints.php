@@ -671,6 +671,10 @@ function getDataJobSunat(int $ano, int $manifesto, string $job)
             $arrayJob["handling"] = str_replace("  ", "", $arrayJob["handling"]);
             $arrayJob["schd_collection"] = trim(str_replace("\t", "", str_replace("&nbsp;", " ", $fechaLlegada)));
 
+            $formatDateCollection = str_replace('/', '-', $arrayJob["schd_collection"]);
+            $arrayJob["schd_collection"] = date('Y/m/d H:i:s', strtotime($formatDateCollection));
+
+
             // busqueda de datos en el html
             // echo $html ?? "null";
             $tableData = $html->find('table', 1)->find('tr');
