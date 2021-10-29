@@ -156,7 +156,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             </div>
                         </div>
                     </div> -->
-                        <label for="exportador-text">Exportador</label>
+                        <!-- <label for="exportador-text">Exportador</label>
                         <div class="input-group my-2">
                             <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled id="exportador-text" placeholder="Elija un exportador" value="<?= $exportadorCurrent->nombre ?>">
                             <div class="input-group-append">
@@ -166,8 +166,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNewExportador">Nuevo Exportador</a>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="exportador">Exportador</label>
+                            <input type="text" name="exportador" id="exportador" class="form-control" placeholder="Ingrese el Exportador" value="<?= $courierCurrent->exportador ?>" maxlength="250">
                         </div>
-
 
                     </div>
                 </div>
@@ -303,7 +306,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class=" form-group my-2">
+                                <!-- <div class=" form-group my-2">
                                     <label for="id_handling">Handling:</label>
                                     <select name="id_handling" id="id_handling" class="form-control" placeholder="Elija el Handling" aria-describedby="handling" style="width: 100%;">
                                         <option value="">Selecciona un Handling</option>
@@ -313,8 +316,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                                         <?php }  ?>
                                     </select>
                                     <small id="helpId" class="text-muted">Entrega al importador por Guia Hija</small>
+                                </div> -->
+                                <div class="form-group my-2">
+                                    <label for="handling">Handling: </label>
+                                    <input type="text" class="form-control" id="handling" placeholder="Ingresar Handling" name="handling" maxlength="150" value="<?= $courierCurrent->handling ?>">
                                 </div>
-
                             </div>
                         </div>
                         <div class="row my-2">
@@ -694,12 +700,27 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             minTime: "09:00",
             allowInput: true
         });
+        $("#collection").flatpickr({
+            enableTime: true,
+            minTime: "00:00",
+            allowInput: true
+        })
         <?php if ($update && $courierCurrent->fecha_levante != "0000-00-00 00:00:00") {
         ?>
             $("#fecha_levante").flatpickr({
                 enableTime: true,
                 defaultDate: "<?= $courierCurrent->fecha_levante ?>",
-                 requestOptionsallowInput: true
+                requestOptionsallowInput: true
+            });
+        <?php        }
+        ?>
+
+        <?php if ($update && $courierCurrent->schd_collection != "0000-00-00 00:00:00") {
+        ?>
+            $("#collection").flatpickr({
+                enableTime: true,
+                defaultDate: "<?= $courierCurrent->schd_collection ?>",
+                allowInput: true
             });
         <?php        }
         ?>
@@ -1112,7 +1133,11 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                         manifiesto,
                         pcs,
                         protocolo,
-                        semaforo
+                        semaforo,
+                        handling,
+                        schd_collection,
+                        guia_master,
+                        exportador,
                     }
                 } = response;
                 $setValue("#job", job);
@@ -1121,8 +1146,16 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                 $setValue("#kilos", kilos);
                 $setValue("#protocolo", protocolo);
                 $setValue("#importador", id_importador);
+                $setValue("#exportador", exportador);
+                $setValue("#master", guia_master);
+                $setValue("#handling", handling);
                 $("#fecha_levante").flatpickr({
                     defaultDate: fecha_levante ?? "",
+                    enableTime: true,
+                    allowInput: true
+                })
+                $("#collection").flatpickr({
+                    defaultDate: schd_collection ?? "",
                     enableTime: true,
                     allowInput: true
                 })

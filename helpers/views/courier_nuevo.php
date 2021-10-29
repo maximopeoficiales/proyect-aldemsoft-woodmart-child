@@ -699,6 +699,15 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
             });
         <?php        }
         ?>
+        <?php if ($update && $courierCurrent->schd_collection != "0000-00-00 00:00:00") {
+        ?>
+            $("#collection").flatpickr({
+                enableTime: true,
+                defaultDate: "<?= $courierCurrent->schd_collection ?>",
+                allowInput: true
+            });
+        <?php        }
+        ?>
     });
     <?php
 
