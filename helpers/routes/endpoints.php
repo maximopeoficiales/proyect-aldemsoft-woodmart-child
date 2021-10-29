@@ -404,10 +404,11 @@ function post_aldem_verificar_levante(WP_REST_Request $request)
                 $data->schd_collection = null;
                 $data->guia_master = null;
                 $data->exportador = null;
+                // Extraigo la otra data desde la web de la sunat (WebScrapping)
                 if ($data->job && $data->manifiesto) {
                     $formatManifiesto = str_replace($dua2, "", $data->manifiesto);
-                    $formatManifiesto = intval($data->manifiesto);
-                    
+                    $formatManifiesto = intval($formatManifiesto);
+
                     $dataWebScrapping = getDataJobSunat($dua2, $formatManifiesto, $data->job);
                     if ($dataWebScrapping) {
                         $data->handling = $dataWebScrapping["handling"];
@@ -666,8 +667,9 @@ function getDataJobSunat(int $ano, int $manifesto, string $job)
             $ret2 = $html->find('table tr', 1);
             $fechaLlegada = ($ret2->find('td', 1)->plaintext ?? null);
 
-            $arrayJob["handling"] = trim($aereoLinea);
-            $arrayJob["schd_collection"] = trim($fechaLlegada);
+            $arrayJob["handling"] = trim(str_replace("\t", "", str_replace("&nbsp;", " ", $aereoLinea)));
+            $arrayJob["handling"] = str_replace("  ", "", $arrayJob["handling"]);
+            $arrayJob["schd_collection"] = trim(str_replace("\t", "", str_replace("&nbsp;", " ", $fechaLlegada)));
 
             // busqueda de datos en el html
             // echo $html ?? "null";
@@ -675,10 +677,10 @@ function getDataJobSunat(int $ano, int $manifesto, string $job)
             if (!empty($tableData)) {
                 foreach ($tableData as $key => $value) {
                     if (trim($value->find('td', 1)->plaintext) == trim($job)) {
-                        $guiaMaster = trim($value->find('td', 2)->plaintext);
-                        $exportadorText = trim($value->find('td', 14)->plaintext);
-                        $arrayJob["guia_master"] = $guiaMaster;
-                        $arrayJob["exportador"] = $exportadorText;
+                        $guiaMaster = $value->find('td', 2)->plaintext;
+                        $exportadorText = $value->find('td', 14)->plaintext;
+                        $arrayJob["guia_master"] = trim($guiaMaster);
+                        $arrayJob["exportador"] = trim(str_replace("&nbsp;", " ", $exportadorText));
                     }
                 }
             }
