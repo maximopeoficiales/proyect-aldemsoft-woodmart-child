@@ -203,7 +203,7 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
                             <div class="col-md-6 ">
                                 <div class="form-group mb-2">
                                     <label for="collection">Schd Collection</label>
-                                    <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese el Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
+                                    <input type="date" name="collection" id="collection" class="form-control" placeholder="Ingrese la Schd Collection" aria-describedby="collection" value="<?= $courierCurrent->schd_collection ?>">
 
                                 </div>
 
@@ -682,9 +682,14 @@ aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de i
 
         $("#fecha_levante").flatpickr({
             enableTime: true,
-            minTime: "09:00",
+            minTime: "00:00",
             allowInput: true
         });
+        $("#collection").flatpickr({
+            enableTime: true,
+            minTime: "00:00",
+            allowInput: true
+        })
         <?php if ($update && $courierCurrent->fecha_levante != "0000-00-00 00:00:00") {
         ?>
             $("#fecha_levante").flatpickr({
