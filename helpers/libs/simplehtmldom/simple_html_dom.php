@@ -110,10 +110,10 @@ function str_get_html(
 		$defaultSpanText
 	);
 
-	if (empty($str) || strlen($str) > MAX_FILE_SIZE) {
-		$dom->clear();
-		return false;
-	}
+	// if (empty($str) || strlen($str) > MAX_FILE_SIZE) {
+	// 	$dom->clear();
+	// 	return false;
+	// }
 
 	return $dom->load($str, $lowercase, $stripRN);
 }
