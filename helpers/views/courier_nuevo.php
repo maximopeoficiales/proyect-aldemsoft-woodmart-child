@@ -33,7 +33,10 @@ $urlVerifyLevante = get_site_url() . "/wp-json/aldem/v1/verificarLevante/" . ald
 } ?>
 <?php
 aldem_cargarStyles();
-aldem_show_message_custom("Se ha registrado correctamente el nuevo servicio de importacion courier 😀", "Se ha actualizado correctamente el servicio de importacion courier😀", "Ocurrio un error 😢 en el registro del servicio de importacion courier");
+$urlPageCurrent = get_permalink();
+aldem_show_message_custom("
+<a href='$urlPageCurrent'>Se ha registrado correctamente el nuevo servicio de importacion courier 😀
+Para registrar un nuevo Job haz Click Aqui</a>", "Se ha actualizado correctamente el servicio de importacion courier😀", "Ocurrio un error 😢 en el registro del servicio de importacion courier");
 ?>
 
 <div class="row justify-content-center p-4">
